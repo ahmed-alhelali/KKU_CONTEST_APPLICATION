@@ -33,13 +33,6 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
             controller: _controller,
             duration: duration,
           )
-          // (
-          //   controller: _controller,
-          // ),
-          // InstructorScreen(
-          //   controller: _controller,
-          //   duration: duration,
-          // )
         ],
       ),
     );
