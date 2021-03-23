@@ -113,7 +113,7 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
                         size: 25,
                       ),
                       onPressed: () {
-                        InstructorFirestoreDB.deleteLecture(
+                        FirestoreDB.deleteLecture(
                             widget.id, titleLecture);
                         // deleteLecture(titleLecture);
                       },

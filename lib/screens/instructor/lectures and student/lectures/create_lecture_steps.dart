@@ -6,7 +6,6 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
 
-
 class CreateLectureSteps extends StatefulWidget {
   final String id;
 
@@ -107,7 +106,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       onStepCancel: cancel,
                       controlsBuilder: (BuildContext context,
                           {VoidCallback onStepContinue,
-                            VoidCallback onStepCancel}) {
+                          VoidCallback onStepCancel}) {
                         return Container();
                       },
                       steps: _mySteps(
@@ -150,11 +149,11 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("title"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 0
-              ? Utils.getUbuntuTextStyleWithSize(16)
-              : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
+                  ? Utils.getUbuntuTextStyleWithSize(16)
+                  : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
               : (_currentStep == 0
-              ? Utils.getTajwalTextStyleWithSize(14)
-              : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
+                  ? Utils.getTajwalTextStyleWithSize(14)
+                  : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
         ),
         content: Padding(
             padding: EdgeInsets.only(bottom: 10),
@@ -168,15 +167,15 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                   decoration: InputDecoration(
                     errorText: titleValidate
                         ? MyLocalization.of(context)
-                        .getTranslatedValue("validate")
+                            .getTranslatedValue("validate")
                         : null,
                     hintText:
-                    MyLocalization.of(context).getTranslatedValue("title"),
+                        MyLocalization.of(context).getTranslatedValue("title"),
                     hintStyle: textDirection == TextDirection.ltr
                         ? Utils.getUbuntuTextStyleWithSize(12,
-                        color: Colors.grey)
+                            color: Colors.grey)
                         : Utils.getTajwalTextStyleWithSize(12,
-                        color: Colors.grey),
+                            color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
@@ -236,11 +235,11 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("set_steps"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 1
-              ? Utils.getUbuntuTextStyleWithSize(16)
-              : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
+                  ? Utils.getUbuntuTextStyleWithSize(16)
+                  : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
               : (_currentStep == 1
-              ? Utils.getTajwalTextStyleWithSize(14)
-              : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
+                  ? Utils.getTajwalTextStyleWithSize(14)
+                  : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
         ),
         content: Column(
           children: [
@@ -347,11 +346,11 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("help"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 2
-              ? Utils.getUbuntuTextStyleWithSize(16)
-              : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
+                  ? Utils.getUbuntuTextStyleWithSize(16)
+                  : Utils.getUbuntuTextStyleWithSize(16, color: Colors.grey))
               : (_currentStep == 2
-              ? Utils.getTajwalTextStyleWithSize(14)
-              : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
+                  ? Utils.getTajwalTextStyleWithSize(14)
+                  : Utils.getUbuntuTextStyleWithSize(14, color: Colors.grey)),
         ),
         content: Column(
           children: [
@@ -463,10 +462,10 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
   }
 
   Widget getColumnOfTextFields(
-      TextDirection textDirection,
-      titleController,
-      descriptionController,
-      ) {
+    TextDirection textDirection,
+    titleController,
+    descriptionController,
+  ) {
     return Column(
       children: [
         TextField(
@@ -506,7 +505,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 ? Utils.getUbuntuTextStyleWithSize(12, color: Colors.grey)
                 : Utils.getTajwalTextStyleWithSize(12, color: Colors.grey),
             hintText:
-            MyLocalization.of(context).getTranslatedValue("description"),
+                MyLocalization.of(context).getTranslatedValue("description"),
           ),
           maxLines: 4,
         ),
@@ -516,52 +515,55 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
 
   addNewLecture() {
     CollectionReference newLecture =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return newLecture
         .doc(widget.id)
         .collection("lectures")
         .doc(lectureTitleController.text)
         .set({
-      "title": lectureTitleController.text,
-      "message": messageController.text.isEmpty
-          ? "No Message"
-          : messageController.text,
-    })
+          "title": lectureTitleController.text,
+          "message": messageController.text.isEmpty
+              ? "No Message"
+              : messageController.text,
+        })
         .then((value) => {
-      addStepsToFirebase(
-        titleStepController1.text,
-        descriptionStepController1.text,
-        titleStepController2.text,
-        descriptionStepController2.text,
-        titleStepController3.text,
-        descriptionStepController3.text,
-        titleStepController4.text,
-        descriptionStepController4.text,
-        titleStepController5.text,
-        descriptionStepController5.text,
-      )
-    })
+              addStepsToFirebase(
+                titleStepController1.text,
+                descriptionStepController1.text,
+                titleStepController2.text,
+                descriptionStepController2.text,
+                titleStepController3.text,
+                descriptionStepController3.text,
+                titleStepController4.text,
+                descriptionStepController4.text,
+                titleStepController5.text,
+                descriptionStepController5.text,
+              )
+            })
         .catchError((error) => print(error));
   }
 
   addStepsToFirebase(
-      String title1,
-      String description1,
-      String title2,
-      String description2,
-      String title3,
-      String description3,
-      String title4,
-      String description4,
-      String title5,
-      String description5,
-      ) {
+    String title1,
+    String description1,
+    String title2,
+    String description2,
+    String title3,
+    String description3,
+    String title4,
+    String description4,
+    String title5,
+    String description5,
+  ) {
     CollectionReference newLecture =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
-
-    if( title1== "" || title2== "" || title3 == "" || title4 == "" || title5== ""){
+    if (title1 == "" ||
+        title2 == "" ||
+        title3 == "" ||
+        title4 == "" ||
+        title5 == "") {
       print("TITLES EMPTU");
     }
     List<String> titles = [
@@ -586,7 +588,11 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           .doc(lectureTitleController.text)
           .collection("steps")
           .doc(titles[i])
-          .set({"time": DateTime.now() ,"title": titles[i], "description": descriptions[i]});
+          .set({
+        "time": DateTime.now(),
+        "title": titles[i],
+        "description": descriptions[i]
+      });
     }
   }
 }

@@ -99,7 +99,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
               backgroundColor: Colors.green.shade800,
               onPressed: () {
                 // addCourse();
-                InstructorFirestoreDB.addCourseWidget(textDirection, context);
+                FirestoreDB.addCourseWidget(textDirection, context);
               },
               child: Icon(
                 Icons.add,
@@ -201,7 +201,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                             "delete",
                             "cancel",
                                 () {
-                              InstructorFirestoreDB.deleteCourse(document.id);
+                                  FirestoreDB.deleteCourse(document.id);
                               Navigator.pop(context);
                             },
                                 () {

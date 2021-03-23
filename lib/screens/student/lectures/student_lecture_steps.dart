@@ -66,7 +66,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                     height: 50,
                   ),
                   Expanded(
-                    child: getInstructorCourses(textDirection),
+                    child: getStudentLectureSteps(textDirection),
                   ),
                 ],
               ),
@@ -77,7 +77,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
     );
   }
 
-  Widget getInstructorCourses(TextDirection textDirection) {
+  Widget getStudentLectureSteps(TextDirection textDirection) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(widget.id)
