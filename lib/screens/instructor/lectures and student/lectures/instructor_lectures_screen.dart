@@ -94,7 +94,7 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final titleLecture = document.get("title");
               print(titleLecture);
               return Column(
@@ -113,7 +113,8 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
                         size: 25,
                       ),
                       onPressed: () {
-                        InstructorFirestoreDB.deleteLecture( widget.id , titleLecture);
+                        InstructorFirestoreDB.deleteLecture(
+                            widget.id, titleLecture);
                         // deleteLecture(titleLecture);
                       },
                     ),
@@ -135,7 +136,4 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
       },
     );
   }
-
-
-
 }

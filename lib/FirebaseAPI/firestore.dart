@@ -204,10 +204,10 @@ class InstructorFirestoreDB {
         .catchError((error) => print(error));
   }
 
-  static deleteLecture(String CourseID, String title) {
+  static deleteLecture(String courseID, String title) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
-        .doc(CourseID)
+        .doc(courseID)
         .collection("lectures");
 
     return courses.doc(title).delete().then((value) => {}).catchError(
@@ -215,10 +215,10 @@ class InstructorFirestoreDB {
     );
   }
 
-  static deleteAllSteps(String CourseID, String title) async {
+  static deleteAllSteps(String courseID, String title) async {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
-        .doc(CourseID)
+        .doc(courseID)
         .collection("lectures");
 
     final lectureSteps = courses.doc(title).collection("steps").get();

@@ -71,7 +71,8 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
         if (snapshot.data.size == 0) {
           return Center(
             child: Text(
-              MyLocalization.of(context).getTranslatedValue("no_lectures_student"),
+              MyLocalization.of(context)
+                  .getTranslatedValue("no_lectures_student"),
               style: textDirection == TextDirection.ltr
                   ? Utils.getUbuntuTextStyleWithSize(14)
                   : Utils.getTajwalTextStyleWithSize(14),
@@ -83,9 +84,8 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final titleLecture = document.get("title");
-
 
               print(titleLecture);
               return Column(
@@ -98,10 +98,17 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
                           : Utils.getTajwalTextStyleWithSize(12),
                     ),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return StudentLectureSteps(widget.id, titleLecture);
-                          }));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return StudentLectureSteps(
+                              widget.id,
+                              titleLecture,
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
                   Padding(

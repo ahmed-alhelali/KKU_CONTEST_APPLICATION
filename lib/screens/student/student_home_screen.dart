@@ -23,7 +23,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final searchController = TextEditingController();
+    // final searchController = TextEditingController();
     if (_scaleAnimation == null) {
       _scaleAnimation =
           Tween<double>(begin: 1, end: 0.6).animate(widget.controller);

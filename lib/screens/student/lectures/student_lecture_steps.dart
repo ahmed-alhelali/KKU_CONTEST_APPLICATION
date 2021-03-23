@@ -19,9 +19,6 @@ class StudentLectureSteps extends StatefulWidget {
 class _StudentLectureStepsState extends State<StudentLectureSteps> {
   int _currentStep = 0;
 
-  StepperType stepperType = StepperType.vertical;
-  List<Step> mySteps = [];
-
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
@@ -126,7 +123,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
         }
 
         return Stepper(
-          type: stepperType,
+          type: StepperType.vertical,
           physics: ScrollPhysics(),
           currentStep: _currentStep,
           onStepTapped: (step) => tapped(step),
@@ -154,7 +151,6 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                     onPressed: () {
                       if (_currentStep < 4) {
                         onStepContinue();
-                        print(mySteps.length);
                       } else {
                         Navigator.pop(context);
                       }
@@ -184,13 +180,6 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
           }).toList(),
         );
       },
-    );
-  }
-  switchStepsType() {
-    setState(
-          () => stepperType == StepperType.vertical
-          ? stepperType = StepperType.horizontal
-          : stepperType = StepperType.vertical,
     );
   }
 
