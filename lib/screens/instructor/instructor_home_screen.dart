@@ -7,6 +7,7 @@ import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/widgets/widgets.dart';
 import 'instructor_course_screen.dart';
 
 class InstructorHomeScreen extends StatefulWidget {
@@ -41,13 +42,13 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
       bottom: 0,
       left: menuOpen
           ? (textDirection == TextDirection.ltr
-          ? 0.3 * size.width
-          : -0.3 * size.width)
+              ? 0.3 * size.width
+              : -0.3 * size.width)
           : 0,
       right: menuOpen
           ? (textDirection == TextDirection.ltr
-          ? -0.3 * size.width
-          : 0.3 * size.width)
+              ? -0.3 * size.width
+              : 0.3 * size.width)
           : 0,
       child: ScaleTransition(
         scale: _scaleAnimation,
@@ -56,25 +57,25 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
           appBar: AppBar(
             leading: !menuOpen
                 ? IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                setState(() {
-                  widget.controller.forward();
-                  menuOpen = true;
-                });
-              },
-              color: Colors.white,
-            )
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      setState(() {
+                        widget.controller.forward();
+                        menuOpen = true;
+                      });
+                    },
+                    color: Colors.white,
+                  )
                 : IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                setState(() {
-                  widget.controller.reverse();
-                  menuOpen = false;
-                });
-              },
-              color: Colors.white,
-            ),
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      setState(() {
+                        widget.controller.reverse();
+                        menuOpen = false;
+                      });
+                    },
+                    color: Colors.white,
+                  ),
             title: Text(
               MyLocalization.of(context).getTranslatedValue("home_page_title"),
               style: textDirection == TextDirection.ltr
@@ -115,7 +116,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
 
   Widget getInstructorCourses(TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
     final slidableController = new SlidableController();
     String courseID;
     return StreamBuilder<QuerySnapshot>(
@@ -147,7 +148,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final currentCourse = document.data().values;
               return Slidable(
                 child: InkWell(
@@ -194,17 +195,17 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                         color: Colors.red,
                         icon: Icons.delete,
                         onTap: () {
-                          Utils.showWarringDialog(
+                          Widgets.showWarringDialog(
                             "are_you_sure",
                             "delete_course_warring",
                             context,
                             "delete",
                             "cancel",
-                                () {
-                                  FirestoreDB.deleteCourse(document.id);
+                            () {
+                              FirestoreDB.deleteCourse(document.id);
                               Navigator.pop(context);
                             },
-                                () {
+                            () {
                               Navigator.pop(context);
                             },
                             textDirection,
@@ -228,7 +229,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                             final snackBar = SnackBar(
                               elevation: 0,
                               backgroundColor:
-                              AppTheme.darkTheme.scaffoldBackgroundColor,
+                                  AppTheme.darkTheme.scaffoldBackgroundColor,
                               content: Text(MyLocalization.of(context)
                                   .getTranslatedValue("course_id_copied")),
                               action: SnackBarAction(

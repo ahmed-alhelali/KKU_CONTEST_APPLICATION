@@ -5,6 +5,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
 import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/widgets/widgets.dart';
 
 class InstructorDrawerScreen extends StatefulWidget {
   final AnimationController controller;
@@ -30,9 +31,9 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
     if (_slideAnimation == null) {
       _slideAnimation = textDirection == TextDirection.ltr
           ? Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
-          .animate(widget.controller)
+              .animate(widget.controller)
           : Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))
-          .animate(widget.controller);
+              .animate(widget.controller);
     }
     return SlideTransition(
       position: _slideAnimation,
@@ -52,13 +53,13 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                     color: AppTheme.darkTheme.scaffoldBackgroundColor,
                     borderRadius: textDirection == TextDirection.ltr
                         ? BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    )
+                            topRight: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                          )
                         : BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
-                    ),
+                            topLeft: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                          ),
                   ),
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Center(
@@ -86,13 +87,14 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                       CircleAvatar(
                         radius: 45,
                         backgroundImage:
-                        ExactAssetImage("assets/images/instructor.png"),
+                            ExactAssetImage("assets/images/instructor.png"),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        MyLocalization.of(context).getTranslatedValue("instructor_name"),
+                        MyLocalization.of(context)
+                            .getTranslatedValue("instructor_name"),
                         style: textDirection == TextDirection.ltr
                             ? Utils.getUbuntuTextStyleWithSize(16)
                             : Utils.getTajwalTextStyleWithSize(14),
@@ -102,7 +104,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                 ],
               ),
               SizedBox(height: 40),
-              Utils.getContainerWithOnOnTap(
+              Widgets.getContainerWithOnOnTap(
                 Icon(
                   Icons.menu_book,
                   color: Colors.white,
@@ -118,7 +120,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: getInstructorCourses(textDirection),
               ),
-              Utils.getContainerWithOnOnTap(
+              Widgets.getContainerWithOnOnTap(
                 Icon(
                   Icons.logout,
                   color: Colors.red,
@@ -127,17 +129,21 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                 textDirection,
                 context,
                 onTap: () {
-                  Utils.showWarringDialog("are_you_sure", "instructor_logout_warning",
-                      context, "logout", "cancel", () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WrapperScreen(),
-                          ),
-                        );
-                      }, () {
-                        Navigator.of(context).pop();
-                      }, textDirection);
+                  Widgets.showWarringDialog(
+                      "are_you_sure",
+                      "instructor_logout_warning",
+                      context,
+                      "logout",
+                      "cancel", () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WrapperScreen(),
+                      ),
+                    );
+                  }, () {
+                    Navigator.of(context).pop();
+                  }, textDirection);
                 },
               ),
             ],
@@ -149,7 +155,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
 
   Widget getInstructorCourses(TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
       stream: courses.snapshots(),
@@ -209,7 +215,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
               ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
               : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final currentCourse = document.data().values;
               // print(currentCourse);
               return Column(

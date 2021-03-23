@@ -3,6 +3,7 @@ import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/widgets/widgets.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -80,7 +81,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             brightness: AppTheme.darkTheme.appBarTheme.brightness,
             backgroundColor: Colors.transparent,
           ),
-          body: FirestoreDB.getStudentCourses(textDirection),
+          body: Widgets.getStudentCourses(textDirection),
         ),
       ),
     );

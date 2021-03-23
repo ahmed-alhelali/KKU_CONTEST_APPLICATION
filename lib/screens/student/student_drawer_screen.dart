@@ -4,6 +4,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
 import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/widgets/widgets.dart';
 
 class StudentDrawerScreen extends StatefulWidget {
   final AnimationController controller;
@@ -29,9 +30,9 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
     if (_slideAnimation == null) {
       _slideAnimation = textDirection == TextDirection.ltr
           ? Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
-          .animate(widget.controller)
+              .animate(widget.controller)
           : Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))
-          .animate(widget.controller);
+              .animate(widget.controller);
     }
     return SlideTransition(
       position: _slideAnimation,
@@ -51,13 +52,13 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                     color: AppTheme.darkTheme.scaffoldBackgroundColor,
                     borderRadius: textDirection == TextDirection.ltr
                         ? BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    )
+                            topRight: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                          )
                         : BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
-                    ),
+                            topLeft: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                          ),
                   ),
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Center(
@@ -85,14 +86,14 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                       CircleAvatar(
                         radius: 45,
                         backgroundImage:
-                        ExactAssetImage("assets/images/student.png"),
+                            ExactAssetImage("assets/images/student.png"),
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                        MyLocalization.of(context).getTranslatedValue("student_name"),
-
+                        MyLocalization.of(context)
+                            .getTranslatedValue("student_name"),
                         style: textDirection == TextDirection.ltr
                             ? Utils.getUbuntuTextStyleWithSize(16)
                             : Utils.getTajwalTextStyleWithSize(14),
@@ -102,7 +103,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                 ],
               ),
               SizedBox(height: 40),
-              Utils.getContainerWithOnOnTap(
+              Widgets.getContainerWithOnOnTap(
                 Icon(
                   Icons.menu_book,
                   color: Colors.white,
@@ -117,7 +118,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                 //color: Colors.grey,
                 margin: EdgeInsets.symmetric(vertical: 10),
               ),
-              Utils.getContainerWithOnOnTap(
+              Widgets.getContainerWithOnOnTap(
                 Icon(
                   Icons.logout,
                   color: Colors.red,
@@ -126,17 +127,21 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                 textDirection,
                 context,
                 onTap: () {
-                  Utils.showWarringDialog("are_you_sure", "student_logout_warning",
-                      context, "logout", "cancel", () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WrapperScreen(),
-                          ),
-                        );
-                      }, () {
-                        Navigator.of(context).pop();
-                      }, textDirection);
+                  Widgets.showWarringDialog(
+                      "are_you_sure",
+                      "student_logout_warning",
+                      context,
+                      "logout",
+                      "cancel", () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WrapperScreen(),
+                      ),
+                    );
+                  }, () {
+                    Navigator.of(context).pop();
+                  }, textDirection);
                 },
               ),
             ],
