@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/main.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/models/languages.dart';
+import 'package:uuid/uuid.dart';
 
 class Utils {
   static void changeLanguages(Languages language, context) {
@@ -29,6 +27,11 @@ class Utils {
       color: color?? Colors.white,
       fontWeight: fontWeight,
     );
+  }
+
+  static String getRandomIdForNewCourse() {
+    var uuid = Uuid();
+    return uuid.v4();
   }
 
   static TextStyle getUbuntuTextStyleWithSize(double size,

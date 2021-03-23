@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
-import 'package:kku_contest_app/widgets/widgets.dart';
+import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -81,7 +80,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             brightness: AppTheme.darkTheme.appBarTheme.brightness,
             backgroundColor: Colors.transparent,
           ),
-          body: Widgets.getStudentCourses(textDirection),
+          body: StudentWidgets.getStudentCourses(textDirection),
         ),
       ),
     );

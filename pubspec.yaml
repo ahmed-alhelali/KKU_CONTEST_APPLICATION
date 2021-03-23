@@ -42,6 +42,7 @@ dependencies:
   cupertino_stepper: ^0.2.0
   numberpicker: ^2.0.1
   flutter_number_picker: ^0.0.8
+  toast: ^0.1.5
 
 dev_dependencies:
   flutter_test:

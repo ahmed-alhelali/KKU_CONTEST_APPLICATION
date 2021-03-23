@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
@@ -118,7 +117,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                 width: MediaQuery.of(context).size.width * 0.5,
                 //color: Colors.grey,
                 margin: EdgeInsets.symmetric(vertical: 10),
-                child: getInstructorCourses(textDirection),
+                child: Widgets.getCoursesInDrawer(textDirection),
               ),
               Widgets.getContainerWithOnOnTap(
                 Icon(
@@ -153,91 +152,5 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
     );
   }
 
-  Widget getInstructorCourses(TextDirection textDirection) {
-    CollectionReference courses =
-        FirebaseFirestore.instance.collection("Courses");
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: courses.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  MyLocalization.of(context)
-                      .getTranslatedValue("error_connection"),
-                  style: textDirection == TextDirection.ltr
-                      ? Utils.getUbuntuTextStyleWithSize(14)
-                      : Utils.getTajwalTextStyleWithSize(14),
-                )
-              ],
-            ),
-          );
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 80),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-              ],
-            ),
-          );
-        }
-
-        if (snapshot.data.size == 0) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  MyLocalization.of(context).getTranslatedValue("no_courses"),
-                  style: textDirection == TextDirection.ltr
-                      ? Utils.getUbuntuTextStyleWithSize(14)
-                      : Utils.getTajwalTextStyleWithSize(14),
-                )
-              ],
-            ),
-          );
-        }
-
-        return ListView(
-          padding: textDirection == TextDirection.ltr
-              ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
-              : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
-          children: snapshot.data.docs.map(
-            (DocumentSnapshot document) {
-              final currentCourse = document.data().values;
-              // print(currentCourse);
-              return Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      currentCourse.first,
-                      style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 0.5,
-                    child: Container(color: Colors.grey),
-                  ),
-                ],
-              );
-            },
-          ).toList(),
-        );
-      },
-    );
-  }
 }

@@ -7,6 +7,7 @@ import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
 import 'package:kku_contest_app/widgets/widgets.dart';
 import 'instructor_course_screen.dart';
 
@@ -87,10 +88,6 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
             brightness: AppTheme.darkTheme.appBarTheme.brightness,
             backgroundColor: Colors.transparent,
           ),
-          // body: ListView(
-          //   padding: EdgeInsets.symmetric(vertical: 6),
-          //   children: ,
-          // ),
           body: getInstructorCourses(textDirection),
           floatingActionButton: Padding(
             padding: EdgeInsets.all(6),
@@ -99,8 +96,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
               elevation: 0,
               backgroundColor: Colors.green.shade800,
               onPressed: () {
-                // addCourse();
-                FirestoreDB.addCourseWidget(textDirection, context);
+                InstructorWidgets.addCourseWidget(textDirection, context);
               },
               child: Icon(
                 Icons.add,

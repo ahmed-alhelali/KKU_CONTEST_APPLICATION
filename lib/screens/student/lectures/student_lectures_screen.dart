@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utils/utils.dart';
-import 'package:kku_contest_app/widgets/widgets.dart';
+import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
 
 class StudentLectureScreen extends StatefulWidget {
   final String title;
@@ -32,7 +31,7 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
               : Utils.getTajwalTextStyleWithSize(14),
         ),
       ),
-      body: Widgets.getStudentLectures(textDirection,widget.id),
+      body: StudentWidgets.getStudentLectures(textDirection,widget.id),
     );
   }
 
