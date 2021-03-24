@@ -4,7 +4,7 @@ import 'package:kku_contest_app/main.dart';
 import 'package:kku_contest_app/models/languages.dart';
 import 'package:uuid/uuid.dart';
 
-class Utils {
+class Utilities {
   static void changeLanguages(Languages language, context) {
     Locale _temp;
     switch (language.languageCode) {

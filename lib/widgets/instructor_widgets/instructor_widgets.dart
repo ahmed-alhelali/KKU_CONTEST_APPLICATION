@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:toast/toast.dart';
 
 class InstructorWidgets{
@@ -39,8 +39,8 @@ class InstructorWidgets{
                     MyLocalization.of(context)
                         .getTranslatedValue("create_course"),
                     style: textDirection == TextDirection.ltr
-                        ? Utils.getUbuntuTextStyleWithSize(18)
-                        : Utils.getTajwalTextStyleWithSize(18),
+                        ? Utilities.getUbuntuTextStyleWithSize(18)
+                        : Utilities.getTajwalTextStyleWithSize(18),
                   ),
                   Divider(
                     color: Colors.grey,
@@ -57,8 +57,8 @@ class InstructorWidgets{
                           controller: titleController,
                           cursorColor: Colors.white,
                           style: textDirection == TextDirection.ltr
-                              ? Utils.getUbuntuTextStyleWithSize(14)
-                              : Utils.getTajwalTextStyleWithSize(14),
+                              ? Utilities.getUbuntuTextStyleWithSize(14)
+                              : Utilities.getTajwalTextStyleWithSize(14),
                           decoration: InputDecoration(
                             contentPadding: textDirection == TextDirection.ltr
                                 ? EdgeInsets.only(left: 30)
@@ -66,8 +66,8 @@ class InstructorWidgets{
                             labelText: MyLocalization.of(context)
                                 .getTranslatedValue("course_name"),
                             labelStyle: textDirection == TextDirection.ltr
-                                ? Utils.getUbuntuTextStyleWithSize(12)
-                                : Utils.getTajwalTextStyleWithSize(12),
+                                ? Utilities.getUbuntuTextStyleWithSize(12)
+                                : Utilities.getTajwalTextStyleWithSize(12),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 Icons.close,
@@ -203,8 +203,8 @@ class InstructorWidgets{
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utils.getUbuntuTextStyleWithSize(14)
-                    : Utils.getTajwalTextStyleWithSize(14),
+                    ? Utilities.getUbuntuTextStyleWithSize(14)
+                    : Utilities.getTajwalTextStyleWithSize(14),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -223,8 +223,8 @@ class InstructorWidgets{
               MyLocalization.of(context)
                   .getTranslatedValue("no_lectures_instructor"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
               textAlign: TextAlign.center,
             ),
           );
@@ -242,8 +242,8 @@ class InstructorWidgets{
                     title: Text(
                       titleLecture,
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12)
+                          : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                     trailing: IconButton(
                       icon: Icon(
@@ -273,6 +273,59 @@ class InstructorWidgets{
           ).toList(),
         );
       },
+    );
+  }
+
+  static Widget getColumnOfTextFields(
+      BuildContext context,
+      TextDirection textDirection,
+      titleController,
+      descriptionController,
+      ) {
+    return Column(
+      children: [
+        TextField(
+          controller: titleController,
+          style: textDirection == TextDirection.ltr
+              ? Utilities.getUbuntuTextStyleWithSize(12)
+              : Utilities.getTajwalTextStyleWithSize(12),
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            hintStyle: textDirection == TextDirection.ltr
+                ? Utilities.getUbuntuTextStyleWithSize(12, color: Colors.grey)
+                : Utilities.getTajwalTextStyleWithSize(12, color: Colors.grey),
+            hintText: MyLocalization.of(context).getTranslatedValue("title"),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: descriptionController,
+          style: textDirection == TextDirection.ltr
+              ? Utilities.getUbuntuTextStyleWithSize(12)
+              : Utilities.getTajwalTextStyleWithSize(12),
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            hintStyle: textDirection == TextDirection.ltr
+                ? Utilities.getUbuntuTextStyleWithSize(12, color: Colors.grey)
+                : Utilities.getTajwalTextStyleWithSize(12, color: Colors.grey),
+            hintText:
+            MyLocalization.of(context).getTranslatedValue("description"),
+          ),
+          maxLines: 4,
+        ),
+      ],
     );
   }
 }

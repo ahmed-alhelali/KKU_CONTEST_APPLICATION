@@ -4,7 +4,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lectures_screen.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 
 class StudentWidgets{
   static Widget getStudentCourses(TextDirection textDirection) {
@@ -31,8 +31,8 @@ class StudentWidgets{
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_courses"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
             ),
           );
         }
@@ -55,8 +55,8 @@ class StudentWidgets{
                 child: Text(
                   currentCourse.first,
                   style: textDirection == TextDirection.ltr
-                      ? Utils.getUbuntuTextStyleWithSize(16)
-                      : Utils.getTajwalTextStyleWithSize(16),
+                      ? Utilities.getUbuntuTextStyleWithSize(16)
+                      : Utilities.getTajwalTextStyleWithSize(16),
                 ),
               ),
               onTap: () {
@@ -78,7 +78,6 @@ class StudentWidgets{
       },
     );
   }
-
   static Widget getStudentLectures(TextDirection textDirection,courseID) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
@@ -96,8 +95,8 @@ class StudentWidgets{
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utils.getUbuntuTextStyleWithSize(14)
-                    : Utils.getTajwalTextStyleWithSize(14),
+                    ? Utilities.getUbuntuTextStyleWithSize(14)
+                    : Utilities.getTajwalTextStyleWithSize(14),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -116,8 +115,8 @@ class StudentWidgets{
               MyLocalization.of(context)
                   .getTranslatedValue("no_lectures_student"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
               textAlign: TextAlign.center,
             ),
           );
@@ -136,10 +135,11 @@ class StudentWidgets{
                     title: Text(
                       titleLecture,
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12)
+                          : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                     onTap: () {
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -170,5 +170,6 @@ class StudentWidgets{
       },
     );
   }
+
 
 }

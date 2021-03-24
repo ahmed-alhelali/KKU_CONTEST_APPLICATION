@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
 
 class StudentLectureScreen extends StatefulWidget {
@@ -23,12 +23,12 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
         centerTitle: true,
         elevation: 0,
         brightness: AppTheme.darkTheme.appBarTheme.brightness,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppTheme.darkTheme.backgroundColor,
         title: Text(
-          widget.title,
+          widget.title.toUpperCase(),
           style: textDirection == TextDirection.ltr
-              ? Utils.getUbuntuTextStyleWithSize(14)
-              : Utils.getTajwalTextStyleWithSize(14),
+              ? Utilities.getUbuntuTextStyleWithSize(16)
+              : Utilities.getTajwalTextStyleWithSize(16),
         ),
       ),
       body: StudentWidgets.getStudentLectures(textDirection,widget.id),

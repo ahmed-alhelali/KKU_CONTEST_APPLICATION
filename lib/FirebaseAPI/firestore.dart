@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 
 class FirestoreDB {
 
@@ -8,7 +8,7 @@ class FirestoreDB {
         FirebaseFirestore.instance.collection("Courses");
 
     return newCourse
-        .doc(Utils.getRandomIdForNewCourse())
+        .doc(Utilities.getRandomIdForNewCourse())
         .set({"course_title": courseTitle, "time": DateTime.now()})
         .then((value) => {print("course added")})
         .catchError((error) => print(error));

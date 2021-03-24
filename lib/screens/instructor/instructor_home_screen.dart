@@ -6,9 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
-import 'package:kku_contest_app/widgets/widgets.dart';
+import 'package:kku_contest_app/widgets/shared_widgets.dart';
 import 'instructor_course_screen.dart';
 
 class InstructorHomeScreen extends StatefulWidget {
@@ -80,8 +80,8 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
             title: Text(
               MyLocalization.of(context).getTranslatedValue("home_page_title"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
             ),
             centerTitle: true,
             elevation: 0,
@@ -135,8 +135,8 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_courses"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
             ),
           );
         }
@@ -161,8 +161,8 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                     child: Text(
                       currentCourse.first,
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(16)
-                          : Utils.getTajwalTextStyleWithSize(16),
+                          ? Utilities.getUbuntuTextStyleWithSize(16)
+                          : Utilities.getTajwalTextStyleWithSize(16),
                     ),
                   ),
                   onTap: () {

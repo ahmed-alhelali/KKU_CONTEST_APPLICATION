@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 
 class StudentLectureSteps extends StatefulWidget {
   final String title;
@@ -30,6 +30,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           margin: EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
             color: AppTheme.darkTheme.backgroundColor,
@@ -55,8 +56,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                   child: Text(
                     widget.title,
                     style: textDirection == TextDirection.ltr
-                        ? Utils.getUbuntuTextStyleWithSize(18)
-                        : Utils.getTajwalTextStyleWithSize(18),
+                        ? Utilities.getUbuntuTextStyleWithSize(18)
+                        : Utilities.getTajwalTextStyleWithSize(18),
                   ),
                 ),
               ),
@@ -96,8 +97,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utils.getUbuntuTextStyleWithSize(14)
-                    : Utils.getTajwalTextStyleWithSize(14),
+                    ? Utilities.getUbuntuTextStyleWithSize(14)
+                    : Utilities.getTajwalTextStyleWithSize(14),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -115,8 +116,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_lectures"),
               style: textDirection == TextDirection.ltr
-                  ? Utils.getUbuntuTextStyleWithSize(14)
-                  : Utils.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14)
+                  : Utilities.getTajwalTextStyleWithSize(14),
               textAlign: TextAlign.center,
             ),
           );
@@ -131,52 +132,120 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
           onStepCancel: cancel,
           controlsBuilder: (BuildContext context,
               {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: HexColor("#5C704D"),
-                    ),
-                    child: Text(
-                      MyLocalization.of(context).getTranslatedValue("next"),
-                      style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
-                    ),
-                    onPressed: () {
-                      if (_currentStep < 4) {
-                        onStepContinue();
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ],
-              ),
-            );
+            return Container();
           },
           steps: snapshot.data.docs.map((DocumentSnapshot document) {
-            return Step(
-              title: Text(
-                document.get("title").toString(),
-                style: textDirection == TextDirection.ltr
-                    ? Utils.getUbuntuTextStyleWithSize(16)
-                    : Utils.getTajwalTextStyleWithSize(14),
-              ),
-              content: Text(
-                document.get("description").toString(),
-                style: textDirection == TextDirection.ltr
-                    ? Utils.getUbuntuTextStyleWithSize(13)
-                    : Utils.getTajwalTextStyleWithSize(13),
-              ),
-              isActive: true,
-              state: StepState.indexed,
-            );
+            if (document.data().values.contains("Help")) {
+              return Step(
+                title: Text(
+                  document.get("title").toString(),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(16)
+                      : Utilities.getTajwalTextStyleWithSize(14),
+                ),
+                content: Column(
+                  children: [
+                    Text(
+                      document.get("description").toString(),
+                      style: textDirection == TextDirection.ltr
+                          ? Utilities.getUbuntuTextStyleWithSize(13)
+                          : Utilities.getTajwalTextStyleWithSize(13),
+                    ),
+                    SizedBox(height: 25,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: HexColor("#A74552"),
+                            ),
+                            child: Text(
+                              MyLocalization.of(context).getTranslatedValue("i_have_issues"),
+                              style: textDirection == TextDirection.ltr
+                                  ? Utilities.getUbuntuTextStyleWithSize(12)
+                                  : Utilities.getTajwalTextStyleWithSize(12),
+                            ),
+                            onPressed: (){},
+                          ),
+                          SizedBox(width: 50,),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: HexColor("#5C704D"),
+                            ),
+                            child: Text(
+                              MyLocalization.of(context).getTranslatedValue("no_thanks"),
+                              style: textDirection == TextDirection.ltr
+                                  ? Utilities.getUbuntuTextStyleWithSize(12)
+                                  : Utilities.getTajwalTextStyleWithSize(12),
+                            ),
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                isActive: true,
+                state: StepState.indexed,
+              );
+            } else {
+              return Step(
+                title: Text(
+                  document.get("title").toString(),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(16)
+                      : Utilities.getTajwalTextStyleWithSize(14),
+                ),
+                content: Column(
+                  children: [
+                    Text(
+                      document.get("description").toString(),
+                      style: textDirection == TextDirection.ltr
+                          ? Utilities.getUbuntuTextStyleWithSize(13)
+                          : Utilities.getTajwalTextStyleWithSize(13),
+                    ),
+                    SizedBox(height: 25,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: HexColor("#5C704D"),
+                            ),
+                            child: Text(
+                              MyLocalization.of(context).getTranslatedValue("next"),
+                              style: textDirection == TextDirection.ltr
+                                  ? Utilities.getUbuntuTextStyleWithSize(12)
+                                  : Utilities.getTajwalTextStyleWithSize(12),
+                            ),
+                            onPressed: () {
+                              if (_currentStep < 5) {
+                                continued();
+                              } else {
+                                Navigator.pop(context);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                isActive: true,
+                state: StepState.indexed,
+              );
+            }
           }).toList(),
         );
       },
@@ -188,7 +257,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
   }
 
   continued() {
-    _currentStep < 4 ? setState(() => _currentStep += 1) : null;
+    _currentStep < 5 ? setState(() => _currentStep += 1) : null;
   }
 
   cancel() {

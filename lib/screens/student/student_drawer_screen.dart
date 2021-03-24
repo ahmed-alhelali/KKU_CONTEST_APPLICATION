@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
-import 'package:kku_contest_app/utils/utils.dart';
-import 'package:kku_contest_app/widgets/widgets.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:kku_contest_app/widgets/shared_widgets.dart';
 
 class StudentDrawerScreen extends StatefulWidget {
   final AnimationController controller;
@@ -67,8 +67,8 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                           .getTranslatedValue("student")
                           .toUpperCase(),
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(18)
-                          : Utils.getTajwalTextStyleWithSize(18),
+                          ? Utilities.getUbuntuTextStyleWithSize(18)
+                          : Utilities.getTajwalTextStyleWithSize(18),
                     ),
                   ),
                 ),
@@ -95,8 +95,8 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                         MyLocalization.of(context)
                             .getTranslatedValue("student_name"),
                         style: textDirection == TextDirection.ltr
-                            ? Utils.getUbuntuTextStyleWithSize(16)
-                            : Utils.getTajwalTextStyleWithSize(14),
+                            ? Utilities.getUbuntuTextStyleWithSize(16)
+                            : Utilities.getTajwalTextStyleWithSize(14),
                       ),
                     ],
                   ),

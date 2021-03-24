@@ -5,8 +5,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/models/languages.dart';
 import 'package:kku_contest_app/screens/student/student_wrapper_screen.dart';
-import 'package:kku_contest_app/utils/utils.dart';
-
+import 'package:kku_contest_app/utilities/utilities.dart';
 import 'instructor/instructor_wrapper_screen.dart';
 
 class WrapperScreen extends StatefulWidget {
@@ -38,11 +37,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
                 child: TextButton(
                   onPressed: () {
                     textDirection == TextDirection.ltr
-                        ? Utils.changeLanguages(
+                        ? Utilities.changeLanguages(
                       Languages(1, 'عربي', 'ar'),
                       context,
                     )
-                        : Utils.changeLanguages(
+                        : Utilities.changeLanguages(
                       Languages(0, 'English', 'en'),
                       context,
                     );
@@ -77,9 +76,9 @@ class _WrapperScreenState extends State<WrapperScreen> {
                       MyLocalization.of(context)
                           .getTranslatedValue("sign_in_page_title"),
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(24,
+                          ? Utilities.getUbuntuTextStyleWithSize(24,
                           fontWeight: FontWeight.bold)
-                          : Utils.getTajwalTextStyleWithSize(24,
+                          : Utilities.getTajwalTextStyleWithSize(24,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -89,8 +88,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
                       MyLocalization.of(context)
                           .getTranslatedValue("sign_in_page_subTitle"),
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(14)
-                          : Utils.getTajwalTextStyleWithSize(14),
+                          ? Utilities.getUbuntuTextStyleWithSize(14)
+                          : Utilities.getTajwalTextStyleWithSize(14),
                     ),
                   ],
                 ),
@@ -115,8 +114,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           MyLocalization.of(context)
                               .getTranslatedValue("instructor"),
                           style: textDirection == TextDirection.ltr
-                              ? Utils.getUbuntuTextStyleWithSize(14)
-                              : Utils.getTajwalTextStyleWithSize(12),
+                              ? Utilities.getUbuntuTextStyleWithSize(14)
+                              : Utilities.getTajwalTextStyleWithSize(12),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -141,8 +140,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           MyLocalization.of(context)
                               .getTranslatedValue("student"),
                           style: textDirection == TextDirection.ltr
-                              ? Utils.getUbuntuTextStyleWithSize(14)
-                              : Utils.getTajwalTextStyleWithSize(12),
+                              ? Utilities.getUbuntuTextStyleWithSize(14)
+                              : Utilities.getTajwalTextStyleWithSize(12),
                         ),
                         onPressed: () {
                           Navigator.push(

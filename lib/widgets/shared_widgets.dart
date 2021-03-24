@@ -3,26 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 
-class Widgets{
+class Widgets {
 
-
-
-
-
-
-
-  static Padding getContainerWithOnOnTap(Icon icon, String keyMap,
+  static Widget getContainerWithOnOnTap(Icon icon, String keyMap,
       TextDirection textDirection, BuildContext context,
       {Function onTap}) {
     return Padding(
-      padding: textDirection == TextDirection.ltr ?EdgeInsets.only(
-        right: MediaQuery.of(context).size.width * 0.60,
-      ) :EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.60,
-      ),
+      padding: textDirection == TextDirection.ltr
+          ? EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.60,
+            )
+          : EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.60,
+            ),
       child: InkWell(
+
         child: Align(
           alignment: AlignmentDirectional.topStart,
           child: Container(
@@ -31,13 +28,13 @@ class Widgets{
               color: AppTheme.darkTheme.scaffoldBackgroundColor,
               borderRadius: textDirection == TextDirection.ltr
                   ? BorderRadius.only(
-                topRight: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-              )
+                      topRight: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    )
                   : BorderRadius.only(
-                topLeft: Radius.circular(25),
-                bottomLeft: Radius.circular(25),
-              ),
+                      topLeft: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                    ),
             ),
             width: 150,
             child: Center(
@@ -51,8 +48,8 @@ class Widgets{
                   Text(
                     MyLocalization.of(context).getTranslatedValue(keyMap),
                     style: textDirection == TextDirection.ltr
-                        ? Utils.getUbuntuTextStyleWithSize(13)
-                        : Utils.getTajwalTextStyleWithSize(13),
+                        ? Utilities.getUbuntuTextStyleWithSize(13)
+                        : Utilities.getTajwalTextStyleWithSize(13),
                   ),
                   SizedBox(
                     width: 10,
@@ -68,15 +65,15 @@ class Widgets{
   }
 
   static showWarringDialog(
-      String keyTitle,
-      String keyContent,
-      BuildContext context,
-      String yetText,
-      String noText,
-      Function functionOfYesButton,
-      Function functionOfNoButton,
-      TextDirection textDirection,
-      ) {
+    String keyTitle,
+    String keyContent,
+    BuildContext context,
+    String yetText,
+    String noText,
+    Function functionOfYesButton,
+    Function functionOfNoButton,
+    TextDirection textDirection,
+  ) {
     AlertDialog alertDialog = AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -86,14 +83,14 @@ class Widgets{
       title: Text(
         MyLocalization.of(context).getTranslatedValue(keyTitle),
         style: textDirection == TextDirection.ltr
-            ? Utils.getUbuntuTextStyleWithSize(20)
-            : Utils.getTajwalTextStyleWithSize(20),
+            ? Utilities.getUbuntuTextStyleWithSize(20)
+            : Utilities.getTajwalTextStyleWithSize(20),
       ),
       content: Text(
         MyLocalization.of(context).getTranslatedValue(keyContent),
         style: textDirection == TextDirection.ltr
-            ? Utils.getUbuntuTextStyleWithSize(14)
-            : Utils.getTajwalTextStyleWithSize(14),
+            ? Utilities.getUbuntuTextStyleWithSize(14)
+            : Utilities.getTajwalTextStyleWithSize(14),
       ),
       actions: [
         TextButton(
@@ -104,8 +101,8 @@ class Widgets{
           child: Text(
             MyLocalization.of(context).getTranslatedValue(noText),
             style: textDirection == TextDirection.ltr
-                ? Utils.getUbuntuTextStyleWithSize(12)
-                : Utils.getTajwalTextStyleWithSize(12),
+                ? Utilities.getUbuntuTextStyleWithSize(12)
+                : Utilities.getTajwalTextStyleWithSize(12),
           ),
           onPressed: functionOfNoButton,
         ),
@@ -117,8 +114,8 @@ class Widgets{
           child: Text(
             MyLocalization.of(context).getTranslatedValue(yetText),
             style: textDirection == TextDirection.ltr
-                ? Utils.getUbuntuTextStyleWithSize(12)
-                : Utils.getTajwalTextStyleWithSize(12),
+                ? Utilities.getUbuntuTextStyleWithSize(12)
+                : Utilities.getTajwalTextStyleWithSize(12),
           ),
           onPressed: functionOfYesButton,
         ),
@@ -131,10 +128,9 @@ class Widgets{
     );
   }
 
-
   static Widget getCoursesInDrawer(TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
       stream: courses.snapshots(),
@@ -150,8 +146,8 @@ class Widgets{
                   MyLocalization.of(context)
                       .getTranslatedValue("error_connection"),
                   style: textDirection == TextDirection.ltr
-                      ? Utils.getUbuntuTextStyleWithSize(14)
-                      : Utils.getTajwalTextStyleWithSize(14),
+                      ? Utilities.getUbuntuTextStyleWithSize(14)
+                      : Utilities.getTajwalTextStyleWithSize(14),
                 )
               ],
             ),
@@ -181,8 +177,8 @@ class Widgets{
                 Text(
                   MyLocalization.of(context).getTranslatedValue("no_courses"),
                   style: textDirection == TextDirection.ltr
-                      ? Utils.getUbuntuTextStyleWithSize(14)
-                      : Utils.getTajwalTextStyleWithSize(14),
+                      ? Utilities.getUbuntuTextStyleWithSize(14)
+                      : Utilities.getTajwalTextStyleWithSize(14),
                 )
               ],
             ),
@@ -194,7 +190,7 @@ class Widgets{
               ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
               : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final currentCourse = document.data().values;
               // print(currentCourse);
               return Column(
@@ -203,8 +199,8 @@ class Widgets{
                     title: Text(
                       currentCourse.first,
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12)
+                          : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                   ),
                   SizedBox(

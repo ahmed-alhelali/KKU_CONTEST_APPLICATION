@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utils/utils.dart';
+import 'package:kku_contest_app/utilities/utilities.dart';
 import 'lectures and student/help_student_screen.dart';
 import 'lectures and student/lectures/instructor_lectures_screen.dart';
 
@@ -49,8 +49,8 @@ class _InstructorCourseState extends State<InstructorCourse>
           title: Text(
             widget.courseTitle,
             style: textDirection == TextDirection.ltr
-                ? Utils.getUbuntuTextStyleWithSize(16)
-                : Utils.getTajwalTextStyleWithSize(16),
+                ? Utilities.getUbuntuTextStyleWithSize(16)
+                : Utilities.getTajwalTextStyleWithSize(16),
           ),
           bottom: TabBar(
             unselectedLabelColor: Colors.grey,
@@ -72,8 +72,8 @@ class _InstructorCourseState extends State<InstructorCourse>
                       MyLocalization.of(context)
                           .getTranslatedValue("lecture_section"),
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12)
+                          : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                   ),
                 ),
@@ -90,8 +90,8 @@ class _InstructorCourseState extends State<InstructorCourse>
                       MyLocalization.of(context)
                           .getTranslatedValue("student_section"),
                       style: textDirection == TextDirection.ltr
-                          ? Utils.getUbuntuTextStyleWithSize(12)
-                          : Utils.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12)
+                          : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                   ),
                 ),
