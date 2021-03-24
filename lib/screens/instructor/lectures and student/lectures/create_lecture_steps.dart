@@ -107,7 +107,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       // onStepCancel: cancel,
                       controlsBuilder: (BuildContext context,
                           {VoidCallback onStepContinue,
-                          VoidCallback onStepCancel}) {
+                            VoidCallback onStepCancel}) {
                         return Container();
                       },
                       steps: _mySteps(
@@ -154,13 +154,13 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("title"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 0
-                  ? Utilities.getUbuntuTextStyleWithSize(16)
-                  : Utilities.getUbuntuTextStyleWithSize(16,
-                      color: Colors.grey))
+              ? Utilities.getUbuntuTextStyleWithSize(16)
+              : Utilities.getUbuntuTextStyleWithSize(16,
+              color: Colors.grey))
               : (_currentStep == 0
-                  ? Utilities.getTajwalTextStyleWithSize(14)
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.grey)),
+              ? Utilities.getTajwalTextStyleWithSize(14)
+              : Utilities.getUbuntuTextStyleWithSize(14,
+              color: Colors.grey)),
         ),
         content: Padding(
             padding: EdgeInsets.only(bottom: 10),
@@ -174,15 +174,15 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                   decoration: InputDecoration(
                     errorText: titleValidate
                         ? MyLocalization.of(context)
-                            .getTranslatedValue("validate")
+                        .getTranslatedValue("validate")
                         : null,
                     hintText:
-                        MyLocalization.of(context).getTranslatedValue("title"),
+                    MyLocalization.of(context).getTranslatedValue("title"),
                     hintStyle: textDirection == TextDirection.ltr
                         ? Utilities.getUbuntuTextStyleWithSize(12,
-                            color: Colors.grey)
+                        color: Colors.grey)
                         : Utilities.getTajwalTextStyleWithSize(12,
-                            color: Colors.grey),
+                        color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
@@ -242,13 +242,13 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("set_steps"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 1
-                  ? Utilities.getUbuntuTextStyleWithSize(16)
-                  : Utilities.getUbuntuTextStyleWithSize(16,
-                      color: Colors.grey))
+              ? Utilities.getUbuntuTextStyleWithSize(16)
+              : Utilities.getUbuntuTextStyleWithSize(16,
+              color: Colors.grey))
               : (_currentStep == 1
-                  ? Utilities.getTajwalTextStyleWithSize(14)
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.grey)),
+              ? Utilities.getTajwalTextStyleWithSize(14)
+              : Utilities.getUbuntuTextStyleWithSize(14,
+              color: Colors.grey)),
         ),
         content: Column(
           children: [
@@ -350,13 +350,13 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("help"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 2
-                  ? Utilities.getUbuntuTextStyleWithSize(16)
-                  : Utilities.getUbuntuTextStyleWithSize(16,
-                      color: Colors.grey))
+              ? Utilities.getUbuntuTextStyleWithSize(16)
+              : Utilities.getUbuntuTextStyleWithSize(16,
+              color: Colors.grey))
               : (_currentStep == 2
-                  ? Utilities.getTajwalTextStyleWithSize(14)
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.grey)),
+              ? Utilities.getTajwalTextStyleWithSize(14)
+              : Utilities.getUbuntuTextStyleWithSize(14,
+              color: Colors.grey)),
         ),
         content: Column(
           children: [
@@ -393,9 +393,9 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 ),
                 hintStyle: textDirection == TextDirection.ltr
                     ? Utilities.getUbuntuTextStyleWithSize(12,
-                        color: Colors.grey)
+                    color: Colors.grey)
                     : Utilities.getTajwalTextStyleWithSize(12,
-                        color: Colors.grey),
+                    color: Colors.grey),
                 hintText: MyLocalization.of(context)
                     .getTranslatedValue("write_message"),
               ),
@@ -471,60 +471,60 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
 
   addNewLecture() {
     CollectionReference newLecture =
-        FirebaseFirestore.instance.collection("Courses");
+    FirebaseFirestore.instance.collection("Courses");
 
     return newLecture
         .doc(widget.id)
         .collection("lectures")
         .doc(lectureTitleController.text)
         .set({
-          "title": lectureTitleController.text,
-        })
+      "title": lectureTitleController.text,
+    })
         .then((value) => {
-              if (titleStepController1.text == "" ||
-                  descriptionStepController1.text == "" ||
-                  titleStepController2.text == "" ||
-                  descriptionStepController2.text == "" ||
-                  titleStepController3.text == "" ||
-                  descriptionStepController3.text == "" ||
-                  titleStepController4.text == "" ||
-                  descriptionStepController4.text == "" ||
-                  titleStepController5.text == "" ||
-                  descriptionStepController5.text == "")
-                {print("NOT ADDED")}
-              else
-                {
-                  addStepsToFirebase(
-                    titleStepController1.text,
-                    descriptionStepController1.text,
-                    titleStepController2.text,
-                    descriptionStepController2.text,
-                    titleStepController3.text,
-                    descriptionStepController3.text,
-                    titleStepController4.text,
-                    descriptionStepController4.text,
-                    titleStepController5.text,
-                    descriptionStepController5.text,
-                  )
-                }
-            })
+      if (titleStepController1.text == "" ||
+          descriptionStepController1.text == "" ||
+          titleStepController2.text == "" ||
+          descriptionStepController2.text == "" ||
+          titleStepController3.text == "" ||
+          descriptionStepController3.text == "" ||
+          titleStepController4.text == "" ||
+          descriptionStepController4.text == "" ||
+          titleStepController5.text == "" ||
+          descriptionStepController5.text == "")
+        {print("NOT ADDED")}
+      else
+        {
+          addStepsToFirebase(
+            titleStepController1.text,
+            descriptionStepController1.text,
+            titleStepController2.text,
+            descriptionStepController2.text,
+            titleStepController3.text,
+            descriptionStepController3.text,
+            titleStepController4.text,
+            descriptionStepController4.text,
+            titleStepController5.text,
+            descriptionStepController5.text,
+          )
+        }
+    })
         .catchError((error) => print(error));
   }
 
   addStepsToFirebase(
-    String title1,
-    String description1,
-    String title2,
-    String description2,
-    String title3,
-    String description3,
-    String title4,
-    String description4,
-    String title5,
-    String description5,
-  ) {
+      String title1,
+      String description1,
+      String title2,
+      String description2,
+      String title3,
+      String description3,
+      String title4,
+      String description4,
+      String title5,
+      String description5,
+      ) {
     CollectionReference newLecture =
-        FirebaseFirestore.instance.collection("Courses");
+    FirebaseFirestore.instance.collection("Courses");
 
     if (title1 == "" ||
         title2 == "" ||

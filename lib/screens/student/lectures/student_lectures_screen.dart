@@ -14,6 +14,7 @@ class StudentLectureScreen extends StatefulWidget {
 }
 
 class _StudentLectureScreenState extends State<StudentLectureScreen> {
+
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
@@ -34,6 +35,7 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
       body: StudentWidgets.getStudentLectures(textDirection,widget.id),
     );
   }
+
 
 
 }

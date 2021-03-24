@@ -139,7 +139,6 @@ class StudentWidgets{
                           : Utilities.getTajwalTextStyleWithSize(12),
                     ),
                     onTap: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -170,6 +169,4 @@ class StudentWidgets{
       },
     );
   }
-
-
 }

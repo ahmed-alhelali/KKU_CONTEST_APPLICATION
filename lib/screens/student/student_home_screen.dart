@@ -36,53 +36,57 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
       left: menuOpen
           ? (textDirection == TextDirection.ltr
               ? 0.3 * size.width
-              : -0.3 * size.width)
+              : -0.35 * size.width)
           : 0,
       right: menuOpen
           ? (textDirection == TextDirection.ltr
-              ? -0.3 * size.width
+              ? -0.35 * size.width
               : 0.3 * size.width)
           : 0,
       child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Scaffold(
-          backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
-          appBar: AppBar(
-            leading: !menuOpen
-                ? IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: () {
-                      setState(() {
-                        widget.controller.forward();
-                        menuOpen = true;
-                      });
-                    },
-                    color: Colors.white,
-                  )
-                : IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      setState(() {
-                        widget.controller.reverse();
-                        menuOpen = false;
-                      });
-                    },
-                    color: Colors.white,
-                  ),
-            title: Text(
-              MyLocalization.of(context).getTranslatedValue("home_page_title"),
-              style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14)
-                  : Utilities.getTajwalTextStyleWithSize(14),
+          scale: _scaleAnimation,
+          child: ClipRRect(
+            borderRadius:
+                menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
+            child: Scaffold(
+              backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+              appBar: AppBar(
+                leading: !menuOpen
+                    ? IconButton(
+                        icon: Icon(Icons.menu),
+                        onPressed: () {
+                          setState(() {
+                            widget.controller.forward();
+                            menuOpen = true;
+                          });
+                        },
+                        color: Colors.white,
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          setState(() {
+                            widget.controller.reverse();
+                            menuOpen = false;
+                          });
+                        },
+                        color: Colors.white,
+                      ),
+                title: Text(
+                  MyLocalization.of(context)
+                      .getTranslatedValue("home_page_title"),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(14)
+                      : Utilities.getTajwalTextStyleWithSize(14),
+                ),
+                centerTitle: true,
+                elevation: 0,
+                brightness: AppTheme.darkTheme.appBarTheme.brightness,
+                backgroundColor: Colors.transparent,
+              ),
+              body: StudentWidgets.getStudentCourses(textDirection),
             ),
-            centerTitle: true,
-            elevation: 0,
-            brightness: AppTheme.darkTheme.appBarTheme.brightness,
-            backgroundColor: Colors.transparent,
-          ),
-          body: StudentWidgets.getStudentCourses(textDirection),
-        ),
-      ),
+          )),
     );
   }
 }

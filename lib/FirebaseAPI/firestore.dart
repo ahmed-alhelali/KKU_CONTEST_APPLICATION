@@ -36,7 +36,7 @@ class FirestoreDB {
     final lectures = courses.doc(courseID).collection("lectures").get();
     return await lectures
         .then((lecture) => lecture.docs.forEach((element) {
-              print("1 value  ${element.data().values.first}");
+              // print("1 value  ${element.data().values.first}");
               deleteAllStepsUnderLecture(courseID, element.data().values.first);
               deleteLecture(courseID, element.data().values.first);
             }))
