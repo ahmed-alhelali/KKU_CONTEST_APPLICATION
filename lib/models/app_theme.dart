@@ -15,7 +15,7 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  void toggleTheme(bool isOn) {
+  void changeAppTheme(bool isOn) {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     bool currentValue = !isOn;
     setCurrentStatusNavigationBarColor(currentValue);

@@ -96,7 +96,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
 
                           final provider =
                           Provider.of<ThemeProvider>(context, listen: false);
-                          provider.toggleTheme(isLightTheme);
+                          provider.changeAppTheme(isLightTheme);
                         },
                       ),
                     ),

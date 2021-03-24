@@ -84,7 +84,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 ),
                 centerTitle: true,
                 elevation: 0,
-                brightness: AppTheme.darkTheme.appBarTheme.brightness,
+                brightness: isLightTheme ? AppTheme.lightTheme.appBarTheme.brightness : AppTheme.darkTheme.appBarTheme.brightness,
                 backgroundColor: Colors.transparent,
               ),
               body: StudentWidgets.getStudentCourses(themeProvider, isLightTheme ,textDirection),
