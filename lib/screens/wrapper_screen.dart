@@ -6,6 +6,7 @@ import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/models/languages.dart';
 import 'package:kku_contest_app/screens/student/student_wrapper_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:provider/provider.dart';
 import 'instructor/instructor_wrapper_screen.dart';
 
 class WrapperScreen extends StatefulWidget {
@@ -17,9 +18,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -27,7 +30,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
           margin: EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: AppTheme.darkTheme.backgroundColor,
+            color: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
           ),
           child: Stack(
             children: [
@@ -50,11 +53,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
                     MyLocalization.of(context)
                         .getTranslatedValue("change_language"),
                     style:
-                    GoogleFonts.ubuntu(fontSize: 16, color: Colors.white),
+                    GoogleFonts.ubuntu(fontSize: 16, color: isLightTheme ? Colors.black : Colors.white),
                   ),
                 ),
               ),
-              Column(
+              isLightTheme ? Center() : Column(
                 children: [
                   SizedBox(
                     height: 120,
@@ -77,9 +80,9 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           .getTranslatedValue("sign_in_page_title"),
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(24,
-                          fontWeight: FontWeight.bold)
+                          fontWeight: FontWeight.bold,color: themeProvider.themeColor(isLightTheme).textColor)
                           : Utilities.getTajwalTextStyleWithSize(24,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,color: themeProvider.themeColor(isLightTheme).textColor),
                     ),
                     SizedBox(
                       height: 25,
@@ -88,8 +91,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
                       MyLocalization.of(context)
                           .getTranslatedValue("sign_in_page_subTitle"),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(14)
-                          : Utilities.getTajwalTextStyleWithSize(14),
+                          ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
+                          : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
                     ),
                   ],
                 ),
@@ -107,15 +110,15 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         style: TextButton.styleFrom(
                           primary: Colors.grey,
                           elevation: 0,
-                          backgroundColor:
-                          AppTheme.darkTheme.scaffoldBackgroundColor,
+                          backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
+
                         ),
                         child: Text(
                           MyLocalization.of(context)
                               .getTranslatedValue("instructor"),
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14)
-                              : Utilities.getTajwalTextStyleWithSize(12),
+                              ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
+                              : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -133,15 +136,15 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         style: TextButton.styleFrom(
                           primary: Colors.grey,
                           elevation: 0,
-                          backgroundColor:
-                          AppTheme.darkTheme.scaffoldBackgroundColor,
+                          backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
+
                         ),
                         child: Text(
                           MyLocalization.of(context)
                               .getTranslatedValue("student"),
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14)
-                              : Utilities.getTajwalTextStyleWithSize(12),
+                              ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
+                              : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
                         ),
                         onPressed: () {
                           Navigator.push(

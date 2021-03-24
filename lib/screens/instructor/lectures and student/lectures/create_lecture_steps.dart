@@ -6,6 +6,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
+import 'package:provider/provider.dart';
 
 class CreateLectureSteps extends StatefulWidget {
   final String id;
@@ -66,17 +67,23 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: isLightTheme
+          ? AppTheme.lightTheme.scaffoldBackgroundColor
+          : AppTheme.darkTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 12),
+          margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
-            color: AppTheme.darkTheme.backgroundColor,
+            color: isLightTheme
+                ? AppTheme.lightTheme.backgroundColor
+                : AppTheme.darkTheme.backgroundColor,
           ),
           child: Stack(
             children: [
@@ -85,7 +92,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 child: IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: isLightTheme? Colors.black : Colors.white,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -107,10 +114,11 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       // onStepCancel: cancel,
                       controlsBuilder: (BuildContext context,
                           {VoidCallback onStepContinue,
-                            VoidCallback onStepCancel}) {
+                          VoidCallback onStepCancel}) {
                         return Container();
                       },
-                      steps: _mySteps(
+                      steps: _mySteps(themeProvider
+                          ,isLightTheme,
                           textDirection, switchStepsType, continued, cancel),
                     ),
                   ),
@@ -141,7 +149,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
-  List<Step> _mySteps(
+  List<Step> _mySteps(ThemeProvider themeProvider,bool isLightTheme,
       TextDirection textDirection, switchStepsType, continued, cancel) {
     List<Step> _steps = [
       //TODO : Create four steps, then named the second step "How much steps"
@@ -154,13 +162,12 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("title"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 0
-              ? Utilities.getUbuntuTextStyleWithSize(16)
-              : Utilities.getUbuntuTextStyleWithSize(16,
-              color: Colors.grey))
+                  ? Utilities.getUbuntuTextStyleWithSize(16,color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black26: Colors.grey))
               : (_currentStep == 0
-              ? Utilities.getTajwalTextStyleWithSize(14)
-              : Utilities.getUbuntuTextStyleWithSize(14,
-              color: Colors.grey)),
+                  ? Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getUbuntuTextStyleWithSize(14,
+                      color:  isLightTheme? Colors.black26: Colors.grey)),
         ),
         content: Padding(
             padding: EdgeInsets.only(bottom: 10),
@@ -169,20 +176,20 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 TextFormField(
                   controller: lectureTitleController,
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(12)
-                      : Utilities.getTajwalTextStyleWithSize(12),
+                      ? Utilities.getUbuntuTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
                   decoration: InputDecoration(
                     errorText: titleValidate
                         ? MyLocalization.of(context)
-                        .getTranslatedValue("validate")
+                            .getTranslatedValue("validate")
                         : null,
                     hintText:
-                    MyLocalization.of(context).getTranslatedValue("title"),
+                        MyLocalization.of(context).getTranslatedValue("title"),
                     hintStyle: textDirection == TextDirection.ltr
                         ? Utilities.getUbuntuTextStyleWithSize(12,
-                        color: Colors.grey)
+                            color: Colors.grey)
                         : Utilities.getTajwalTextStyleWithSize(12,
-                        color: Colors.grey),
+                            color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
@@ -242,13 +249,12 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("set_steps"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 1
-              ? Utilities.getUbuntuTextStyleWithSize(16)
-              : Utilities.getUbuntuTextStyleWithSize(16,
-              color: Colors.grey))
+              ? Utilities.getUbuntuTextStyleWithSize(16,color: themeProvider.themeColor(isLightTheme).textColor)
+              : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black54: Colors.grey))
               : (_currentStep == 1
-              ? Utilities.getTajwalTextStyleWithSize(14)
+              ? Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
               : Utilities.getUbuntuTextStyleWithSize(14,
-              color: Colors.grey)),
+              color:  isLightTheme? Colors.black26: Colors.grey)),
         ),
         content: Column(
           children: [
@@ -256,33 +262,33 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
               MyLocalization.of(context)
                   .getTranslatedValue("set_steps_message"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(12)
-                  : Utilities.getTajwalTextStyleWithSize(12),
+                  ? Utilities.getUbuntuTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
             ),
             SizedBox(
               height: 15,
             ),
-            InstructorWidgets.getColumnOfTextFields(context, textDirection,
+            InstructorWidgets.getColumnOfTextFields(themeProvider,isLightTheme,context, textDirection,
                 titleStepController1, descriptionStepController1),
             SizedBox(
               height: 20,
             ),
-            InstructorWidgets.getColumnOfTextFields(context, textDirection,
+            InstructorWidgets.getColumnOfTextFields(themeProvider,isLightTheme,context, textDirection,
                 titleStepController2, descriptionStepController2),
             SizedBox(
               height: 20,
             ),
-            InstructorWidgets.getColumnOfTextFields(context, textDirection,
+            InstructorWidgets.getColumnOfTextFields(themeProvider,isLightTheme,context, textDirection,
                 titleStepController3, descriptionStepController3),
             SizedBox(
               height: 20,
             ),
-            InstructorWidgets.getColumnOfTextFields(context, textDirection,
+            InstructorWidgets.getColumnOfTextFields(themeProvider,isLightTheme,context, textDirection,
                 titleStepController4, descriptionStepController4),
             SizedBox(
               height: 20,
             ),
-            InstructorWidgets.getColumnOfTextFields(context, textDirection,
+            InstructorWidgets.getColumnOfTextFields(themeProvider,isLightTheme,context, textDirection,
                 titleStepController5, descriptionStepController5),
             SizedBox(
               height: 20,
@@ -350,21 +356,20 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           MyLocalization.of(context).getTranslatedValue("help"),
           style: textDirection == TextDirection.ltr
               ? (_currentStep == 2
-              ? Utilities.getUbuntuTextStyleWithSize(16)
-              : Utilities.getUbuntuTextStyleWithSize(16,
-              color: Colors.grey))
+              ? Utilities.getUbuntuTextStyleWithSize(16,color: themeProvider.themeColor(isLightTheme).textColor)
+              : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black54: Colors.grey))
               : (_currentStep == 2
-              ? Utilities.getTajwalTextStyleWithSize(14)
+              ? Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
               : Utilities.getUbuntuTextStyleWithSize(14,
-              color: Colors.grey)),
+              color:  isLightTheme? Colors.black26: Colors.grey)),
         ),
         content: Column(
           children: [
             Text(
               MyLocalization.of(context).getTranslatedValue("help_instruction"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(12)
-                  : Utilities.getTajwalTextStyleWithSize(12),
+                  ? Utilities.getUbuntuTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
             ),
             SizedBox(
               height: 15,
@@ -372,8 +377,8 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
             TextFormField(
               controller: messageController,
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(12)
-                  : Utilities.getTajwalTextStyleWithSize(12),
+                  ? Utilities.getUbuntuTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
               // controller: numberOfStepsController,
               decoration: InputDecoration(
                 errorText: messageValidate
@@ -393,9 +398,9 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 ),
                 hintStyle: textDirection == TextDirection.ltr
                     ? Utilities.getUbuntuTextStyleWithSize(12,
-                    color: Colors.grey)
+                        color: Colors.grey)
                     : Utilities.getTajwalTextStyleWithSize(12,
-                    color: Colors.grey),
+                        color: Colors.grey),
                 hintText: MyLocalization.of(context)
                     .getTranslatedValue("write_message"),
               ),
@@ -471,60 +476,60 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
 
   addNewLecture() {
     CollectionReference newLecture =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return newLecture
         .doc(widget.id)
         .collection("lectures")
         .doc(lectureTitleController.text)
         .set({
-      "title": lectureTitleController.text,
-    })
+          "title": lectureTitleController.text,
+        })
         .then((value) => {
-      if (titleStepController1.text == "" ||
-          descriptionStepController1.text == "" ||
-          titleStepController2.text == "" ||
-          descriptionStepController2.text == "" ||
-          titleStepController3.text == "" ||
-          descriptionStepController3.text == "" ||
-          titleStepController4.text == "" ||
-          descriptionStepController4.text == "" ||
-          titleStepController5.text == "" ||
-          descriptionStepController5.text == "")
-        {print("NOT ADDED")}
-      else
-        {
-          addStepsToFirebase(
-            titleStepController1.text,
-            descriptionStepController1.text,
-            titleStepController2.text,
-            descriptionStepController2.text,
-            titleStepController3.text,
-            descriptionStepController3.text,
-            titleStepController4.text,
-            descriptionStepController4.text,
-            titleStepController5.text,
-            descriptionStepController5.text,
-          )
-        }
-    })
+              if (titleStepController1.text == "" ||
+                  descriptionStepController1.text == "" ||
+                  titleStepController2.text == "" ||
+                  descriptionStepController2.text == "" ||
+                  titleStepController3.text == "" ||
+                  descriptionStepController3.text == "" ||
+                  titleStepController4.text == "" ||
+                  descriptionStepController4.text == "" ||
+                  titleStepController5.text == "" ||
+                  descriptionStepController5.text == "")
+                {print("NOT ADDED")}
+              else
+                {
+                  addStepsToFirebase(
+                    titleStepController1.text,
+                    descriptionStepController1.text,
+                    titleStepController2.text,
+                    descriptionStepController2.text,
+                    titleStepController3.text,
+                    descriptionStepController3.text,
+                    titleStepController4.text,
+                    descriptionStepController4.text,
+                    titleStepController5.text,
+                    descriptionStepController5.text,
+                  )
+                }
+            })
         .catchError((error) => print(error));
   }
 
   addStepsToFirebase(
-      String title1,
-      String description1,
-      String title2,
-      String description2,
-      String title3,
-      String description3,
-      String title4,
-      String description4,
-      String title5,
-      String description5,
-      ) {
+    String title1,
+    String description1,
+    String title2,
+    String description2,
+    String title3,
+    String description3,
+    String title4,
+    String description4,
+    String title5,
+    String description5,
+  ) {
     CollectionReference newLecture =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     if (title1 == "" ||
         title2 == "" ||

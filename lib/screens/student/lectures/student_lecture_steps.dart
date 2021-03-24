@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:provider/provider.dart';
 
 class StudentLectureSteps extends StatefulWidget {
   final String title;
@@ -31,18 +32,20 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 12),
+          margin: EdgeInsets.only(left: 12,right: 12,bottom: 5),
           padding: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
-            color: AppTheme.darkTheme.backgroundColor,
+            color: isLightTheme ?AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
           ),
           child: Stack(
             children: [
@@ -51,7 +54,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                 child: IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: isLightTheme? Colors.black : Colors.white,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -65,8 +68,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                   child: Text(
                     widget.title,
                     style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(18)
-                        : Utilities.getTajwalTextStyleWithSize(18),
+                        ? Utilities.getUbuntuTextStyleWithSize(18, color: themeProvider.themeColor(isLightTheme).textColor)
+                        : Utilities.getTajwalTextStyleWithSize(18, color: themeProvider.themeColor(isLightTheme).textColor),
                   ),
                 ),
               ),
@@ -97,9 +100,9 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                 title: Text(
                                   e.toString(),
                                   style: textDirection == TextDirection.ltr
-                                      ? Utilities.getUbuntuTextStyleWithSize(16)
+                                      ? Utilities.getUbuntuTextStyleWithSize(16, color: themeProvider.themeColor(isLightTheme).textColor)
                                       : Utilities.getTajwalTextStyleWithSize(
-                                          14),
+                                          14, color: themeProvider.themeColor(isLightTheme).textColor),
                                 ),
                                 content: Column(
                                   children: [
@@ -107,9 +110,9 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                       descriptions[_currentStep],
                                       style: textDirection == TextDirection.ltr
                                           ? Utilities
-                                              .getUbuntuTextStyleWithSize(13)
+                                              .getUbuntuTextStyleWithSize(13, color: themeProvider.themeColor(isLightTheme).textColor)
                                           : Utilities
-                                              .getTajwalTextStyleWithSize(13),
+                                              .getTajwalTextStyleWithSize(13, color: themeProvider.themeColor(isLightTheme).textColor),
                                     ),
                                     SizedBox(
                                       height: 25,
@@ -202,8 +205,6 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                 12),
                                                   ),
                                                   onPressed: () {
-                                                    print(descriptions);
-                                                    print(titles.length);
                                                     if (_currentStep < 5) {
                                                       continued();
                                                     } else {

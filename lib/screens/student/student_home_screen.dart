@@ -3,6 +3,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
+import 'package:provider/provider.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -22,6 +23,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
     // final searchController = TextEditingController();
     if (_scaleAnimation == null) {
       _scaleAnimation =
@@ -49,7 +52,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             borderRadius:
                 menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
             child: Scaffold(
-              backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+              backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
               appBar: AppBar(
                 leading: !menuOpen
                     ? IconButton(
@@ -60,7 +63,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                             menuOpen = true;
                           });
                         },
-                        color: Colors.white,
+                  color: isLightTheme ? Colors.black : Colors.white,
                       )
                     : IconButton(
                         icon: Icon(Icons.arrow_back_ios),
@@ -70,21 +73,21 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                             menuOpen = false;
                           });
                         },
-                        color: Colors.white,
+                  color: isLightTheme ? Colors.black : Colors.white,
                       ),
                 title: Text(
                   MyLocalization.of(context)
                       .getTranslatedValue("home_page_title"),
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(14)
-                      : Utilities.getTajwalTextStyleWithSize(14),
+                      ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
                 ),
                 centerTitle: true,
                 elevation: 0,
                 brightness: AppTheme.darkTheme.appBarTheme.brightness,
                 backgroundColor: Colors.transparent,
               ),
-              body: StudentWidgets.getStudentCourses(textDirection),
+              body: StudentWidgets.getStudentCourses(themeProvider, isLightTheme ,textDirection),
             ),
           )),
     );

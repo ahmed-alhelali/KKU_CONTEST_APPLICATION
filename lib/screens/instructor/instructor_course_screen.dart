@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:provider/provider.dart';
 import 'lectures and student/help_student_screen.dart';
 import 'lectures and student/lectures/instructor_lectures_screen.dart';
 
@@ -36,28 +37,34 @@ class _InstructorCourseState extends State<InstructorCourse>
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
+
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+        backgroundColor: isLightTheme
+            ? AppTheme.lightTheme.scaffoldBackgroundColor
+            : AppTheme.darkTheme.scaffoldBackgroundColor,
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          brightness: AppTheme.darkTheme.appBarTheme.brightness,
+          brightness: isLightTheme ? AppTheme.lightTheme.appBarTheme.brightness : AppTheme.darkTheme.appBarTheme.brightness,
           backgroundColor: Colors.transparent,
+          iconTheme: isLightTheme ? AppTheme.lightTheme.appBarTheme.iconTheme : AppTheme.darkTheme.appBarTheme.iconTheme,
           title: Text(
             widget.courseTitle,
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(16)
-                : Utilities.getTajwalTextStyleWithSize(16),
+                ? Utilities.getUbuntuTextStyleWithSize(16, color: themeProvider.themeColor(isLightTheme).textColor)
+                : Utilities.getTajwalTextStyleWithSize(16, color: themeProvider.themeColor(isLightTheme).textColor),
           ),
           bottom: TabBar(
             unselectedLabelColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: HexColor("#322840"),
+              color: isLightTheme ? AppTheme.lightTheme.backgroundColor : HexColor("#322840"),
             ),
             tabs: [
               Tab(
@@ -72,8 +79,8 @@ class _InstructorCourseState extends State<InstructorCourse>
                       MyLocalization.of(context)
                           .getTranslatedValue("lecture_section"),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12)
-                          : Utilities.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12, color: themeProvider.themeColor(isLightTheme).textColor)
+                          : Utilities.getTajwalTextStyleWithSize(12, color: themeProvider.themeColor(isLightTheme).textColor),
                     ),
                   ),
                 ),
@@ -90,8 +97,8 @@ class _InstructorCourseState extends State<InstructorCourse>
                       MyLocalization.of(context)
                           .getTranslatedValue("student_section"),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12)
-                          : Utilities.getTajwalTextStyleWithSize(12),
+                          ? Utilities.getUbuntuTextStyleWithSize(12, color: themeProvider.themeColor(isLightTheme).textColor)
+                          : Utilities.getTajwalTextStyleWithSize(12, color: themeProvider.themeColor(isLightTheme).textColor),
                     ),
                   ),
                 ),

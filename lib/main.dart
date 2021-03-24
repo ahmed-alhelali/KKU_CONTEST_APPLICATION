@@ -1,24 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
+import 'package:provider/provider.dart';
 import 'localization/my_localization.dart';
+import 'models/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
 
-      systemNavigationBarColor: Color(0xFF282033),
-      systemNavigationBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: MyApp(),
     ),
   );
-
-  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {

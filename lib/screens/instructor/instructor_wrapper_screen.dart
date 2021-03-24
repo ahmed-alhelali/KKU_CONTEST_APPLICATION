@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
+import 'package:provider/provider.dart';
 import 'instructor_drawer_screen.dart';
 import 'instructor_home_screen.dart';
 
@@ -22,8 +23,11 @@ class _InstructorWrapperScreenState extends State<InstructorWrapperScreen>
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
+
     return Scaffold(
-      backgroundColor: AppTheme.darkTheme.backgroundColor,
+      backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
 
       body: Stack(
         children: [

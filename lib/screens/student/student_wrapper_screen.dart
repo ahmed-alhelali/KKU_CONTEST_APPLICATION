@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/student/student_drawer_screen.dart';
 import 'package:kku_contest_app/screens/student/student_home_screen.dart';
+import 'package:provider/provider.dart';
 
 class StudentWrapperScreen extends StatefulWidget {
   @override
@@ -22,8 +23,11 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
+
     return Scaffold(
-      backgroundColor: AppTheme.darkTheme.backgroundColor,
+      backgroundColor: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
       body: Stack(
         children: [
           StudentDrawerScreen(
