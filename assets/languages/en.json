@@ -35,8 +35,10 @@
   "help": "Helping Your Students",
   "next": "NEXT",
   "back": "BACK",
-  "i_have_issues" : "I HAVE ISSUES",
-  "no_thanks" : "No THANKS",
+  "which_steps_title": "Choose the steps you're having problems with:",
+  "send": "SEND",
+  "i_have_issues": "I HAVE ISSUES",
+  "no_thanks": "No THANKS",
   "lecture_section": "The Practical Section Steps",
   "student_section": "Students Have Issues",
   "student_name": "Ahmed Ali Alhelali",
@@ -44,6 +46,5 @@
   "search": "Search For New Course...",
   "write_message": "write your message here",
   "help_instruction": "This Step will show the student two option first is \"I have issue\" and this option will allow the student to contact you through chatting, the second option is \"No, Thanks\" which it means the student doesn't have issues\n\nwrite your message to the student below: ",
-  "course_already_exist" : "The course already exist! please try another name"
-
+  "course_already_exist": "The course already exist! please try another name"
 }

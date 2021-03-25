@@ -45,8 +45,6 @@ dependencies:
   toast: ^0.1.5
   shared_preferences: ^2.0.5
   provider: ^5.0.0
-  firebase_auth: ^1.0.1
-  google_sign_in: ^5.0.1
 
 dev_dependencies:
   flutter_test:

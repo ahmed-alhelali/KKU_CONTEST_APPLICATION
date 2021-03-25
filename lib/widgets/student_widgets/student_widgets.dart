@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:kku_contest_app/controllers/multi_chose.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lectures_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:provider/provider.dart';
 
 class StudentWidgets{
   static Widget getStudentCourses(ThemeProvider themeProvider , bool isLightTheme, TextDirection textDirection) {
@@ -169,6 +172,104 @@ class StudentWidgets{
               );
             },
           ).toList(),
+        );
+      },
+    );
+  }
+
+  static showChoiceStepsIssuesDialog(List titles,
+      BuildContext context, bool isLightTheme, TextDirection textDirection) {
+    return showDialog(
+      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+
+      context: context,
+      builder: (context) {
+        final _multipleNotifier = Provider.of<MultipleNotifier>(context);
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          elevation: 10,
+          backgroundColor: isLightTheme
+              ? AppTheme.lightTheme.backgroundColor
+              : AppTheme.darkTheme.backgroundColor,
+          title: Text(
+            MyLocalization.of(context).getTranslatedValue("which_steps_title"),
+            style: textDirection == TextDirection.ltr
+                ? Utilities.getUbuntuTextStyleWithSize(16,fontWeight: FontWeight.bold,
+                color: isLightTheme ? Colors.black : Colors.white)
+                : Utilities.getTajwalTextStyleWithSize(16,fontWeight: FontWeight.bold,
+                color: isLightTheme ? Colors.black : Colors.white),
+          ),
+          content: SingleChildScrollView(
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: titles.getRange(0, 5)
+                    .map(
+                      (e) => CheckboxListTile(
+                    activeColor: HexColor("#5C704D"),
+                    title: Text(
+                      e,
+                      style: textDirection == TextDirection.ltr
+                          ? Utilities.getUbuntuTextStyleWithSize(12,
+                          color: isLightTheme
+                              ? Colors.black
+                              : Colors.white)
+                          : Utilities.getTajwalTextStyleWithSize(12,
+                          color: isLightTheme
+                              ? Colors.black
+                              : Colors.white),
+                    ),
+                    onChanged: (value) {
+                      value
+                          ? _multipleNotifier.addItem(e)
+                          : _multipleNotifier.removeItem(e);
+                    },
+                    value: _multipleNotifier.isHaveItem(e),
+                  ),
+                )
+                    .toList(),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                elevation: 0,
+                backgroundColor: HexColor("#A74552"),
+              ),
+              child: Text(
+                MyLocalization.of(context).getTranslatedValue("cancel"),
+                style: textDirection == TextDirection.ltr
+                    ? Utilities.getUbuntuTextStyleWithSize(13)
+                    : Utilities.getTajwalTextStyleWithSize(13),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                elevation: 0,
+                backgroundColor: HexColor("#5C704D"),
+              ),
+              child: Text(
+                MyLocalization.of(context).getTranslatedValue("send"),
+                style: textDirection == TextDirection.ltr
+                    ? Utilities.getUbuntuTextStyleWithSize(12)
+                    : Utilities.getTajwalTextStyleWithSize(12),
+              ),
+              onPressed: () {},
+            ),
+            SizedBox(
+              width: 10,
+            ),
+          ],
         );
       },
     );

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
 import 'package:provider/provider.dart';
+import 'controllers/multi_chose.dart';
 import 'localization/my_localization.dart';
 import 'models/app_theme.dart';
 
@@ -12,7 +13,6 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-
       systemNavigationBarColor: AppTheme.lightTheme.scaffoldBackgroundColor,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
@@ -21,9 +21,16 @@ void main() async {
   );
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
-      child: MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MultipleNotifier>(
+          create: (_) => MultipleNotifier([]),
+        ),
+      ],
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeProvider(),
+        child: MyApp(),
+      ),
     ),
   );
 }
