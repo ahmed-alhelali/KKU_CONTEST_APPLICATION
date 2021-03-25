@@ -36,16 +36,20 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
     bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: isLightTheme
+          ? AppTheme.lightTheme.scaffoldBackgroundColor
+          : AppTheme.darkTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          margin: EdgeInsets.only(left: 12,right: 12,bottom: 5),
+          margin: EdgeInsets.only(left: 12, right: 12, bottom: 5),
           padding: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
-            color: isLightTheme ?AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
+            color: isLightTheme
+                ? AppTheme.lightTheme.backgroundColor
+                : AppTheme.darkTheme.backgroundColor,
           ),
           child: Stack(
             children: [
@@ -54,7 +58,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                 child: IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: isLightTheme? Colors.black : Colors.white,
+                    color: isLightTheme ? Colors.black : Colors.white,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -68,8 +72,14 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                   child: Text(
                     widget.title,
                     style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(18, color: themeProvider.themeColor(isLightTheme).textColor)
-                        : Utilities.getTajwalTextStyleWithSize(18, color: themeProvider.themeColor(isLightTheme).textColor),
+                        ? Utilities.getUbuntuTextStyleWithSize(18,
+                            color: themeProvider
+                                .themeColor(isLightTheme)
+                                .textColor)
+                        : Utilities.getTajwalTextStyleWithSize(18,
+                            color: themeProvider
+                                .themeColor(isLightTheme)
+                                .textColor),
                   ),
                 ),
               ),
@@ -100,9 +110,14 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                 title: Text(
                                   e.toString(),
                                   style: textDirection == TextDirection.ltr
-                                      ? Utilities.getUbuntuTextStyleWithSize(16, color: themeProvider.themeColor(isLightTheme).textColor)
-                                      : Utilities.getTajwalTextStyleWithSize(
-                                          14, color: themeProvider.themeColor(isLightTheme).textColor),
+                                      ? Utilities.getUbuntuTextStyleWithSize(16,
+                                          color: themeProvider
+                                              .themeColor(isLightTheme)
+                                              .textColor)
+                                      : Utilities.getTajwalTextStyleWithSize(14,
+                                          color: themeProvider
+                                              .themeColor(isLightTheme)
+                                              .textColor),
                                 ),
                                 content: Column(
                                   children: [
@@ -110,9 +125,15 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                       descriptions[_currentStep],
                                       style: textDirection == TextDirection.ltr
                                           ? Utilities
-                                              .getUbuntuTextStyleWithSize(13, color: themeProvider.themeColor(isLightTheme).textColor)
+                                              .getUbuntuTextStyleWithSize(13,
+                                                  color: themeProvider
+                                                      .themeColor(isLightTheme)
+                                                      .textColor)
                                           : Utilities
-                                              .getTajwalTextStyleWithSize(13, color: themeProvider.themeColor(isLightTheme).textColor),
+                                              .getTajwalTextStyleWithSize(13,
+                                                  color: themeProvider
+                                                      .themeColor(isLightTheme)
+                                                      .textColor),
                                     ),
                                     SizedBox(
                                       height: 25,
@@ -146,9 +167,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                 12),
                                                   ),
                                                   //TODO: Show dialog to choose which steps the student have issues with
-                                                  onPressed: () {
-
-                                                  },
+                                                  onPressed: () {},
                                                 ),
                                                 SizedBox(
                                                   width: 50,
