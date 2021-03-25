@@ -207,6 +207,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 SizedBox(
                   height: 10,
                 ),
+
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
