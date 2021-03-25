@@ -47,7 +47,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
           margin: EdgeInsets.only(left: 12, right: 12, bottom: 5),
           padding: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(35),
+            borderRadius: BorderRadius.circular(20),
             color: isLightTheme
                 ? AppTheme.lightTheme.backgroundColor
                 : AppTheme.darkTheme.backgroundColor,

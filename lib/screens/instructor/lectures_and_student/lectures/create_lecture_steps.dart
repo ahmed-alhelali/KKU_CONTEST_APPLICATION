@@ -80,7 +80,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
           width: double.infinity,
           margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(35),
+            borderRadius: BorderRadius.circular(20),
             color: isLightTheme
                 ? AppTheme.lightTheme.backgroundColor
                 : AppTheme.darkTheme.backgroundColor,
