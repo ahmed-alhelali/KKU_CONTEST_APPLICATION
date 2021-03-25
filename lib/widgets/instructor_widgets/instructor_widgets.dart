@@ -179,10 +179,13 @@ class InstructorWidgets {
     );
   }
 
-  static addCourseWidget(ThemeProvider themeProvider, bool isLightTheme,
-      TextDirection textDirection, BuildContext context) {
+  static addCourseWidget(
+      ThemeProvider themeProvider,
+      bool isLightTheme,
+      TextDirection textDirection,
+      BuildContext context,
+      TextEditingController titleController) {
     final formKey = GlobalKey<FormState>();
-    final titleController = TextEditingController();
 
     showModalBottomSheet(
       context: context,
@@ -203,7 +206,6 @@ class InstructorWidgets {
           child: Stack(
             children: [
               Column(
-
                 children: [
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
@@ -240,16 +242,20 @@ class InstructorWidgets {
                             EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         child: TextFormField(
                           controller: titleController,
-                          cursorColor: Colors.white,
+                          cursorColor: isLightTheme ? Colors.black : Colors.white,
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14,
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  14,
                                   color: themeProvider
                                       .themeColor(isLightTheme)
-                                      .textColor)
-                              : Utilities.getTajwalTextStyleWithSize(14,
+                                      .textColor,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  14,
                                   color: themeProvider
                                       .themeColor(isLightTheme)
-                                      .textColor),
+                                      .textColor,
+                                ),
                           decoration: InputDecoration(
                             contentPadding: textDirection == TextDirection.ltr
                                 ? EdgeInsets.only(left: 30)

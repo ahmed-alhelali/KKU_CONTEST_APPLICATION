@@ -20,6 +20,11 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
     _controller = AnimationController(duration: duration, vsync: this);
     super.initState();
   }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

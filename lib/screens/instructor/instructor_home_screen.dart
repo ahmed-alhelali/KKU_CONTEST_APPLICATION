@@ -17,9 +17,16 @@ class InstructorHomeScreen extends StatefulWidget {
 }
 
 class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
+  final lectureTitleController = TextEditingController();
+
   bool menuOpen = false;
   Animation<double> _scaleAnimation;
 
+  @override
+  void dispose() {
+    lectureTitleController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
@@ -96,7 +103,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                 elevation: 0,
                 backgroundColor: Colors.green.shade800,
                 onPressed: () {
-                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme , textDirection, context);
+                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme , textDirection, context,lectureTitleController);
                 },
                 child: Icon(
                   Icons.add,
