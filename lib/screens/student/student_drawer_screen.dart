@@ -40,6 +40,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
     }
     return SlideTransition(
       position: _slideAnimation,
+      textDirection: textDirection,
       child: ScaleTransition(
         scale: _scaleAnimation,
         alignment: Alignment.topRight,
@@ -152,7 +153,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   isLightTheme,
                   Icon(
                     Icons.menu_book,
-                    color: Colors.white,
+                    color: isLightTheme ? Colors.black87 : Colors.grey,
                   ),
                   "my_courses",
                   textDirection,
@@ -165,6 +166,24 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Widgets.getCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
+                ),
+                Widgets.getContainerWithOnOnTap(
+                  themeProvider,
+                  isLightTheme,
+                  Icon(
+                    FontAwesomeIcons.language,
+                    color: isLightTheme ? Colors.black : Colors.grey,
+                  ),
+                  "app_language",
+                  textDirection,
+                  context,
+                  onTap: () {
+                    Widgets.changeLanguageWidget(
+                        themeProvider, isLightTheme, textDirection, context);
+                  },
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Widgets.getContainerWithOnOnTap(
                   themeProvider,

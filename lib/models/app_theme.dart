@@ -35,7 +35,7 @@ class ThemeProvider extends ChangeNotifier {
       ));
     } else {
       return SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xFF26242e),
+        systemNavigationBarColor: AppTheme.darkTheme.scaffoldBackgroundColor,
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,

@@ -146,7 +146,9 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                 12),
                                                   ),
                                                   //TODO: Show dialog to choose which steps the student have issues with
-                                                  onPressed: () {},
+                                                  onPressed: () {
+
+                                                  },
                                                 ),
                                                 SizedBox(
                                                   width: 50,

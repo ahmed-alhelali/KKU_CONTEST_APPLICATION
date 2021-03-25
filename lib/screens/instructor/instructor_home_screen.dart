@@ -96,7 +96,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                 elevation: 0,
                 backgroundColor: Colors.green.shade800,
                 onPressed: () {
-                  InstructorWidgets.addCourseWidget(textDirection, context);
+                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme , textDirection, context);
                 },
                 child: Icon(
                   Icons.add,
