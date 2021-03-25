@@ -21,6 +21,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
   Animation<double> _scaleAnimation;
   Animation<Offset> _slideAnimation;
 
+
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);

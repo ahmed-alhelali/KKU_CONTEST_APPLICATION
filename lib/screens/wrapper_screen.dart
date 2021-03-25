@@ -27,7 +27,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 12),
+          margin: EdgeInsets.only(left: 12,right: 12,bottom: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
