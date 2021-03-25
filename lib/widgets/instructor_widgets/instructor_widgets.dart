@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
@@ -325,7 +326,7 @@ class InstructorWidgets {
                                   .getTranslatedValue("cancel"),
                               style: TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: Colors.red,
+                            backgroundColor: HexColor("#A74552"),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -341,7 +342,7 @@ class InstructorWidgets {
                                   .getTranslatedValue("create"),
                               style: TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: Colors.green.shade800,
+                            backgroundColor: HexColor("#5C704D"),
                             onPressed: () async {
                               CollectionReference newCourse = FirebaseFirestore
                                   .instance

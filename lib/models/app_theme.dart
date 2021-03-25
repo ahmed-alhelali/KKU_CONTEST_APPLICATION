@@ -71,7 +71,7 @@ class AppTheme {
 
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.grey.shade100,
+    backgroundColor: Colors.grey.shade200,
     primaryColor: Colors.white,
     colorScheme: ColorScheme.light(),
     appBarTheme: AppBarTheme(
