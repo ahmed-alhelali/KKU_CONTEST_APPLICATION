@@ -109,9 +109,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       type: stepperType,
                       physics: ScrollPhysics(),
                       currentStep: _currentStep,
-                      // onStepTapped: (step) => tapped(step),
-                      // onStepContinue: continued,
-                      // onStepCancel: cancel,
                       controlsBuilder: (BuildContext context,
                           {VoidCallback onStepContinue,
                           VoidCallback onStepCancel}) {

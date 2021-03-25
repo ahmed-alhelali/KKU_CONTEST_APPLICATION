@@ -236,75 +236,80 @@ class InstructorWidgets {
                     height: 10,
                   ),
                   Form(
-                      key: formKey,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                        child: TextFormField(
-                          controller: titleController,
-                          cursorColor: isLightTheme ? Colors.black : Colors.white,
-                          style: textDirection == TextDirection.ltr
+                    key: formKey,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      child: TextFormField(
+                        controller: titleController,
+                        cursorColor: isLightTheme ? Colors.black : Colors.white,
+                        style: textDirection == TextDirection.ltr
+                            ? Utilities.getUbuntuTextStyleWithSize(
+                                14,
+                                color: themeProvider
+                                    .themeColor(isLightTheme)
+                                    .textColor,
+                              )
+                            : Utilities.getTajwalTextStyleWithSize(
+                                14,
+                                color: themeProvider
+                                    .themeColor(isLightTheme)
+                                    .textColor,
+                              ),
+                        decoration: InputDecoration(
+                          contentPadding: textDirection == TextDirection.ltr
+                              ? EdgeInsets.only(left: 30)
+                              : EdgeInsets.only(right: 30),
+                          labelText: MyLocalization.of(context)
+                              .getTranslatedValue("course_name"),
+                          labelStyle: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(
-                                  14,
+                                  12,
                                   color: themeProvider
                                       .themeColor(isLightTheme)
                                       .textColor,
                                 )
                               : Utilities.getTajwalTextStyleWithSize(
-                                  14,
+                                  12,
                                   color: themeProvider
                                       .themeColor(isLightTheme)
                                       .textColor,
                                 ),
-                          decoration: InputDecoration(
-                            contentPadding: textDirection == TextDirection.ltr
-                                ? EdgeInsets.only(left: 30)
-                                : EdgeInsets.only(right: 30),
-                            labelText: MyLocalization.of(context)
-                                .getTranslatedValue("course_name"),
-                            labelStyle: textDirection == TextDirection.ltr
-                                ? Utilities.getUbuntuTextStyleWithSize(12,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor)
-                                : Utilities.getTajwalTextStyleWithSize(12,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                Icons.close,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () => titleController.clear(),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.grey,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.grey),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
+                            onPressed: () => titleController.clear(),
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return MyLocalization.of(context)
-                                  .getTranslatedValue("validate_title");
-                            }
-                            return null;
-                          },
-                          maxLength: 37,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
                         ),
-                      )),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return MyLocalization.of(context)
+                                .getTranslatedValue("validate_title");
+                          }
+                          return null;
+                        },
+                        maxLength: 37,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Positioned(
