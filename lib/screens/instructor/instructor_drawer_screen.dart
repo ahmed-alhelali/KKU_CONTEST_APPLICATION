@@ -124,7 +124,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                         CircleAvatar(
                           radius: 45,
                           backgroundImage:
-                              ExactAssetImage("assets/images/instructor.png"),
+                              ExactAssetImage("assets/images/instructor_avatar.jpg"),
                         ),
                         SizedBox(
                           height: 10,
