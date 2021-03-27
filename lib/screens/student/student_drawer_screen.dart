@@ -99,10 +99,9 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                       child: IconButton(
                         icon: Icon(
                           isLightTheme
-                              ? FontAwesomeIcons.solidMoon
-                              : Icons.wb_sunny_outlined,
-                          color:
-                              isLightTheme ? Colors.deepPurple : Colors.orange,
+                              ? FontAwesomeIcons.lightbulb
+                              : FontAwesomeIcons.solidLightbulb,
+                          color: isLightTheme ? Colors.black : Colors.white,
                         ),
                         onPressed: () {
                           final provider = Provider.of<ThemeProvider>(context,
@@ -198,23 +197,27 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   context,
                   onTap: () {
                     Widgets.showWarringDialog(
-                        themeProvider,
-                        isLightTheme,
-                        "are_you_sure",
-                        "student_logout_warning",
-                        context,
-                        "logout",
-                        "cancel", () {
-                      FirestoreDB.signOut();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WrapperScreen(),
-                        ),
-                      );
-                    }, () {
-                      Navigator.of(context).pop();
-                    }, textDirection);
+                      themeProvider,
+                      isLightTheme,
+                      "are_you_sure",
+                      "student_logout_warning",
+                      context,
+                      "logout",
+                      "cancel",
+                      textDirection,
+                      functionOfYesButton: () {
+                        FirestoreDB.signOut();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WrapperScreen(),
+                          ),
+                        );
+                      },
+                      functionOfNoButton: () {
+                        Navigator.of(context).pop();
+                      },
+                    );
                   },
                 ),
               ],

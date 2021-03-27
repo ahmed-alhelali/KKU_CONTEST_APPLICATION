@@ -11,8 +11,10 @@ import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUsername, courseID;
+  // final List<String> listTitlesSelected;
 
-  const ChatScreen(this.chatWithUsername, this.courseID);
+  const ChatScreen(this.chatWithUsername, this.courseID,
+);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -23,6 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   String instructorID = "50Un4ErjskQVOrubCLzUloBsvHl1";
   String studentID = "crKMIHUqhrbBLzjtOsH1b10bnNx1";
+  List<String> myTitles;
 
   Stream messageStream;
   final messageController = TextEditingController();
@@ -38,6 +41,20 @@ class _ChatScreenState extends State<ChatScreen> {
     String IDtoString = Id.toString();
     return IDtoString;
   }
+
+  // setInitMessages() {
+  //   widget.listTitlesSelected.map(
+  //     (e) => FirestoreDB.addMessage(
+  //       widget.courseID,
+  //       messageID,
+  //       {
+  //         "message": e.toString(),
+  //         "sendBy": myID,
+  //         "ts": DateTime.now(),
+  //       },
+  //     ),
+  //   );
+  // }
 
   addMessage(bool sendClicked) {
     if (messageController.text != "") {
@@ -290,7 +307,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                 : Utilities.getTajwalTextStyleWithSize(14,
                                     color: Colors.grey),
                             filled: true,
-                            fillColor: isLightTheme? Colors.grey.shade100 : HexColor("#362b45"),
+                            fillColor: isLightTheme
+                                ? Colors.grey.shade100
+                                : HexColor("#362b45"),
                             // hintStyle: TextStyle(
                             //   color: isLightTheme ? Colors.black : Colors.grey,
                             // ),
@@ -305,6 +324,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       onPressed: () {
                         addMessage(true);
+                        // print(widget.listTitlesSelected);
+                        // setInitMessages();
                       },
                     ),
                   ],

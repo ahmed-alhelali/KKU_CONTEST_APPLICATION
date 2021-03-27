@@ -302,18 +302,26 @@ class StudentWidgets {
                     ? "Abdullah Mohammad"
                     : "عبدالله محمد الغامدي";
 
-                // print(_multipleNotifier.selectedItems);
-                // List<String> selectedTitles = _multipleNotifier.selectedItems;
-
                 await FirestoreDB.createChatRoom(
                   courseID,
                   chatRoomInfoMap,
                 );
+                List<String> mySelectedTitles = _multipleNotifier.selectedItems;
+
+                print("mySelectedTitles = $mySelectedTitles");
+
+                for(int i = 0 ; i<mySelectedTitles.length ; i++){
+                  addInitialMessages(courseID, mySelectedTitles[i]);
+                }
 
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatScreen(name, courseID),
+                    builder: (context) => ChatScreen(
+                      name,
+                      courseID,
+                      // listTitlesSelected: mySelectedTitles,
+                    ),
                   ),
                 );
               },
@@ -325,5 +333,17 @@ class StudentWidgets {
         );
       },
     );
+  }
+
+  static addInitialMessages(courseID, String myTitles) {
+    String messageID = Utilities.getRandomIdForNewCourse();
+    print("myTitles = $myTitles");
+    Map<String, dynamic> messageInfoMap = {
+      "message": myTitles,
+      "sendBy": "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+      "ts": DateTime.now(),
+    };
+    FirestoreDB.updateLastMessageSend(courseID, courseID, messageInfoMap);
+    return FirestoreDB.addMessage(courseID, messageID, messageInfoMap);
   }
 }

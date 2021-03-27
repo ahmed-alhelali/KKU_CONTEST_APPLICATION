@@ -112,14 +112,14 @@ class InstructorWidgets {
                             context,
                             "delete",
                             "cancel",
-                            () {
+                            textDirection,
+                            functionOfYesButton: () {
                               FirestoreDB.deleteCourse(document.id);
                               Navigator.pop(context);
                             },
-                            () {
+                            functionOfNoButton: () {
                               Navigator.pop(context);
                             },
-                            textDirection,
                           );
                         },
                       ),

@@ -64,7 +64,8 @@ class Widgets {
                     ),
                     Text(
                       MyLocalization.of(context)
-                          .getTranslatedValue("app_language").toUpperCase(),
+                          .getTranslatedValue("app_language")
+                          .toUpperCase(),
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(16,
                               letterSpacing: 1,
@@ -100,9 +101,8 @@ class Widgets {
                                   backgroundColor: textDirection ==
                                           TextDirection.ltr
                                       ? isLightTheme
-                                      ? Colors.grey.shade200
-
-                                      : AppTheme.darkTheme.backgroundColor
+                                          ? Colors.grey.shade200
+                                          : AppTheme.darkTheme.backgroundColor
                                       : Colors.transparent,
                                 ),
                                 child: Text(
@@ -139,16 +139,15 @@ class Widgets {
                               width: 90,
                               child: TextButton(
                                 style: TextButton.styleFrom(
-                                  primary: Colors.grey,
-                                  elevation: 0,
-                                  backgroundColor: textDirection ==
-                                          TextDirection.ltr
-                                      ? Colors.transparent
-                                      : isLightTheme
-                                      ? Colors.grey.shade200
-                                      : AppTheme.darkTheme.backgroundColor
-
-                                ),
+                                    primary: Colors.grey,
+                                    elevation: 0,
+                                    backgroundColor:
+                                        textDirection == TextDirection.ltr
+                                            ? Colors.transparent
+                                            : isLightTheme
+                                                ? Colors.grey.shade200
+                                                : AppTheme
+                                                    .darkTheme.backgroundColor),
                                 child: Text(
                                   'عربي',
                                   style: textDirection == TextDirection.ltr
@@ -275,10 +274,10 @@ class Widgets {
     BuildContext context,
     String yetText,
     String noText,
+    TextDirection textDirection, {
     Function functionOfYesButton,
     Function functionOfNoButton,
-    TextDirection textDirection,
-  ) {
+  }) {
     AlertDialog alertDialog = AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -304,32 +303,132 @@ class Widgets {
                 color: themeProvider.themeColor(isLightTheme).textColor),
       ),
       actions: [
-        TextButton(
-          style: TextButton.styleFrom(
-            elevation: 0,
-            backgroundColor: HexColor("#5C704D"),
+        functionOfNoButton == null
+            ? Container()
+            : TextButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: HexColor("#5C704D"),
+                ),
+                child: Text(
+                  MyLocalization.of(context).getTranslatedValue(noText),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(12)
+                      : Utilities.getTajwalTextStyleWithSize(12),
+                ),
+                onPressed: functionOfNoButton,
+              ),
+        functionOfYesButton == null
+            ? Container()
+            : TextButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: HexColor("#A74552"),
+                ),
+                child: Text(
+                  MyLocalization.of(context).getTranslatedValue(yetText),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(12)
+                      : Utilities.getTajwalTextStyleWithSize(12),
+                ),
+                onPressed: functionOfYesButton,
+              ),
+      ],
+    );
+
+    showDialog(
+      context: context,
+      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      builder: (context) => alertDialog,
+    );
+  }
+
+  static getDialogToAskIfNeedMoreSteps(
+    ThemeProvider themeProvider,
+    bool isLightTheme,
+    List titles,
+    String keyTitle,
+    BuildContext context,
+    String yetText,
+    String noText,
+    TextDirection textDirection,
+    Function functionOfYesButton,
+    Function functionOfNoButton,
+  ) {
+    AlertDialog alertDialog = AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 10,
+      backgroundColor: isLightTheme
+          ? AppTheme.lightTheme.scaffoldBackgroundColor
+          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      title: Text(
+        MyLocalization.of(context).getTranslatedValue(keyTitle),
+        style: textDirection == TextDirection.ltr
+            ? Utilities.getUbuntuTextStyleWithSize(16,
+                color: themeProvider.themeColor(isLightTheme).textColor)
+            : Utilities.getTajwalTextStyleWithSize(16,
+                color: themeProvider.themeColor(isLightTheme).textColor),
+      ),
+      content: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: titles
+                .map(
+                  (e) => Column(
+                    children: [
+                      Text(
+                        e,
+                        style: textDirection == TextDirection.ltr
+                            ? Utilities.getUbuntuTextStyleWithSize(12,
+                            color: isLightTheme ? Colors.black : Colors.white)
+                            : Utilities.getTajwalTextStyleWithSize(12,
+                            color: isLightTheme ? Colors.black : Colors.white),
+                      ),
+                      SizedBox(height: 10,),
+                    ],
+                  )
+                )
+                .toList(),
           ),
-          child: Text(
-            MyLocalization.of(context).getTranslatedValue(noText),
-            style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(12)
-                : Utilities.getTajwalTextStyleWithSize(12),
-          ),
-          onPressed: functionOfNoButton,
         ),
-        TextButton(
-          style: TextButton.styleFrom(
-            elevation: 0,
-            backgroundColor: HexColor("#A74552"),
-          ),
-          child: Text(
-            MyLocalization.of(context).getTranslatedValue(yetText),
-            style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(12)
-                : Utilities.getTajwalTextStyleWithSize(12),
-          ),
-          onPressed: functionOfYesButton,
-        ),
+      ),
+      actions: [
+        functionOfNoButton == null
+            ? Container()
+            : TextButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: HexColor("#5C704D"),
+                ),
+                child: Text(
+                  MyLocalization.of(context).getTranslatedValue(noText),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(12)
+                      : Utilities.getTajwalTextStyleWithSize(12),
+                ),
+                onPressed: functionOfNoButton,
+              ),
+        functionOfYesButton == null
+            ? Container()
+            : TextButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: HexColor("#A74552"),
+                ),
+                child: Text(
+                  MyLocalization.of(context).getTranslatedValue(yetText),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(12)
+                      : Utilities.getTajwalTextStyleWithSize(12),
+                ),
+                onPressed: functionOfYesButton,
+              ),
       ],
     );
 

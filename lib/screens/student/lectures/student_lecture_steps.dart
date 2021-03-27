@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:kku_contest_app/controllers/multi_chose.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
+import 'package:kku_contest_app/screens/chatScreen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:kku_contest_app/widgets/shared_widgets.dart';
 import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +38,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
     final TextDirection textDirection = Directionality.of(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
     bool isLightTheme = themeProvider.isDarkMode ? false : true;
-
+    final _multipleNotifier = Provider.of<MultipleNotifier>(context);
     return Scaffold(
       backgroundColor: isLightTheme
           ? AppTheme.lightTheme.scaffoldBackgroundColor
@@ -169,14 +172,67 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                   ),
                                                   //TODO: Show dialog to choose which steps the student have issues with
                                                   onPressed: () {
-                                                    StudentWidgets.showChoiceStepsIssuesDialog(
-                                                      widget.id,
-                                                      widget.title,
-                                                      titles,
-                                                      context,
-                                                      isLightTheme,
-                                                      textDirection,
-                                                    );
+                                                    List<String>
+                                                        mySelectedTitles =
+                                                        _multipleNotifier
+                                                            .selectedItems;
+
+                                                    print(
+                                                        "mySelectedTitles = $mySelectedTitles");
+
+                                                    if (mySelectedTitles
+                                                        .isEmpty) {
+                                                      StudentWidgets
+                                                          .showChoiceStepsIssuesDialog(
+                                                        widget.id,
+                                                        widget.title,
+                                                        titles,
+                                                        context,
+                                                        isLightTheme,
+                                                        textDirection,
+                                                      );
+                                                    } else {
+                                                      Widgets
+                                                          .getDialogToAskIfNeedMoreSteps(
+                                                        themeProvider,
+                                                        isLightTheme,
+                                                        mySelectedTitles,
+                                                        "you_asked_help",
+                                                        context,
+                                                        "yes",
+                                                        "no",
+                                                        textDirection,
+                                                        () {
+                                                          StudentWidgets
+                                                              .showChoiceStepsIssuesDialog(
+                                                            widget.id,
+                                                            widget.title,
+                                                            titles,
+                                                            context,
+                                                            isLightTheme,
+                                                            textDirection,
+                                                          );
+                                                        },
+                                                        () {
+                                                          String name = textDirection ==
+                                                                  TextDirection
+                                                                      .ltr
+                                                              ? "Abdullah Mohammad"
+                                                              : "عبدالله محمد الغامدي";
+
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ChatScreen(
+                                                                      name,
+                                                                      widget
+                                                                          .id),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    }
                                                   },
                                                 ),
                                                 SizedBox(

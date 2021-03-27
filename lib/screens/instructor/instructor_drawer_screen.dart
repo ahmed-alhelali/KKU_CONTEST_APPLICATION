@@ -197,23 +197,39 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   context,
                   onTap: () {
                     Widgets.showWarringDialog(
-                        themeProvider,
-                        isLightTheme,
-                        "are_you_sure",
-                        "instructor_logout_warning",
-                        context,
-                        "logout",
-                        "cancel", () {
-                      FirestoreDB.signOut();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WrapperScreen(),
-                        ),
-                      );
-                    }, () {
-                      Navigator.of(context).pop();
-                    }, textDirection);
+                      themeProvider,
+                      isLightTheme,
+                      "are_you_sure",
+                      "instructor_logout_warning",
+                      context,
+                      "logout",
+                      "cancel",
+                      textDirection,
+                      functionOfYesButton: () {
+                        FirestoreDB.signOut();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WrapperScreen(),
+                          ),
+                        );
+                      },
+                      functionOfNoButton: () {
+                        Navigator.of(context).pop();
+                      },
+                      // () {
+                      //   FirestoreDB.signOut();
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => WrapperScreen(),
+                      //     ),
+                      //   );
+                      // },
+                      // () {
+                      //   Navigator.of(context).pop();
+                      // },
+                    );
                   },
                 ),
               ],
