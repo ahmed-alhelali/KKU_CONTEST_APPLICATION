@@ -98,10 +98,9 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                       child: IconButton(
                         icon: Icon(
                           isLightTheme
-                              ? FontAwesomeIcons.solidMoon
-                              : Icons.wb_sunny_outlined,
-                          color:
-                              isLightTheme ? Colors.deepPurple : Colors.orange,
+                              ? FontAwesomeIcons.lightbulb
+                              : FontAwesomeIcons.solidLightbulb,
+                          color: isLightTheme ? Colors.black : Colors.white,
                         ),
                         onPressed: () {
                           final provider = Provider.of<ThemeProvider>(context,
