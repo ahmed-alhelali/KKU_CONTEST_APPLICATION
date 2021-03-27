@@ -79,7 +79,7 @@ class InstructorWidgets {
                   ),
                   onTap: () {
                     courseID = document.id;
-                    print(courseID);
+                    // print(courseID);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -136,7 +136,7 @@ class InstructorWidgets {
                             isLightTheme ? Colors.grey.shade100 : Colors.grey,
                         icon: FontAwesomeIcons.link,
                         onTap: () {
-                          print(document.id);
+                          // print(document.id);
                           Clipboard.setData(ClipboardData(text: document.id))
                               .then((value) {
                             final snackBar = SnackBar(
@@ -447,7 +447,7 @@ class InstructorWidgets {
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
               final titleLecture = document.get("title");
-              print(titleLecture);
+              // print(titleLecture);
               return Column(
                 children: [
                   ListTile(
