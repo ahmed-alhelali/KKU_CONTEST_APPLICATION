@@ -257,7 +257,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: isLightTheme
                     ? AppTheme.lightTheme.scaffoldBackgroundColor
                     : AppTheme.darkTheme.scaffoldBackgroundColor,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Row(
                   children: [
                     Expanded(
@@ -286,13 +286,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                 .getTranslatedValue("type_message"),
                             hintStyle: textDirection == TextDirection.ltr
                                 ? Utilities.getUbuntuTextStyleWithSize(14,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor)
+                                    color: Colors.grey)
                                 : Utilities.getTajwalTextStyleWithSize(14,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor),
+                                    color: Colors.grey),
                             filled: true,
                             fillColor: isLightTheme? Colors.grey.shade100 : HexColor("#362b45"),
                             // hintStyle: TextStyle(
