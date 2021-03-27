@@ -302,9 +302,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
                     IconButton(
                       icon: Icon(
                         Icons.send,
