@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
@@ -6,8 +7,6 @@ import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/chatScreen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:provider/provider.dart';
-
-
 
 class HelpStudentScreen extends StatefulWidget {
   final String id, lectureTitle;
@@ -99,11 +98,13 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                           ? Utilities.getUbuntuTextStyleWithSize(14,
                               color: themeProvider
                                   .themeColor(isLightTheme)
-                                  .textColor)
+                                  .textColor,
+                              fontWeight: FontWeight.w600)
                           : Utilities.getTajwalTextStyleWithSize(14,
                               color: themeProvider
                                   .themeColor(isLightTheme)
-                                  .textColor),
+                                  .textColor,
+                              fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
                       document.get("message").toString(),

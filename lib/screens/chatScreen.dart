@@ -238,9 +238,11 @@ class _ChatScreenState extends State<ChatScreen> {
               widget.chatWithUsername,
               style: textDirection == TextDirection.ltr
                   ? Utilities.getUbuntuTextStyleWithSize(16,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
+                      color: themeProvider.themeColor(isLightTheme).textColor,
+                      fontWeight: FontWeight.w600)
                   : Utilities.getTajwalTextStyleWithSize(16,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                      color: themeProvider.themeColor(isLightTheme).textColor,
+                      fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -274,19 +276,25 @@ class _ChatScreenState extends State<ChatScreen> {
                                       .textColor),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(35),
-                                borderSide: BorderSide(color: Colors.black)),
+                              borderRadius: BorderRadius.circular(35),
+                              borderSide: BorderSide.none,
+                            ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(35),
-                                borderSide: BorderSide(color: Colors.black)),
+                                borderSide: BorderSide.none),
                             hintText: MyLocalization.of(context)
                                 .getTranslatedValue("type_message"),
                             hintStyle: textDirection == TextDirection.ltr
                                 ? Utilities.getUbuntuTextStyleWithSize(14,
-                                color: themeProvider.themeColor(isLightTheme).textColor)
+                                    color: themeProvider
+                                        .themeColor(isLightTheme)
+                                        .textColor)
                                 : Utilities.getTajwalTextStyleWithSize(14,
-                                color: themeProvider.themeColor(isLightTheme).textColor),
-
+                                    color: themeProvider
+                                        .themeColor(isLightTheme)
+                                        .textColor),
+                            filled: true,
+                            fillColor: isLightTheme? Colors.grey.shade100 : HexColor("#362b45"),
                             // hintStyle: TextStyle(
                             //   color: isLightTheme ? Colors.black : Colors.grey,
                             // ),
