@@ -39,8 +39,10 @@ class InstructorWidgets {
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_courses"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14)
-                  : Utilities.getTajwalTextStyleWithSize(14),
+                  ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor),
             ),
           );
         }
