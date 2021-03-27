@@ -66,7 +66,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
           return Center(
             child: Text(
               MyLocalization.of(context)
-                  .getTranslatedValue("no_lectures_student"),
+                  .getTranslatedValue("no_student_ask_help"),
               style: textDirection == TextDirection.ltr
                   ? Utilities.getUbuntuTextStyleWithSize(14,
                       color: themeProvider.themeColor(isLightTheme).textColor)
