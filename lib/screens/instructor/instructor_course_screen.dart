@@ -111,7 +111,9 @@ class _InstructorCourseState extends State<InstructorCourse>
             InstructorLecturesScreen(
               id: widget.id,
             ),
-            HelpStudentScreen(),
+            HelpStudentScreen(
+              id: widget.id,
+            ),
           ],
         ),
       ),

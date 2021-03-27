@@ -66,6 +66,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                   ? IconButton(
                 icon: Icon(Icons.menu),
                 onPressed: () {
+
                   setState(() {
                     widget.controller.forward();
                     menuOpen = true;

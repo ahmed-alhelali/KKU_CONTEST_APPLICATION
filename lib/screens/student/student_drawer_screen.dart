@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
@@ -204,6 +205,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                         context,
                         "logout",
                         "cancel", () {
+                      FirestoreDB.signOut();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

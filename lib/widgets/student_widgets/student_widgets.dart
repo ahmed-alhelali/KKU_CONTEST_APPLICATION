@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/controllers/multi_chose.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
+import 'package:kku_contest_app/screens/chatScreen.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.dart';
 import 'package:kku_contest_app/screens/student/lectures/student_lectures_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:provider/provider.dart';
 
-class StudentWidgets{
-  static Widget getStudentCourses(ThemeProvider themeProvider , bool isLightTheme, TextDirection textDirection) {
+class StudentWidgets {
+  static Widget getStudentCourses(ThemeProvider themeProvider,
+      bool isLightTheme, TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
     String courseID;
     return StreamBuilder<QuerySnapshot>(
       stream: courses.snapshots(),
@@ -21,9 +24,10 @@ class StudentWidgets{
           return Text(
             MyLocalization.of(context).getTranslatedValue("error_connection"),
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
-                : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
-
+                ? Utilities.getUbuntuTextStyleWithSize(14,
+                    color: themeProvider.themeColor(isLightTheme).textColor)
+                : Utilities.getTajwalTextStyleWithSize(14,
+                    color: themeProvider.themeColor(isLightTheme).textColor),
           );
         }
 
@@ -38,8 +42,10 @@ class StudentWidgets{
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_courses"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor),
             ),
           );
         }
@@ -56,14 +62,20 @@ class StudentWidgets{
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.09,
                 decoration: BoxDecoration(
-                  color: isLightTheme ?  AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
+                  color: isLightTheme
+                      ? AppTheme.lightTheme.backgroundColor
+                      : AppTheme.darkTheme.backgroundColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(
                   currentCourse.first,
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(16,color: themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(16,color: themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(16,
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(16,
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor),
                 ),
               ),
               onTap: () {
@@ -85,7 +97,9 @@ class StudentWidgets{
       },
     );
   }
-  static Widget getStudentLectures(ThemeProvider themeProvider, bool isLightTheme , TextDirection textDirection,courseID) {
+
+  static Widget getStudentLectures(ThemeProvider themeProvider,
+      bool isLightTheme, TextDirection textDirection, courseID) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -102,8 +116,11 @@ class StudentWidgets{
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(14,
+                        color: themeProvider.themeColor(isLightTheme).textColor)
+                    : Utilities.getTajwalTextStyleWithSize(14,
+                        color:
+                            themeProvider.themeColor(isLightTheme).textColor),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -122,8 +139,10 @@ class StudentWidgets{
               MyLocalization.of(context)
                   .getTranslatedValue("no_lectures_student"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor)
+                  : Utilities.getTajwalTextStyleWithSize(14,
+                      color: themeProvider.themeColor(isLightTheme).textColor),
               textAlign: TextAlign.center,
             ),
           );
@@ -132,7 +151,7 @@ class StudentWidgets{
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final titleLecture = document.get("title");
 
               print(titleLecture);
@@ -142,8 +161,14 @@ class StudentWidgets{
                     title: Text(
                       titleLecture,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,color: themeProvider.themeColor(isLightTheme).textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(12,
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor)
+                          : Utilities.getTajwalTextStyleWithSize(12,
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -177,11 +202,10 @@ class StudentWidgets{
     );
   }
 
-  static showChoiceStepsIssuesDialog(List titles,
+  static showChoiceStepsIssuesDialog(courseID, lectureTitle, List titles,
       BuildContext context, bool isLightTheme, TextDirection textDirection) {
     return showDialog(
       barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
-
       context: context,
       builder: (context) {
         final _multipleNotifier = Provider.of<MultipleNotifier>(context);
@@ -196,40 +220,43 @@ class StudentWidgets{
           title: Text(
             MyLocalization.of(context).getTranslatedValue("which_steps_title"),
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(16,fontWeight: FontWeight.bold,
-                color: isLightTheme ? Colors.black : Colors.white)
-                : Utilities.getTajwalTextStyleWithSize(16,fontWeight: FontWeight.bold,
-                color: isLightTheme ? Colors.black : Colors.white),
+                ? Utilities.getUbuntuTextStyleWithSize(16,
+                    fontWeight: FontWeight.bold,
+                    color: isLightTheme ? Colors.black : Colors.white)
+                : Utilities.getTajwalTextStyleWithSize(16,
+                    fontWeight: FontWeight.bold,
+                    color: isLightTheme ? Colors.black : Colors.white),
           ),
           content: SingleChildScrollView(
             child: Container(
               width: double.infinity,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: titles.getRange(0, 5)
+                children: titles
+                    .getRange(0, 5)
                     .map(
                       (e) => CheckboxListTile(
-                    activeColor: HexColor("#5C704D"),
-                    title: Text(
-                      e,
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                          color: isLightTheme
-                              ? Colors.black
-                              : Colors.white)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                          color: isLightTheme
-                              ? Colors.black
-                              : Colors.white),
-                    ),
-                    onChanged: (value) {
-                      value
-                          ? _multipleNotifier.addItem(e)
-                          : _multipleNotifier.removeItem(e);
-                    },
-                    value: _multipleNotifier.isHaveItem(e),
-                  ),
-                )
+                        activeColor: HexColor("#5C704D"),
+                        title: Text(
+                          e,
+                          style: textDirection == TextDirection.ltr
+                              ? Utilities.getUbuntuTextStyleWithSize(12,
+                                  color: isLightTheme
+                                      ? Colors.black
+                                      : Colors.white)
+                              : Utilities.getTajwalTextStyleWithSize(12,
+                                  color: isLightTheme
+                                      ? Colors.black
+                                      : Colors.white),
+                        ),
+                        onChanged: (value) {
+                          value
+                              ? _multipleNotifier.addItem(e)
+                              : _multipleNotifier.removeItem(e);
+                        },
+                        value: _multipleNotifier.isHaveItem(e),
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -264,7 +291,32 @@ class StudentWidgets{
                     ? Utilities.getUbuntuTextStyleWithSize(12)
                     : Utilities.getTajwalTextStyleWithSize(12),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                Map<String, dynamic> chatRoomInfoMap = {
+                  "users": [
+                    "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+                    "50Un4ErjskQVOrubCLzUloBsvHl1"
+                  ]
+                };
+                String name = textDirection == TextDirection.ltr
+                    ? "Abdullah Mohammad"
+                    : "عبدالله محمد الغامدي";
+
+                // print(_multipleNotifier.selectedItems);
+                // List<String> selectedTitles = _multipleNotifier.selectedItems;
+
+                await FirestoreDB.createChatRoom(
+                  courseID,
+                  chatRoomInfoMap,
+                );
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatScreen(name, courseID),
+                  ),
+                );
+              },
             ),
             SizedBox(
               width: 10,

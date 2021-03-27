@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 
 class FirestoreDB {
@@ -67,5 +68,79 @@ class FirestoreDB {
         courses.doc(courseID).collection("lectures").doc(lectureTitle);
 
     return lecture.delete();
+  }
+
+
+  static signOut() async {
+    try {
+      // print("LOGOUT");
+      return FirebaseAuth.instance.signOut().then((value) => print("LOGGED OUT"));
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future addMessage(
+      String courseID, String messageId, Map messageInfoMap) async {
+    return FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(courseID)
+        .collection("my_chats")
+        .doc(messageId)
+        .set(messageInfoMap);
+  }
+
+  static updateLastMessageSend(
+      String courseID, String chatRoomId, Map lastMessageInfoMap) {
+    return FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(courseID)
+        .update(lastMessageInfoMap);
+  }
+
+  static createChatRoom(String courseID,
+      Map chatRoomInfoMap) async {
+    final snapShot = await FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(courseID)
+        .get();
+
+    if (snapShot.exists) {
+      //when the chatRoom exist we don't need to create it
+      return true;
+    } else {
+      return FirebaseFirestore.instance
+          .collection("Courses")
+          .doc(courseID)
+          .collection("chats")
+          .doc(courseID)
+          .set(chatRoomInfoMap);
+    }
+  }
+
+  static Future<Stream<QuerySnapshot>> getChatRoomMessages(courseID) async {
+    return FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(courseID)
+        .collection("my_chats")
+        .orderBy("ts", descending: true)
+        .snapshots();
+  }
+
+  static Future<Stream<QuerySnapshot>> getChatRooms(courseID) async {
+    return FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .snapshots();
   }
 }

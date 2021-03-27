@@ -170,6 +170,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                   //TODO: Show dialog to choose which steps the student have issues with
                                                   onPressed: () {
                                                     StudentWidgets.showChoiceStepsIssuesDialog(
+                                                      widget.id,
+                                                      widget.title,
                                                       titles,
                                                       context,
                                                       isLightTheme,
