@@ -503,7 +503,7 @@ class InstructorWidgets {
                       child: IconSlideAction(
                         caption: MyLocalization.of(context)
                             .getTranslatedValue("review"),
-                        color: Colors.green.shade900,
+                        color: Colors.green.shade800,
                         icon: Icons.pageview,
                         onTap: () {
                           Widgets.showWarringDialog(

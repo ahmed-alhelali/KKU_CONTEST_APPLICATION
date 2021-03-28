@@ -63,7 +63,7 @@ class _InstructorCourseState extends State<InstructorCourse>
             unselectedLabelColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               color: isLightTheme ? AppTheme.lightTheme.backgroundColor : HexColor("#322840"),
             ),
             tabs: [
