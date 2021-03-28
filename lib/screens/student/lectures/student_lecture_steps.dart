@@ -72,7 +72,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 60),
                   child: Text(
                     widget.title,
                     style: textDirection == TextDirection.ltr
@@ -84,6 +84,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                             color: themeProvider
                                 .themeColor(isLightTheme)
                                 .textColor),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
