@@ -298,7 +298,7 @@ class Widgets {
         MyLocalization.of(context).getTranslatedValue(keyContent),
         style: textDirection == TextDirection.ltr
             ? Utilities.getUbuntuTextStyleWithSize(14,
-                color: themeProvider.themeColor(isLightTheme).textColor)
+                color: themeProvider.themeColor(isLightTheme).textColor,height: 1.5)
             : Utilities.getTajwalTextStyleWithSize(14,
                 color: themeProvider.themeColor(isLightTheme).textColor),
       ),

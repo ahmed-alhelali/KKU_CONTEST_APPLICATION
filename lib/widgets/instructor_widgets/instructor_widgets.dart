@@ -8,6 +8,7 @@ import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/instructor/instructor_course_screen.dart';
+import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/shared_widgets.dart';
 import 'package:toast/toast.dart';
@@ -398,6 +399,8 @@ class InstructorWidgets {
 
   static Widget getInstructorLectures(ThemeProvider themeProvider,
       bool isLightTheme, TextDirection textDirection, courseID) {
+    final lectureSlidableController = new SlidableController();
+
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -450,40 +453,83 @@ class InstructorWidgets {
             (DocumentSnapshot document) {
               final titleLecture = document.get("title");
               // print(titleLecture);
-              return Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      titleLecture,
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        size: 25,
+              return Slidable(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        titleLecture,
+                        style: textDirection == TextDirection.ltr
+                            ? Utilities.getUbuntuTextStyleWithSize(12,
+                                color: themeProvider
+                                    .themeColor(isLightTheme)
+                                    .textColor)
+                            : Utilities.getTajwalTextStyleWithSize(12,
+                                color: themeProvider
+                                    .themeColor(isLightTheme)
+                                    .textColor),
                       ),
-                      onPressed: () {
-                        FirestoreDB.deleteAllStepsUnderLecture(
-                            courseID, titleLecture);
-                        FirestoreDB.deleteLecture(courseID, titleLecture);
-                      },
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                          size: 25,
+                        ),
+                        onPressed: () {
+                          FirestoreDB.deleteAllStepsUnderLecture(
+                              courseID, titleLecture);
+                          FirestoreDB.deleteLecture(courseID, titleLecture);
+                        },
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: SizedBox(
+                        height: 0.5,
+                        child: Container(
+                          color: isLightTheme ? Colors.grey : Colors.white54,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                actionPane: SlidableStrechActionPane(),
+                controller: lectureSlidableController,
+                actions: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: SizedBox(
-                      height: 0.5,
-                      child: Container(
-                        color: isLightTheme ? Colors.grey : Colors.white54,
+                    padding: EdgeInsets.only(left: 15),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: IconSlideAction(
+                        caption: MyLocalization.of(context)
+                            .getTranslatedValue("review"),
+                        color: Colors.green.shade900,
+                        icon: Icons.pageview,
+                        onTap: () {
+                          Widgets.showWarringDialog(
+                            themeProvider,
+                            isLightTheme,
+                            "do_not_sent_message_title",
+                            "do_not_sent_message_content",
+                            context,
+                            "logout",
+                            "i_get_it",
+                            textDirection,
+                            functionOfNoButton: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return StudentLectureSteps(
+                                      courseID,
+                                      titleLecture,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
