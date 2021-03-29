@@ -21,7 +21,7 @@ class StudentWidgets {
     String courseID;
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access", isEqualTo: true).snapshots(),
+      stream: courses.where("access_by_student", isEqualTo: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -112,7 +112,7 @@ class StudentWidgets {
     FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access",isEqualTo: true).snapshots(),
+      stream: courses.where("access_by_student",isEqualTo: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(

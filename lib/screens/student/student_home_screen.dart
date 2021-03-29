@@ -103,7 +103,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         await FirebaseFirestore.instance
                             .collection("Courses")
                             .doc(searchController.text)
-                            .update({"access": true});
+                            .update({"access_by_student": true});
                       } else {
                         Toast.show(
                           MyLocalization.of(context)
@@ -114,6 +114,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                           gravity: Toast.CENTER,
                         );
                       }
+                      searchController.text = "";
                     } else {
                       print("ignore the click");
                     }
