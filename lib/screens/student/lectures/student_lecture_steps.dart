@@ -173,7 +173,6 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                             .getTajwalTextStyleWithSize(
                                                                 12),
                                                   ),
-                                                  //TODO: Show dialog to choose which steps the student have issues with
                                                   onPressed: () async {
                                                     List<String>
                                                         mySelectedTitles =
