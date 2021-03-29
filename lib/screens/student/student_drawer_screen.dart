@@ -164,7 +164,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Widgets.getCoursesInDrawer(
+                  child: Widgets.getStudentCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
                 ),
                 Widgets.getContainerWithOnOnTap(

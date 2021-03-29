@@ -10,7 +10,7 @@ class FirestoreDB {
 
     return newCourse
         .doc(Utilities.getRandomIdForNewCourse())
-        .set({"course_title": courseTitle, "time": DateTime.now()})
+        .set({"access" : false, "time": DateTime.now(),"course_title": courseTitle})
         .then((value) => {print("course added")})
         .catchError((error) => print(error));
   }

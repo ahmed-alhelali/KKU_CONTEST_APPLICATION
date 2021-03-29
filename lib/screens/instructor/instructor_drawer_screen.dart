@@ -163,7 +163,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Widgets.getCoursesInDrawer(
+                  child: Widgets.getInstructorCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
                 ),
                 Widgets.getContainerWithOnOnTap(

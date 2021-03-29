@@ -14,12 +14,14 @@ import 'package:toast/toast.dart';
 
 class StudentWidgets {
   static Widget getStudentCourses(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection) {
+      bool isLightTheme, TextDirection textDirection,
+      {String id}) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     String courseID;
+
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.snapshots(),
+      stream: courses.where("access", isEqualTo: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -40,13 +42,19 @@ class StudentWidgets {
 
         if (snapshot.data.size == 0) {
           return Center(
-            child: Text(
-              MyLocalization.of(context).getTranslatedValue("no_courses"),
-              style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                MyLocalization.of(context)
+                    .getTranslatedValue("no_courses_student"),
+                style: textDirection == TextDirection.ltr
+                    ? Utilities.getUbuntuTextStyleWithSize(14,
+                        color: themeProvider.themeColor(isLightTheme).textColor)
+                    : Utilities.getTajwalTextStyleWithSize(14,
+                        color:
+                            themeProvider.themeColor(isLightTheme).textColor),
+                textAlign: TextAlign.center,
+              ),
             ),
           );
         }
@@ -54,7 +62,7 @@ class StudentWidgets {
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map((DocumentSnapshot document) {
-            final currentCourse = document.data().values;
+            final currentCourse = document.get("course_title");
             return InkWell(
               child: Container(
                 alignment: AlignmentDirectional.centerStart,
@@ -69,7 +77,7 @@ class StudentWidgets {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(
-                  currentCourse.first,
+                  currentCourse,
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(16,
                           color:
@@ -87,7 +95,7 @@ class StudentWidgets {
                   MaterialPageRoute(
                     builder: (context) => StudentLectureScreen(
                       id: courseID,
-                      title: currentCourse.first,
+                      title: currentCourse,
                     ),
                   ),
                 );
@@ -297,8 +305,7 @@ class StudentWidgets {
                 if (id == "50Un4ErjskQVOrubCLzUloBsvHl1") {
                   Toast.show(
                     MyLocalization.of(context)
-                        .getTranslatedValue(
-                        "you_cannot_create_chatting"),
+                        .getTranslatedValue("you_cannot_create_chatting"),
                     context,
                     duration: Toast.LENGTH_LONG,
                     gravity: Toast.BOTTOM,

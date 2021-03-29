@@ -298,7 +298,8 @@ class Widgets {
         MyLocalization.of(context).getTranslatedValue(keyContent),
         style: textDirection == TextDirection.ltr
             ? Utilities.getUbuntuTextStyleWithSize(14,
-                color: themeProvider.themeColor(isLightTheme).textColor,height: 1.5)
+                color: themeProvider.themeColor(isLightTheme).textColor,
+                height: 1.5)
             : Utilities.getTajwalTextStyleWithSize(14,
                 color: themeProvider.themeColor(isLightTheme).textColor),
       ),
@@ -379,21 +380,25 @@ class Widgets {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: titles
-                .map(
-                  (e) => Column(
-                    children: [
-                      Text(
-                        e,
-                        style: textDirection == TextDirection.ltr
-                            ? Utilities.getUbuntuTextStyleWithSize(12,
-                            color: isLightTheme ? Colors.black : Colors.white)
-                            : Utilities.getTajwalTextStyleWithSize(12,
-                            color: isLightTheme ? Colors.black : Colors.white),
-                      ),
-                      SizedBox(height: 10,),
-                    ],
-                  )
-                )
+                .map((e) => Column(
+                      children: [
+                        Text(
+                          e,
+                          style: textDirection == TextDirection.ltr
+                              ? Utilities.getUbuntuTextStyleWithSize(12,
+                                  color: isLightTheme
+                                      ? Colors.black
+                                      : Colors.white)
+                              : Utilities.getTajwalTextStyleWithSize(12,
+                                  color: isLightTheme
+                                      ? Colors.black
+                                      : Colors.white),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ))
                 .toList(),
           ),
         ),
@@ -439,7 +444,7 @@ class Widgets {
     );
   }
 
-  static Widget getCoursesInDrawer(ThemeProvider themeProvider,
+  static Widget getInstructorCoursesInDrawer(ThemeProvider themeProvider,
       bool isLightTheme, TextDirection textDirection) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
@@ -511,13 +516,13 @@ class Widgets {
               : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
-              final currentCourse = document.data().values;
+              final currentCourse = document.get("course_title");
               // print(currentCourse);
               return Column(
                 children: [
                   ListTile(
                     title: Text(
-                      currentCourse.first,
+                      currentCourse,
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(12,
                               color: themeProvider
@@ -527,6 +532,108 @@ class Widgets {
                               color: themeProvider
                                   .themeColor(isLightTheme)
                                   .textColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 0.5,
+                    child: Container(color: Colors.grey),
+                  ),
+                ],
+              );
+            },
+          ).toList(),
+        );
+      },
+    );
+  }
+  static Widget getStudentCoursesInDrawer(ThemeProvider themeProvider,
+      bool isLightTheme, TextDirection textDirection) {
+    CollectionReference courses =
+    FirebaseFirestore.instance.collection("Courses");
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: courses.where("access",isEqualTo: true).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyLocalization.of(context)
+                      .getTranslatedValue("error_connection"),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor),
+                )
+              ],
+            ),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        }
+
+        if (snapshot.data.size == 0) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyLocalization.of(context).getTranslatedValue("no_courses"),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor),
+                )
+              ],
+            ),
+          );
+        }
+
+        return ListView(
+          padding: textDirection == TextDirection.ltr
+              ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
+              : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
+          children: snapshot.data.docs.map(
+                (DocumentSnapshot document) {
+              final currentCourse = document.get("course_title");
+              // print(currentCourse);
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      currentCourse,
+                      style: textDirection == TextDirection.ltr
+                          ? Utilities.getUbuntuTextStyleWithSize(12,
+                          color: themeProvider
+                              .themeColor(isLightTheme)
+                              .textColor)
+                          : Utilities.getTajwalTextStyleWithSize(12,
+                          color: themeProvider
+                              .themeColor(isLightTheme)
+                              .textColor),
                     ),
                   ),
                   SizedBox(

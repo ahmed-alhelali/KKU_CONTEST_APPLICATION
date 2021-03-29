@@ -52,7 +52,7 @@ class InstructorWidgets {
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
-              final currentCourse = document.data().values;
+              final currentCourse = document.get("course_title");
               return Slidable(
                 child: InkWell(
                   child: Container(
@@ -68,7 +68,7 @@ class InstructorWidgets {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Text(
-                      currentCourse.first,
+                      currentCourse,
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(16,
                               color: themeProvider
@@ -88,7 +88,7 @@ class InstructorWidgets {
                       MaterialPageRoute(
                         builder: (context) => InstructorCourse(
                           id: courseID,
-                          courseTitle: currentCourse.first,
+                          courseTitle: currentCourse,
                         ),
                       ),
                     );
