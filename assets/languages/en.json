@@ -29,6 +29,7 @@
   "validate_title": "Course Name is required",
   "validate": "Value Cannot Be Empty",
   "create_course": "CREATE COURSE",
+  "you_cannot_create_chatting" :"you've not permission to create chatting",
   "course_name": "course name",
   "create": "CREATE",
   "no": "GOTO CHATTING",

@@ -10,6 +10,7 @@ import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.d
 import 'package:kku_contest_app/screens/student/lectures/student_lectures_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class StudentWidgets {
   static Widget getStudentCourses(ThemeProvider themeProvider,
@@ -203,7 +204,8 @@ class StudentWidgets {
   }
 
   static showChoiceStepsIssuesDialog(courseID, lectureTitle, List titles,
-      BuildContext context, bool isLightTheme, TextDirection textDirection) {
+      BuildContext context, bool isLightTheme, TextDirection textDirection,
+      {String id}) {
     return showDialog(
       barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
       context: context,
@@ -292,38 +294,50 @@ class StudentWidgets {
                     : Utilities.getTajwalTextStyleWithSize(12),
               ),
               onPressed: () async {
-                Map<String, dynamic> chatRoomInfoMap = {
-                  "users": [
-                    "crKMIHUqhrbBLzjtOsH1b10bnNx1",
-                    "50Un4ErjskQVOrubCLzUloBsvHl1"
-                  ]
-                };
-                String name = textDirection == TextDirection.ltr
-                    ? "Abdullah Mohammad"
-                    : "عبدالله محمد الغامدي";
+                if (id == "50Un4ErjskQVOrubCLzUloBsvHl1") {
+                  Toast.show(
+                    MyLocalization.of(context)
+                        .getTranslatedValue(
+                        "you_cannot_create_chatting"),
+                    context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.BOTTOM,
+                  );
+                } else {
+                  Map<String, dynamic> chatRoomInfoMap = {
+                    "users": [
+                      "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+                      "50Un4ErjskQVOrubCLzUloBsvHl1"
+                    ]
+                  };
+                  String name = textDirection == TextDirection.ltr
+                      ? "Abdullah Mohammad"
+                      : "عبدالله محمد الغامدي";
 
-                await FirestoreDB.createChatRoom(
-                  courseID,
-                  chatRoomInfoMap,
-                );
-                List<String> mySelectedTitles = _multipleNotifier.selectedItems;
+                  await FirestoreDB.createChatRoom(
+                    courseID,
+                    chatRoomInfoMap,
+                  );
+                  List<String> mySelectedTitles =
+                      _multipleNotifier.selectedItems;
 
-                print("mySelectedTitles = $mySelectedTitles");
+                  print("mySelectedTitles = $mySelectedTitles");
 
-                for(int i = 0 ; i<mySelectedTitles.length ; i++){
-                  addInitialMessages(courseID, mySelectedTitles[i]);
-                }
+                  for (int i = 0; i < mySelectedTitles.length; i++) {
+                    addInitialMessages(courseID, mySelectedTitles[i]);
+                  }
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                      name,
-                      courseID,
-                      // listTitlesSelected: mySelectedTitles,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatScreen(
+                        name,
+                        courseID,
+                        // listTitlesSelected: mySelectedTitles,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
             ),
             SizedBox(
