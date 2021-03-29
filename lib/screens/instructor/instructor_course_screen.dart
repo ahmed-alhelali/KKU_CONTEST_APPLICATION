@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/instructor/lectures_and_student/help_student_screen.dart';
@@ -64,7 +63,7 @@ class _InstructorCourseState extends State<InstructorCourse>
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: isLightTheme ? AppTheme.lightTheme.backgroundColor : HexColor("#322840"),
+              color: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
             ),
             tabs: [
               Tab(

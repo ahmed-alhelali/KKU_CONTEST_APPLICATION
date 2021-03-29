@@ -42,20 +42,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return IDtoString;
   }
 
-  // setInitMessages() {
-  //   widget.listTitlesSelected.map(
-  //     (e) => FirestoreDB.addMessage(
-  //       widget.courseID,
-  //       messageID,
-  //       {
-  //         "message": e.toString(),
-  //         "sendBy": myID,
-  //         "ts": DateTime.now(),
-  //       },
-  //     ),
-  //   );
-  // }
-
   addMessage(bool sendClicked) {
     if (messageController.text != "") {
       String message = messageController.text;
@@ -141,8 +127,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           sendByMe ? Radius.circular(0) : Radius.circular(24),
                     ),
               color: sendByMe
-                  ? (isLightTheme ? Colors.white : HexColor("#4a3b5e"))
-                  : (isLightTheme ? Colors.grey.shade300 : HexColor("#2c2338")),
+                  ? (isLightTheme ? Colors.white : AppTheme.darkTheme.scaffoldBackgroundColor)
+                  : (isLightTheme ? Colors.grey.shade300 : HexColor("#29333E")),
             ),
             padding: EdgeInsets.all(16),
             child: Text(
@@ -309,7 +295,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             filled: true,
                             fillColor: isLightTheme
                                 ? Colors.grey.shade100
-                                : HexColor("#362b45"),
+                                : AppTheme.darkTheme.backgroundColor,
                             // hintStyle: TextStyle(
                             //   color: isLightTheme ? Colors.black : Colors.grey,
                             // ),

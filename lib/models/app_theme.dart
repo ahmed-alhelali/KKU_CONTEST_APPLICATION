@@ -59,9 +59,9 @@ class ThemeProvider extends ChangeNotifier {
 
 class AppTheme {
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: HexColor('#282033'),
+    scaffoldBackgroundColor: HexColor('#14191F'),
     primaryColor: Colors.black,
-    backgroundColor: HexColor('#322840'),
+    backgroundColor: HexColor('#1d242c'),
     colorScheme: ColorScheme.dark(),
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: Colors.white),
