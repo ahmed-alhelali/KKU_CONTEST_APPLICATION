@@ -6,6 +6,7 @@ import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
 import 'package:kku_contest_app/widgets/shared_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -163,7 +164,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Widgets.getInstructorCoursesInDrawer(
+                  child: InstructorWidgets.getInstructorCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
                 ),
                 Widgets.getContainerWithOnOnTap(

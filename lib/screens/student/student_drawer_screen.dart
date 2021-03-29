@@ -7,6 +7,7 @@ import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/screens/wrapper_screen.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
 import 'package:kku_contest_app/widgets/shared_widgets.dart';
+import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
 import 'package:provider/provider.dart';
 
 class StudentDrawerScreen extends StatefulWidget {
@@ -164,7 +165,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Widgets.getStudentCoursesInDrawer(
+                  child: StudentWidgets.getStudentCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
                 ),
                 Widgets.getContainerWithOnOnTap(

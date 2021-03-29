@@ -396,7 +396,108 @@ class InstructorWidgets {
       },
     );
   }
+  static Widget getInstructorCoursesInDrawer(ThemeProvider themeProvider,
+      bool isLightTheme, TextDirection textDirection) {
+    CollectionReference courses =
+    FirebaseFirestore.instance.collection("Courses");
 
+    return StreamBuilder<QuerySnapshot>(
+      stream: courses.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyLocalization.of(context)
+                      .getTranslatedValue("error_connection"),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor),
+                )
+              ],
+            ),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        }
+
+        if (snapshot.data.size == 0) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyLocalization.of(context).getTranslatedValue("no_courses"),
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor)
+                      : Utilities.getTajwalTextStyleWithSize(14,
+                      color:
+                      themeProvider.themeColor(isLightTheme).textColor),
+                )
+              ],
+            ),
+          );
+        }
+
+        return ListView(
+          padding: textDirection == TextDirection.ltr
+              ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
+              : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
+          children: snapshot.data.docs.map(
+                (DocumentSnapshot document) {
+              final currentCourse = document.get("course_title");
+              // print(currentCourse);
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      currentCourse,
+                      style: textDirection == TextDirection.ltr
+                          ? Utilities.getUbuntuTextStyleWithSize(12,
+                          color: themeProvider
+                              .themeColor(isLightTheme)
+                              .textColor)
+                          : Utilities.getTajwalTextStyleWithSize(12,
+                          color: themeProvider
+                              .themeColor(isLightTheme)
+                              .textColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 0.5,
+                    child: Container(color: Colors.grey),
+                  ),
+                ],
+              );
+            },
+          ).toList(),
+        );
+      },
+    );
+  }
   static Widget getInstructorLectures(ThemeProvider themeProvider,
       bool isLightTheme, TextDirection textDirection, courseID) {
     final lectureSlidableController = new SlidableController();
