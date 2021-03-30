@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
@@ -113,7 +114,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 Row(
                   children: [
@@ -122,10 +123,31 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                     ),
                     Column(
                       children: [
-                        CircleAvatar(
-                          radius: 45,
-                          backgroundImage: ExactAssetImage(
-                              "assets/images/instructor_avatar.jpg"),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 110.00,
+                              height: 110.00,
+                              decoration: BoxDecoration(
+                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): AppTheme.darkTheme.scaffoldBackgroundColor.withOpacity(0.5),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            Container(
+                              width: 100.00,
+                              height: 100.00,
+                              decoration: BoxDecoration(
+                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): AppTheme.darkTheme.scaffoldBackgroundColor,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            CircleAvatar(
+                              radius: 45,
+                              backgroundImage: ExactAssetImage(
+                                  "assets/images/instructor_avatar.jpg"),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -147,7 +169,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 35),
                 Widgets.getContainerWithOnOnTap(
                   themeProvider,
                   isLightTheme,
