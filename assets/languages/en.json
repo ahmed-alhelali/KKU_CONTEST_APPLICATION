@@ -44,9 +44,9 @@
   "help": "Helping Your Students",
   "next": "NEXT",
   "back": "BACK",
-  "which_steps_title": "Choose the steps you're having problems with:",
+  "which_steps_title": "Choose the steps you are having troubles with:",
   "send": "SEND",
-  "choose_something" : "you most choose one option at least to start the chatting",
+  "choose_something" : "you must choose one option at least to start the chatting",
 
   "i_have_issues": "I HAVE ISSUES",
   "no_courses_student" : "Do you didn't get courses yet? ask your instructor the courses ID then use it in the search field to add the course",
