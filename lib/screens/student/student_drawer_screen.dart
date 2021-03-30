@@ -139,7 +139,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               width: 100.00,
                               height: 100.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): AppTheme.darkTheme.scaffoldBackgroundColor,
+                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): Colors.black,
                                 shape: BoxShape.circle,
                               ),
                             ),
