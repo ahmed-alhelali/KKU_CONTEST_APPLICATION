@@ -184,7 +184,6 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width * 0.5,
-                  //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: InstructorWidgets.getInstructorCoursesInDrawer(
                       themeProvider, isLightTheme, textDirection),
@@ -239,18 +238,6 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                       functionOfNoButton: () {
                         Navigator.of(context).pop();
                       },
-                      // () {
-                      //   FirestoreDB.signOut();
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => WrapperScreen(),
-                      //     ),
-                      //   );
-                      // },
-                      // () {
-                      //   Navigator.of(context).pop();
-                      // },
                     );
                   },
                 ),
