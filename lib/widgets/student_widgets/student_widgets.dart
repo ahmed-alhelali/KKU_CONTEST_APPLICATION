@@ -411,7 +411,7 @@ class StudentWidgets {
                     duration: Toast.LENGTH_LONG,
                     gravity: Toast.BOTTOM,
                   );
-                } else {
+                } else if(_multipleNotifier.selectedItems.isNotEmpty){
                   Map<String, dynamic> chatRoomInfoMap = {
                     "users": [
                       "crKMIHUqhrbBLzjtOsH1b10bnNx1",
@@ -445,6 +445,15 @@ class StudentWidgets {
                       ),
                     ),
                   );
+                }else{
+                  Toast.show(
+                    MyLocalization.of(context)
+                        .getTranslatedValue("choose_something"),
+                    context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.CENTER,
+                  );
+                  print("just ignore the clicked because the list is empty");
                 }
               },
             ),
