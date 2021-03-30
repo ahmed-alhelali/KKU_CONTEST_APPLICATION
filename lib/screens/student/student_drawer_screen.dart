@@ -175,7 +175,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   themeProvider,
                   isLightTheme,
                   Icon(
-                    Icons.menu_book,
+                    Icons.my_library_books_outlined,
                     color: isLightTheme ? Colors.black87 : Colors.grey,
                   ),
                   "my_courses",
