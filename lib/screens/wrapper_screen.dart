@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
@@ -65,23 +68,48 @@ class _WrapperScreenState extends State<WrapperScreen> {
                   ),
                 ),
               ),
-              isLightTheme
-                  ? Center()
-                  : Column(
-                      children: [
-                        SizedBox(
-                          height: 120,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 120,
+                  ),
+                  Row(
+                    textDirection: TextDirection.ltr,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.chalkboardTeacher,
+                        size: 80,
+                        textDirection: TextDirection.ltr,
+                        color: isLightTheme? Colors.black54 : Colors.white30,
+                      ),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Transform.rotate(
+                        angle: 45 * pi / 180,
+                        child: Icon(
+                          FontAwesomeIcons.link,
+                          size: 50,
+                          textDirection: TextDirection.ltr,
+                          color: Colors.green.shade800,
+
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                          child: Image(
-                            image: ExactAssetImage("assets/images/icons.png"),
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        FontAwesomeIcons.users,
+                        size: 80,
+                        textDirection: TextDirection.ltr,
+                        color: isLightTheme? Colors.black54 : Colors.white30,
+
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

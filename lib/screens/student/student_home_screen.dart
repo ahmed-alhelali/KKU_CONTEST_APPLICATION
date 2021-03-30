@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:kku_contest_app/localization/my_localization.dart';
 import 'package:kku_contest_app/models/app_theme.dart';
 import 'package:kku_contest_app/utilities/utilities.dart';
@@ -64,6 +63,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       icon: Icon(Icons.menu),
                       onPressed: () {
                         setState(() {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           widget.controller.forward();
                           menuOpen = true;
                         });
@@ -107,8 +107,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       } else {
                         Toast.show(
                           MyLocalization.of(context)
-                              .getTranslatedValue(
-                              "course_not_exist"),
+                              .getTranslatedValue("course_not_exist"),
                           context,
                           duration: Toast.LENGTH_LONG,
                           gravity: Toast.CENTER,
@@ -150,12 +149,22 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(35),
+                          borderSide: BorderSide(
+                            color: isLightTheme
+                                ? Colors.black54
+                                : AppTheme.darkTheme.backgroundColor,
+                          ),
+                        ),
                         focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(
-                                color: isLightTheme
-                                    ? Colors.black54
-                                    : HexColor("#3d314e"))),
+                          borderRadius: BorderRadius.circular(35),
+                          borderSide: BorderSide(
+                            color: isLightTheme
+                                ? Colors.black54
+                                : AppTheme.darkTheme.backgroundColor,
+                          ),
+                        ),
                         hintText: MyLocalization.of(context)
                             .getTranslatedValue("search"),
                         hintStyle: textDirection == TextDirection.ltr
