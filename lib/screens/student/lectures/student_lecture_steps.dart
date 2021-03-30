@@ -348,8 +348,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
     return await courses.get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((element) {
         setState(() {
-          titles.add(element.data().values.last.toString());
-          descriptions.add(element.data().values.first.toString());
+          titles.add(element.get("title").toString());
+          descriptions.add(element.get("description").toString());
         });
       });
     }).catchError((error) {
