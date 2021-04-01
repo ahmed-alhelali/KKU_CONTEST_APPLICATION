@@ -48,19 +48,6 @@ dev_dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_native_splash: ^1.1.5+1
-
-flutter_native_splash:
-  color: "#eeeeee"
-  image: assets/images/splash_screen_light_mode.png
-  color_dark: "#1d242c"
-  image_dark: assets/images/splash_screen_dark_mode.png
-  android: true
-  ios: true
-
-
-
-
 
 
 # For information on the generic Dart part of this file, see the
@@ -79,8 +66,6 @@ flutter:
     - assets/languages/
     - assets/images/student.png
     - assets/images/instructor_avatar.jpg
-    - assets/images/splash_screen_dark_mode.png
-    - assets/images/splash_screen_light_mode.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
