@@ -1,6 +1,4 @@
-
 import 'package:kku_contest_app/imports.dart';
-
 
 class InstructorWidgets {
   static Widget getInstructorCourses(ThemeProvider themeProvider,
@@ -124,8 +122,7 @@ class InstructorWidgets {
                       child: IconSlideAction(
                         caption: MyLocalization.of(context)
                             .getTranslatedValue("get_id"),
-                        color:
-                             Colors.green.shade800,
+                        color: Colors.green.shade800,
                         icon: FontAwesomeIcons.link,
                         onTap: () {
                           // print(document.id);
@@ -385,10 +382,12 @@ class InstructorWidgets {
       },
     );
   }
+
   static Widget getInstructorCoursesInDrawer(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection) {
+      bool isLightTheme,
+      TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
       stream: courses.snapshots(),
@@ -405,11 +404,11 @@ class InstructorWidgets {
                       .getTranslatedValue("error_connection"),
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor)
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor)
                       : Utilities.getTajwalTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor),
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor),
                 )
               ],
             ),
@@ -440,11 +439,11 @@ class InstructorWidgets {
                   MyLocalization.of(context).getTranslatedValue("no_courses"),
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor)
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor)
                       : Utilities.getTajwalTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor),
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor),
                 )
               ],
             ),
@@ -456,7 +455,7 @@ class InstructorWidgets {
               ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.45)
               : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.45),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final currentCourse = document.get("course_title");
               // print(currentCourse);
               return Column(
@@ -466,13 +465,13 @@ class InstructorWidgets {
                       currentCourse,
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(12,
-                          color: themeProvider
-                              .themeColor(isLightTheme)
-                              .textColor)
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor)
                           : Utilities.getTajwalTextStyleWithSize(12,
-                          color: themeProvider
-                              .themeColor(isLightTheme)
-                              .textColor),
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor),
                     ),
                   ),
                   SizedBox(
@@ -487,8 +486,11 @@ class InstructorWidgets {
       },
     );
   }
+
   static Widget getInstructorLectures(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection, courseID) {
+      bool isLightTheme,
+      TextDirection textDirection,
+      courseID) {
     final lectureSlidableController = new SlidableController();
 
     CollectionReference courses = FirebaseFirestore.instance
@@ -538,15 +540,14 @@ class InstructorWidgets {
         }
 
         return ListView(
-          padding: EdgeInsets.symmetric(vertical: 5,horizontal: 4),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
               final titleLecture = document.get("title");
               // print(titleLecture);
               return Padding(
                 padding: EdgeInsets.only(top: 5),
-                child:
-                Slidable(
+                child: Slidable(
                   child: Column(
                     children: [
                       ListTile(
@@ -554,13 +555,13 @@ class InstructorWidgets {
                           titleLecture,
                           style: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
+                                  color: themeProvider
+                                      .themeColor(isLightTheme)
+                                      .textColor)
                               : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                                  color: themeProvider
+                                      .themeColor(isLightTheme)
+                                      .textColor),
                         ),
                         trailing: IconButton(
                           icon: Icon(
@@ -642,8 +643,7 @@ class InstructorWidgets {
     BuildContext context,
     TextDirection textDirection,
     titleController,
-    descriptionController,
-  ) {
+    descriptionController) {
     return Column(
       children: [
         TextField(
@@ -692,6 +692,31 @@ class InstructorWidgets {
           maxLines: 4,
         ),
       ],
+    );
+  }
+
+  static Widget getChildForTab(
+      BuildContext context,
+      String titleKey,
+      ThemeProvider themeProvider,
+      bool isLightTheme,
+      TextDirection textDirection) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        // border: Border.all(color: Colors.redAccent, width: 1)
+      ),
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          MyLocalization.of(context).getTranslatedValue(titleKey),
+          style: textDirection == TextDirection.ltr
+              ? Utilities.getUbuntuTextStyleWithSize(12,
+                  color: themeProvider.themeColor(isLightTheme).textColor)
+              : Utilities.getTajwalTextStyleWithSize(12,
+                  color: themeProvider.themeColor(isLightTheme).textColor),
+        ),
+      ),
     );
   }
 }

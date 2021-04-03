@@ -67,52 +67,13 @@ class _InstructorCourseState extends State<InstructorCourse>
             ),
             tabs: [
               Tab(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // border: Border.all(color: Colors.redAccent, width: 1)
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      MyLocalization.of(context)
-                          .getTranslatedValue("lecture_section"),
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
-                    ),
-                  ),
-                ),
+                child: InstructorWidgets.getChildForTab(context,"lecture_section", themeProvider,
+                    isLightTheme, textDirection),
               ),
               Tab(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // border: Border.all(color: Colors.redAccent, width: 1),
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      MyLocalization.of(context)
-                          .getTranslatedValue("student_section"),
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
-                    ),
-                  ),
-                ),
+
+                child:  InstructorWidgets.getChildForTab(context,"student_section", themeProvider,
+                    isLightTheme, textDirection),
               ),
             ],
           ),
