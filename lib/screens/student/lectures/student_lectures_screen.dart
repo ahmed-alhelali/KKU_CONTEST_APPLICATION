@@ -1,12 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/screens/chatScreen.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/shared_widgets.dart';
-import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class StudentLectureScreen extends StatefulWidget {
   final String title;

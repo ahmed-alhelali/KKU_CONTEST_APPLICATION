@@ -1,12 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kku_contest_app/screens/wrapper_screen.dart';
-import 'package:provider/provider.dart';
-import 'controllers/multi_chose.dart';
-import 'localization/my_localization.dart';
-import 'models/app_theme.dart';
+import 'imports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

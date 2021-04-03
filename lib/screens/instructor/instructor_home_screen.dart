@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:kku_contest_app/imports.dart';
+
 
 class InstructorHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -93,7 +89,8 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
               centerTitle: true,
               elevation: 0,
               brightness: isLightTheme ? AppTheme.lightTheme.appBarTheme.brightness : AppTheme.darkTheme.appBarTheme.brightness,
-              iconTheme: isLightTheme ? AppTheme.lightTheme.appBarTheme.iconTheme : AppTheme.darkTheme.appBarTheme.iconTheme,
+              // iconTheme: isLightTheme ? AppTheme.lightTheme.appBarTheme.iconTheme : AppTheme.darkTheme.appBarTheme.iconTheme,
+              iconTheme: Theme.of(context).appBarTheme.iconTheme,
               backgroundColor: Colors.transparent,
             ),
             body: InstructorWidgets.getInstructorCourses(themeProvider,isLightTheme,textDirection),

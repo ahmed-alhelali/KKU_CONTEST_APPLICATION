@@ -1,16 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/screens/wrapper_screen.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
-import 'package:kku_contest_app/widgets/shared_widgets.dart';
-import 'package:provider/provider.dart';
-
+import 'package:kku_contest_app/imports.dart';
 class InstructorDrawerScreen extends StatefulWidget {
   final AnimationController controller;
 
@@ -130,7 +118,10 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                               width: 110.00,
                               height: 110.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): AppTheme.darkTheme.scaffoldBackgroundColor,
+                                color: isLightTheme
+                                    ? HexColor("#354251").withOpacity(0.2)
+                                    : AppTheme
+                                        .darkTheme.scaffoldBackgroundColor,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -138,7 +129,9 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                               width: 100.00,
                               height: 100.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): Colors.black,
+                                color: isLightTheme
+                                    ? HexColor("#354251").withOpacity(0.2)
+                                    : Colors.black,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -175,18 +168,21 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   isLightTheme,
                   Icon(
                     Icons.my_library_books_outlined,
-                    color: isLightTheme ? Colors.black :  Colors.grey,
+                    color: isLightTheme ? Colors.black : Colors.grey,
                   ),
                   "my_courses",
                   textDirection,
                   context,
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   width: MediaQuery.of(context).size.width * 0.5,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: InstructorWidgets.getInstructorCoursesInDrawer(
-                      themeProvider, isLightTheme, textDirection),
+                    themeProvider,
+                    isLightTheme,
+                    textDirection,
+                  ),
                 ),
                 Widgets.getContainerWithOnOnTap(
                   themeProvider,

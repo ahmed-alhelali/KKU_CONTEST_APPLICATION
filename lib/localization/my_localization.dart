@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+import 'package:kku_contest_app/imports.dart';
 class MyLocalization {
   final Locale locale;
 

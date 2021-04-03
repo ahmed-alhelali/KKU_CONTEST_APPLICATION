@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:kku_contest_app/imports.dart';
 class MultipleNotifier extends ChangeNotifier {
   List<String> _selecteItems;
   MultipleNotifier(this._selecteItems);

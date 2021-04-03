@@ -1,6 +1,6 @@
-import 'dart:math';
-class GUIDGen {
+import 'package:kku_contest_app/imports.dart';
 
+class GUIDGen {
   static String generate() {
     Random random = Random(new DateTime.now().millisecond);
 

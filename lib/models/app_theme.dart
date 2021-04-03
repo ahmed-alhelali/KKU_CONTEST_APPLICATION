@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter/services.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;

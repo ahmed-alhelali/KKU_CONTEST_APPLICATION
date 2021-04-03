@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/models/languages.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class Widgets {
   static changeLanguageWidget(ThemeProvider themeProvider, bool isLightTheme,

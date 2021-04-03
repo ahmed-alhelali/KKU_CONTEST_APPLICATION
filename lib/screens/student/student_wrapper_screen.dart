@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/screens/student/student_drawer_screen.dart';
-import 'package:kku_contest_app/screens/student/student_home_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class StudentWrapperScreen extends StatefulWidget {
   @override

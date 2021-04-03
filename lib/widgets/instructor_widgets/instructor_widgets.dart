@@ -1,17 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/screens/instructor/instructor_course_screen.dart';
-import 'package:kku_contest_app/screens/student/lectures/student_lecture_steps.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/shared_widgets.dart';
-import 'package:toast/toast.dart';
+
+import 'package:kku_contest_app/imports.dart';
+
 
 class InstructorWidgets {
   static Widget getInstructorCourses(ThemeProvider themeProvider,

@@ -1,15 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:kku_contest_app/FirebaseAPI/firestore.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/screens/wrapper_screen.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/shared_widgets.dart';
-import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class StudentDrawerScreen extends StatefulWidget {
   final AnimationController controller;

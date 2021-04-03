@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kku_contest_app/main.dart';
-import 'package:kku_contest_app/models/languages.dart';
-import 'package:uuid/uuid.dart';
+import 'package:kku_contest_app/imports.dart';
+
 
 class Utilities {
   static void changeLanguages(Languages language, context) {

@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class FirestoreDB {
 

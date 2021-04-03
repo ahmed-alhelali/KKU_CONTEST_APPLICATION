@@ -1,11 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:kku_contest_app/localization/my_localization.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/utilities/utilities.dart';
-import 'package:kku_contest_app/widgets/student_widgets/student_widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;

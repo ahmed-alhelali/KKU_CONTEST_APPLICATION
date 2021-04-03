@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:kku_contest_app/models/app_theme.dart';
-import 'package:kku_contest_app/widgets/instructor_widgets/instructor_widgets.dart';
-import 'package:provider/provider.dart';
-import 'create_lecture_steps.dart';
+import 'package:kku_contest_app/imports.dart';
 
 class InstructorLecturesScreen extends StatefulWidget {
   final String id;
