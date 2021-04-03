@@ -1,4 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
+
 class InstructorDrawerScreen extends StatefulWidget {
   final AnimationController controller;
 
@@ -71,14 +72,20 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                                 .getTranslatedValue("instructor")
                                 .toUpperCase(),
                             style: textDirection == TextDirection.ltr
-                                ? Utilities.getUbuntuTextStyleWithSize(18,
+                                ? Utilities.getUbuntuTextStyleWithSize(
+                                    18,
                                     color: themeProvider
                                         .themeColor(isLightTheme)
-                                        .textColor)
-                                : Utilities.getTajwalTextStyleWithSize(18,
+                                        .textColor,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                                : Utilities.getTajwalTextStyleWithSize(
+                                    18,
                                     color: themeProvider
                                         .themeColor(isLightTheme)
-                                        .textColor),
+                                        .textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           ),
                         ),
                       ),

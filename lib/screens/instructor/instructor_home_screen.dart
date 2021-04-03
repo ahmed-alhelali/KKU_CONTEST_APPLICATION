@@ -1,6 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
 
-
 class InstructorHomeScreen extends StatefulWidget {
   final AnimationController controller;
   final Duration duration;
@@ -23,6 +22,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
     lectureTitleController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
@@ -54,46 +54,54 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
         scale: _scaleAnimation,
         child: ClipRRect(
           borderRadius:
-          menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
+              menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
           child: Scaffold(
-            backgroundColor: isLightTheme ? AppTheme.lightTheme.scaffoldBackgroundColor : AppTheme.darkTheme.scaffoldBackgroundColor,
+            backgroundColor: isLightTheme
+                ? AppTheme.lightTheme.scaffoldBackgroundColor
+                : AppTheme.darkTheme.scaffoldBackgroundColor,
             appBar: AppBar(
               leading: !menuOpen
                   ? IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-
-                  setState(() {
-                    widget.controller.forward();
-                    menuOpen = true;
-                  });
-                },
-                color: isLightTheme ? Colors.black : Colors.white,
-              )
+                      icon: Icon(Icons.menu),
+                      onPressed: () {
+                        setState(() {
+                          widget.controller.forward();
+                          menuOpen = true;
+                        });
+                      },
+                      color: isLightTheme ? Colors.black : Colors.white,
+                    )
                   : IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  setState(() {
-                    widget.controller.reverse();
-                    menuOpen = false;
-                  });
-                },
-                color: isLightTheme ? Colors.black : Colors.white,
-              ),
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: () {
+                        setState(() {
+                          widget.controller.reverse();
+                          menuOpen = false;
+                        });
+                      },
+                      color: isLightTheme ? Colors.black : Colors.white,
+                    ),
               title: Text(
-                MyLocalization.of(context).getTranslatedValue("home_page_title"),
+                MyLocalization.of(context)
+                    .getTranslatedValue("home_page_title"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14, color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14, color: themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(14,
+                        color: themeProvider.themeColor(isLightTheme).textColor)
+                    : Utilities.getTajwalTextStyleWithSize(14,
+                        color:
+                            themeProvider.themeColor(isLightTheme).textColor),
               ),
               centerTitle: true,
               elevation: 0,
-              brightness: isLightTheme ? AppTheme.lightTheme.appBarTheme.brightness : AppTheme.darkTheme.appBarTheme.brightness,
+              brightness: isLightTheme
+                  ? AppTheme.lightTheme.appBarTheme.brightness
+                  : AppTheme.darkTheme.appBarTheme.brightness,
               // iconTheme: isLightTheme ? AppTheme.lightTheme.appBarTheme.iconTheme : AppTheme.darkTheme.appBarTheme.iconTheme,
               iconTheme: Theme.of(context).appBarTheme.iconTheme,
               backgroundColor: Colors.transparent,
             ),
-            body: InstructorWidgets.getInstructorCourses(themeProvider,isLightTheme,textDirection),
+            body: InstructorWidgets.getInstructorCourses(
+                themeProvider, isLightTheme, textDirection),
             floatingActionButton: Padding(
               padding: EdgeInsets.all(6),
               child: FloatingActionButton(
@@ -101,7 +109,8 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                 elevation: 0,
                 backgroundColor: Colors.green.shade800,
                 onPressed: () {
-                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme , textDirection, context,lectureTitleController);
+                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme,
+                      textDirection, context, lectureTitleController);
                 },
                 child: Icon(
                   Icons.add,

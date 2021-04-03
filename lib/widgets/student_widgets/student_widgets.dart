@@ -94,13 +94,14 @@ class StudentWidgets {
       },
     );
   }
+
   static Widget getStudentCoursesInDrawer(ThemeProvider themeProvider,
       bool isLightTheme, TextDirection textDirection) {
     CollectionReference courses =
-    FirebaseFirestore.instance.collection("Courses");
+        FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access_by_student",isEqualTo: true).snapshots(),
+      stream: courses.where("access_by_student", isEqualTo: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(
@@ -114,11 +115,11 @@ class StudentWidgets {
                       .getTranslatedValue("error_connection"),
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor)
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor)
                       : Utilities.getTajwalTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor),
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor),
                 )
               ],
             ),
@@ -149,11 +150,11 @@ class StudentWidgets {
                   MyLocalization.of(context).getTranslatedValue("no_courses"),
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor)
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor)
                       : Utilities.getTajwalTextStyleWithSize(14,
-                      color:
-                      themeProvider.themeColor(isLightTheme).textColor),
+                          color:
+                              themeProvider.themeColor(isLightTheme).textColor),
                 )
               ],
             ),
@@ -165,7 +166,7 @@ class StudentWidgets {
               ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.45)
               : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.45),
           children: snapshot.data.docs.map(
-                (DocumentSnapshot document) {
+            (DocumentSnapshot document) {
               final currentCourse = document.get("course_title");
               return Column(
                 children: [
@@ -174,13 +175,13 @@ class StudentWidgets {
                       currentCourse,
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(12,
-                          color: themeProvider
-                              .themeColor(isLightTheme)
-                              .textColor)
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor)
                           : Utilities.getTajwalTextStyleWithSize(12,
-                          color: themeProvider
-                              .themeColor(isLightTheme)
-                              .textColor),
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor),
                     ),
                   ),
                   SizedBox(
@@ -195,6 +196,7 @@ class StudentWidgets {
       },
     );
   }
+
   static Widget getStudentLectures(ThemeProvider themeProvider,
       bool isLightTheme, TextDirection textDirection, courseID) {
     CollectionReference courses = FirebaseFirestore.instance
@@ -398,7 +400,7 @@ class StudentWidgets {
                     duration: Toast.LENGTH_LONG,
                     gravity: Toast.BOTTOM,
                   );
-                } else if(_multipleNotifier.selectedItems.isNotEmpty){
+                } else if (_multipleNotifier.selectedItems.isNotEmpty) {
                   Map<String, dynamic> chatRoomInfoMap = {
                     "users": [
                       "crKMIHUqhrbBLzjtOsH1b10bnNx1",
@@ -432,7 +434,7 @@ class StudentWidgets {
                       ),
                     ),
                   );
-                }else{
+                } else {
                   Toast.show(
                     MyLocalization.of(context)
                         .getTranslatedValue("choose_something"),

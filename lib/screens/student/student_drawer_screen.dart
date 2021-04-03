@@ -73,14 +73,20 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                                 .getTranslatedValue("student")
                                 .toUpperCase(),
                             style: textDirection == TextDirection.ltr
-                                ? Utilities.getUbuntuTextStyleWithSize(18,
+                                ? Utilities.getUbuntuTextStyleWithSize(
+                                    18,
                                     color: themeProvider
                                         .themeColor(isLightTheme)
-                                        .textColor)
-                                : Utilities.getTajwalTextStyleWithSize(18,
+                                        .textColor,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                                : Utilities.getTajwalTextStyleWithSize(
+                                    18,
                                     color: themeProvider
                                         .themeColor(isLightTheme)
-                                        .textColor),
+                                        .textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           ),
                         ),
                       ),
@@ -120,7 +126,10 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               width: 110.00,
                               height: 110.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): AppTheme.darkTheme.scaffoldBackgroundColor.withOpacity(1),
+                                color: isLightTheme
+                                    ? HexColor("#354251").withOpacity(0.2)
+                                    : AppTheme.darkTheme.scaffoldBackgroundColor
+                                        .withOpacity(1),
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -128,14 +137,16 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               width: 100.00,
                               height: 100.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme? HexColor("#354251").withOpacity(0.2): Colors.black,
+                                color: isLightTheme
+                                    ? HexColor("#354251").withOpacity(0.2)
+                                    : Colors.black,
                                 shape: BoxShape.circle,
                               ),
                             ),
                             CircleAvatar(
                               radius: 45,
                               backgroundImage:
-                              ExactAssetImage("assets/images/student.png"),
+                                  ExactAssetImage("assets/images/student.png"),
                             ),
                           ],
                         ),
