@@ -453,8 +453,8 @@ class InstructorWidgets {
 
         return ListView(
           padding: textDirection == TextDirection.ltr
-              ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.5)
-              : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.5),
+              ? EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.45)
+              : EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.45),
           children: snapshot.data.docs.map(
                 (DocumentSnapshot document) {
               final currentCourse = document.get("course_title");
