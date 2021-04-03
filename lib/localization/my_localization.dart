@@ -1,4 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
+
 class MyLocalization {
   final Locale locale;
 
@@ -11,8 +12,8 @@ class MyLocalization {
   Map<String, String> _localizedValues;
 
   Future load() async {
-    String jasonStringValues =
-    await rootBundle.loadString('assets/languages/${locale.languageCode}.json');
+    String jasonStringValues = await rootBundle
+        .loadString('assets/languages/${locale.languageCode}.json');
 
     Map<String, dynamic> mappedJson = jsonDecode(jasonStringValues);
 
@@ -25,11 +26,10 @@ class MyLocalization {
   }
 
   static const LocalizationsDelegate<MyLocalization> delegate =
-  _DemoLocalizationDelegate();
+      _DemoLocalizationDelegate();
 }
 
-class _DemoLocalizationDelegate
-    extends LocalizationsDelegate<MyLocalization> {
+class _DemoLocalizationDelegate extends LocalizationsDelegate<MyLocalization> {
   const _DemoLocalizationDelegate();
 
   @override

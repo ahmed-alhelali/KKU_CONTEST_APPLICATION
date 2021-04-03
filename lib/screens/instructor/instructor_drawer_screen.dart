@@ -175,7 +175,7 @@ class _InstructorDrawerScreenState extends State<InstructorDrawerScreen> {
                   context,
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: MediaQuery.of(context).size.height * 0.30,
                   width: MediaQuery.of(context).size.width * 0.5,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: InstructorWidgets.getInstructorCoursesInDrawer(

@@ -538,92 +538,96 @@ class InstructorWidgets {
         }
 
         return ListView(
-          padding: EdgeInsets.symmetric(vertical: 6),
+          padding: EdgeInsets.symmetric(vertical: 5,horizontal: 4),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
               final titleLecture = document.get("title");
               // print(titleLecture);
-              return Slidable(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        titleLecture,
-                        style: textDirection == TextDirection.ltr
-                            ? Utilities.getUbuntuTextStyleWithSize(12,
-                                color: themeProvider
-                                    .themeColor(isLightTheme)
-                                    .textColor)
-                            : Utilities.getTajwalTextStyleWithSize(12,
-                                color: themeProvider
-                                    .themeColor(isLightTheme)
-                                    .textColor),
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                          size: 25,
+              return Padding(
+                padding: EdgeInsets.only(top: 5),
+                child:
+                Slidable(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          titleLecture,
+                          style: textDirection == TextDirection.ltr
+                              ? Utilities.getUbuntuTextStyleWithSize(12,
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor)
+                              : Utilities.getTajwalTextStyleWithSize(12,
+                              color: themeProvider
+                                  .themeColor(isLightTheme)
+                                  .textColor),
                         ),
-                        onPressed: () {
-                          FirestoreDB.deleteAllStepsUnderLecture(
-                              courseID, titleLecture);
-                          FirestoreDB.deleteLecture(courseID, titleLecture);
-                        },
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: 25,
+                          ),
+                          onPressed: () {
+                            FirestoreDB.deleteAllStepsUnderLecture(
+                                courseID, titleLecture);
+                            FirestoreDB.deleteLecture(courseID, titleLecture);
+                          },
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: SizedBox(
+                          height: 0.5,
+                          child: Container(
+                            color: isLightTheme ? Colors.grey : Colors.white54,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  actionPane: SlidableStrechActionPane(),
+                  controller: lectureSlidableController,
+                  actions: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        height: 0.5,
-                        child: Container(
-                          color: isLightTheme ? Colors.grey : Colors.white54,
+                      padding: EdgeInsets.only(left: 12),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: IconSlideAction(
+                          caption: MyLocalization.of(context)
+                              .getTranslatedValue("review"),
+                          color: Colors.green.shade800,
+                          icon: Icons.pageview,
+                          onTap: () {
+                            Widgets.showWarringDialog(
+                              themeProvider,
+                              isLightTheme,
+                              "do_not_sent_message_title",
+                              "do_not_sent_message_content",
+                              context,
+                              "logout",
+                              "i_get_it",
+                              textDirection,
+                              functionOfNoButton: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return StudentLectureSteps(
+                                        courseID,
+                                        titleLecture,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     ),
                   ],
                 ),
-                actionPane: SlidableStrechActionPane(),
-                controller: lectureSlidableController,
-                actions: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: IconSlideAction(
-                        caption: MyLocalization.of(context)
-                            .getTranslatedValue("review"),
-                        color: Colors.green.shade800,
-                        icon: Icons.pageview,
-                        onTap: () {
-                          Widgets.showWarringDialog(
-                            themeProvider,
-                            isLightTheme,
-                            "do_not_sent_message_title",
-                            "do_not_sent_message_content",
-                            context,
-                            "logout",
-                            "i_get_it",
-                            textDirection,
-                            functionOfNoButton: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return StudentLectureSteps(
-                                      courseID,
-                                      titleLecture,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
               );
             },
           ).toList(),
