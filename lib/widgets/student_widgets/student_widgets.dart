@@ -167,7 +167,6 @@ class StudentWidgets {
           children: snapshot.data.docs.map(
                 (DocumentSnapshot document) {
               final currentCourse = document.get("course_title");
-              // print(currentCourse);
               return Column(
                 children: [
                   ListTile(
