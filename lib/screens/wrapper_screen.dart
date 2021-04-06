@@ -61,7 +61,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         FontAwesomeIcons.chalkboardTeacher,
                         size: 80,
                         textDirection: TextDirection.ltr,
-                        color: Theme.of(context).iconTheme.color,
+                        color: Theme.of(context).shadowColor,
                       ),
                       SizedBox(
                         width: 40,
@@ -82,7 +82,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         FontAwesomeIcons.users,
                         size: 80,
                         textDirection: TextDirection.ltr,
-                        color: Theme.of(context).iconTheme.color,
+                        color: Theme.of(context).shadowColor,
                       ),
                     ],
                   ),
