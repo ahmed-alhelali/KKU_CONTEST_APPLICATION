@@ -85,6 +85,27 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                   },
                 ),
               ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                  child: Text(
+                    MyLocalization.of(context).getTranslatedValue("new_lecture"),
+                    style: textDirection == TextDirection.ltr
+                        ? Utilities.getUbuntuTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).textTheme.caption.color,
+                      // fontWeight: FontWeight.bold,
+                    )
+                        : Utilities.getTajwalTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).textTheme.caption.color,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
               Column(
                 children: [
                   SizedBox(
@@ -148,16 +169,19 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       16,
                       color: Theme.of(context).textTheme.caption.color,
                     )
-                  // : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black26: Colors.grey))
-                  : Utilities.getUbuntuTextStyleWithSize(16, color: Colors.red))
+                  : Utilities.getUbuntuTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).disabledColor,
+                    ))
               : (_currentStep == 0
                   ? Utilities.getTajwalTextStyleWithSize(
                       14,
                       color: Theme.of(context).textTheme.caption.color,
                     )
-                  // : Utilities.getUbuntuTextStyleWithSize(14,color:  isLightTheme? Colors.black26: Colors.grey)),
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.red)),
+                  : Utilities.getUbuntuTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).disabledColor,
+                    )),
         ),
         content: Padding(
             padding: EdgeInsets.only(bottom: 10),
@@ -241,25 +265,22 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
 
       //second
       Step(
-        title: Text(
-          MyLocalization.of(context).getTranslatedValue("set_steps"),
-          style: textDirection == TextDirection.ltr
-              ? (_currentStep == 1
-                  ? Utilities.getUbuntuTextStyleWithSize(
-                      16,
-                      color: Theme.of(context).textTheme.caption.color,
-                    )
-                  // : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black54: Colors.grey))
-                  : Utilities.getUbuntuTextStyleWithSize(16, color: Colors.red))
-              : (_currentStep == 1
-                  ? Utilities.getTajwalTextStyleWithSize(
-                      14,
-                      color: Theme.of(context).textTheme.caption.color,
-                    )
-                  // : Utilities.getUbuntuTextStyleWithSize(14,color:  isLightTheme? Colors.black26: Colors.grey)),
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.red)),
-        ),
+        title: Text(MyLocalization.of(context).getTranslatedValue("set_steps"),
+            style: textDirection == TextDirection.ltr
+                ? (_currentStep == 1
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        16,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getUbuntuTextStyleWithSize(16,
+                        color: Theme.of(context).disabledColor))
+                : (_currentStep == 1
+                    ? Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getUbuntuTextStyleWithSize(16,
+                        color: Theme.of(context).disabledColor))),
         content: Column(
           children: [
             Text(
@@ -324,7 +345,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       cancel();
                     } else {
                       addNewLecture();
-                      // print(descriptionStepController.text);
                       Navigator.pop(context);
                     }
                   },
@@ -343,7 +363,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                         ? Utilities.getUbuntuTextStyleWithSize(12)
                         : Utilities.getTajwalTextStyleWithSize(12),
                   ),
-                  // onPressed: continued,
                   onPressed: () {
                     if (_currentStep < 3) {
                       continued();
@@ -370,16 +389,19 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       16,
                       color: Theme.of(context).textTheme.caption.color,
                     )
-                  // : Utilities.getUbuntuTextStyleWithSize(16,color: isLightTheme? Colors.black54: Colors.grey))
-                  : Utilities.getUbuntuTextStyleWithSize(16, color: Colors.red))
+                  : Utilities.getUbuntuTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).disabledColor,
+                    ))
               : (_currentStep == 2
                   ? Utilities.getTajwalTextStyleWithSize(
                       14,
                       color: Theme.of(context).textTheme.caption.color,
                     )
-                  // : Utilities.getUbuntuTextStyleWithSize(14,color:  isLightTheme? Colors.black26: Colors.grey)),
-                  : Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Colors.red)),
+                  : Utilities.getUbuntuTextStyleWithSize(
+                      16,
+                      color: Theme.of(context).disabledColor,
+                    )),
         ),
         content: Column(
           children: [
@@ -409,7 +431,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                       12,
                       color: Theme.of(context).textTheme.caption.color,
                     ),
-              // controller: numberOfStepsController,
               decoration: InputDecoration(
                 errorText: messageValidate
                     ? MyLocalization.of(context).getTranslatedValue("validate")
@@ -455,7 +476,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                         ? Utilities.getUbuntuTextStyleWithSize(12)
                         : Utilities.getTajwalTextStyleWithSize(12),
                   ),
-                  // onPressed: continued,
                   onPressed: () {
                     cancel();
                   },
@@ -474,7 +494,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                         ? Utilities.getUbuntuTextStyleWithSize(12)
                         : Utilities.getTajwalTextStyleWithSize(12),
                   ),
-                  // onPressed: continued,
                   onPressed: () {
                     if (_currentStep < 2) {
                       continued();
@@ -485,7 +504,6 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                         });
                       } else {
                         addNewLecture();
-                        // print(descriptionStepController.text);
                         Navigator.pop(context);
                       }
                     }

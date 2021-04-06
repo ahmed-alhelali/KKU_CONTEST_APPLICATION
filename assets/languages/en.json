@@ -10,6 +10,7 @@
   "app_language": "App Language",
   "delete": "DELETE",
   "get_id": "GET ID",
+  "new_lecture" : "NEW LECTURE",
   "are_you_sure": "Are You Sure?",
   "student_logout_warning": "If you need help from your instructor you must be LOGGED IN",
   "instructor_logout_warning": "if you want to create lectures and communicate with your students you must be LOGGED IN",

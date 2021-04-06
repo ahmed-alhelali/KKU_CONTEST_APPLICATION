@@ -22,9 +22,9 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(
-          highlightElevation: 0,
-          elevation: 0,
-          backgroundColor: Colors.green.shade800,
+          // highlightElevation: 0,
+          // elevation: 0,
+          // backgroundColor: Colors.green.shade800,
           onPressed: () {
             Navigator.push(
               context,

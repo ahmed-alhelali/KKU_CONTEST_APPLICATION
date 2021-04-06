@@ -26,14 +26,18 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
         title: Text(
           widget.title.toUpperCase(),
           style: textDirection == TextDirection.ltr
-              ? Utilities.getUbuntuTextStyleWithSize(16,
-                  color: Theme.of(context).textTheme.caption.color,)
-              : Utilities.getTajwalTextStyleWithSize(16,
-            color: Theme.of(context).textTheme.caption.color,),
+              ? Utilities.getUbuntuTextStyleWithSize(
+                  16,
+                  color: Theme.of(context).textTheme.caption.color,
+                )
+              : Utilities.getTajwalTextStyleWithSize(
+                  16,
+                  color: Theme.of(context).textTheme.caption.color,
+                ),
         ),
       ),
-      body: StudentWidgets.getStudentLectures(
-           textDirection, widget.id),
+      body:
+          StudentWidgets.getStudentLectures(context, textDirection, widget.id),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(

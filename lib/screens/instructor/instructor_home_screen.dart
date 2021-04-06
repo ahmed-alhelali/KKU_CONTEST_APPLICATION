@@ -101,9 +101,6 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
             floatingActionButton: Padding(
               padding: EdgeInsets.all(6),
               child: FloatingActionButton(
-                highlightElevation: 0,
-                elevation: 0,
-                backgroundColor: Colors.green.shade800,
                 onPressed: () {
                   InstructorWidgets.addCourseWidget(
                       textDirection, context, lectureTitleController);

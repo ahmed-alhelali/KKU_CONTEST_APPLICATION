@@ -299,8 +299,8 @@ class InstructorWidgets {
                         SizedBox(
                           width: 100,
                           child: FloatingActionButton.extended(
-                            elevation: 0,
-                            highlightElevation: 0,
+                            // elevation: 0,
+                            // highlightElevation: 0,
                             label: Text(
                               MyLocalization.of(context)
                                   .getTranslatedValue("cancel"),
@@ -566,8 +566,7 @@ class InstructorWidgets {
                         child: SizedBox(
                           height: 0.5,
                           child: Container(
-                            color: Colors.red,
-                            // color: isLightTheme ? Colors.grey : Colors.white54,
+                            color: Theme.of(context).dividerColor,
                           ),
                         ),
                       ),

@@ -16,7 +16,6 @@ class ThemeProvider extends ChangeNotifier {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     bool currentValue = !isOn;
     setCurrentStatusNavigationBarColor(currentValue);
-    themeColor(currentValue);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });
@@ -32,21 +31,12 @@ class ThemeProvider extends ChangeNotifier {
       ));
     } else {
       return SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: AppTheme.darkTheme.scaffoldBackgroundColor,
+        systemNavigationBarColor: HexColor('#14191F'),
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ));
     }
-  }
-
-  ThemeColor themeColor(bool isLightTheme) {
-    return ThemeColor(
-      textColor: isLightTheme ? Colors.black : Colors.white,
-      toggleButtonColor: isLightTheme ? Color(0xFFFFFFFF) : Color(0xFf34323d),
-      toggleBackgroundColor:
-          isLightTheme ? Color(0xFFe7e7e8) : Color(0xFF222029),
-    );
   }
 
   ThemeData themeAPP(bool isLightTheme) {
@@ -65,55 +55,22 @@ class ThemeProvider extends ChangeNotifier {
       iconTheme:
           IconThemeData(color: isLightTheme ? Colors.black87 : Colors.grey),
       textTheme: TextTheme(
-          caption: TextStyle(
-        color: isLightTheme ? Colors.black : Colors.white,
-      )),
+        caption: TextStyle(
+          color: isLightTheme ? Colors.black : Colors.white,
+        ),
+      ),
+      disabledColor: isLightTheme ? Colors.black26 : Colors.grey,
       shadowColor: isLightTheme ? Colors.black54 : Colors.white10,
+      dividerColor: isLightTheme ? Colors.grey : Colors.white54,
       cardColor: isLightTheme ? Colors.grey.shade300 : HexColor("#29333E"),
       canvasColor: isLightTheme ? Colors.black : Colors.white,
-      sliderTheme: SliderThemeData(
-
-      )
+      accentColor: isLightTheme ? Colors.blue.shade100 : Colors.grey,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: Colors.red,
+        backgroundColor: Colors.green.shade800,
+        highlightElevation: 0,
+        elevation: 0,
+      ),
     );
   }
-}
-
-class AppTheme {
-  static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: HexColor('#14191F'),
-    primaryColor: Colors.black,
-    backgroundColor: HexColor('#1d242c'),
-    colorScheme: ColorScheme.dark(),
-    appBarTheme: AppBarTheme(
-      iconTheme: IconThemeData(color: Colors.white),
-      brightness: Brightness.dark,
-    ),
-  );
-
-  static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.grey.shade200,
-    primaryColor: Colors.white,
-    colorScheme: ColorScheme.light(),
-    appBarTheme: AppBarTheme(
-      iconTheme: IconThemeData(color: Colors.black),
-      brightness: Brightness.light,
-    ),
-  );
-}
-
-class ThemeColor {
-  Color backgroundColor;
-  Color toggleButtonColor;
-  Color toggleBackgroundColor;
-  Color textColor;
-  List<BoxShadow> shadow;
-
-  ThemeColor({
-    this.backgroundColor,
-    this.toggleBackgroundColor,
-    this.toggleButtonColor,
-    this.textColor,
-    this.shadow,
-  });
 }

@@ -25,7 +25,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final _multipleNotifier = Provider.of<MultipleNotifier>(context);
+    final _multipleNotifier = Provider.of<MultipleNotifier>(context,listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -62,10 +62,12 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                         ? Utilities.getUbuntuTextStyleWithSize(
                             18,
                             color: Theme.of(context).textTheme.caption.color,
+                            fontWeight: FontWeight.bold,
                           )
                         : Utilities.getTajwalTextStyleWithSize(
                             18,
                             color: Theme.of(context).textTheme.caption.color,
+                            fontWeight: FontWeight.bold,
                           ),
                     textAlign: TextAlign.center,
                   ),

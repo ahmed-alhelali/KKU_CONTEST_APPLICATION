@@ -117,8 +117,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                     child: SizedBox(
                       height: 0.5,
                       child: Container(
-                        color: Colors.red,
-                        // color: isLightTheme ? Colors.grey : Colors.white54,
+                        color: Theme.of(context).dividerColor,
                       ),
                     ),
                   ),

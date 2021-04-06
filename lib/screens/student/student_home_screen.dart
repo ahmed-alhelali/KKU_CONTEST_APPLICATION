@@ -110,8 +110,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       print("ignore the click");
                     }
                   },
-                  color: Colors.red,
-                  // color: isLightTheme ? Colors.black : Colors.white,
+                  color: Theme.of(context).appBarTheme.iconTheme.color,
                 ),
               ],
               centerTitle: true,
@@ -143,19 +142,13 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(
-                            // color: isLightTheme
-                            //     ? Colors.black54
-                            //     : AppTheme.darkTheme.backgroundColor,
-                            color: Colors.red,
+                            color: Theme.of(context).shadowColor,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(
-                            // color: isLightTheme
-                            //     ? Colors.black54
-                            //     : AppTheme.darkTheme.backgroundColor,
-                            color: Colors.red,
+                            color: Theme.of(context).shadowColor,
                           ),
                         ),
                         hintText: MyLocalization.of(context)

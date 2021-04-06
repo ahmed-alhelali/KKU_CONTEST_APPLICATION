@@ -205,7 +205,7 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentLectures(TextDirection textDirection, courseID) {
+  static Widget getStudentLectures(BuildContext context,TextDirection textDirection, courseID) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -303,7 +303,7 @@ class StudentWidgets {
                       height: 0.5,
                       child: Container(
                         // color: isLightTheme ? Colors.grey : Colors.white54,
-                        color: Colors.red,
+                        color: Theme.of(context).dividerColor,
                       ),
                     ),
                   ),

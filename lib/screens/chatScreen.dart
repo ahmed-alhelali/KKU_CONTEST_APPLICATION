@@ -3,8 +3,6 @@ import 'package:kku_contest_app/imports.dart';
 class ChatScreen extends StatefulWidget {
   final String chatWithUsername, courseID;
 
-  // final List<String> listTitlesSelected;
-
   const ChatScreen(
     this.chatWithUsername,
     this.courseID,
@@ -278,9 +276,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                     color: Colors.grey),
                             filled: true,
                             fillColor: Theme.of(context).backgroundColor,
-                            // hintStyle: TextStyle(
-                            //   color: isLightTheme ? Colors.black : Colors.grey,
-                            // ),
                           ),
                         ),
                       ),
@@ -292,8 +287,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       onPressed: () {
                         addMessage(true);
-                        // print(widget.listTitlesSelected);
-                        // setInitMessages();
                       },
                     ),
                   ],
