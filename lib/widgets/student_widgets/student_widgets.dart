@@ -328,7 +328,7 @@ class StudentWidgets {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          elevation: 10,
+          elevation: 0,
           backgroundColor: Theme.of(context).backgroundColor,
           title: Text(
             MyLocalization.of(context).getTranslatedValue("which_steps_title"),

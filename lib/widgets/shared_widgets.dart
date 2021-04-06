@@ -354,7 +354,7 @@ class Widgets {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      elevation: 10,
+      elevation: 0,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         MyLocalization.of(context).getTranslatedValue(keyTitle),
