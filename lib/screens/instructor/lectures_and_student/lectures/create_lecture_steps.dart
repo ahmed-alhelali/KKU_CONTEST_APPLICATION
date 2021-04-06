@@ -90,18 +90,19 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                   child: Text(
-                    MyLocalization.of(context).getTranslatedValue("new_lecture"),
+                    MyLocalization.of(context)
+                        .getTranslatedValue("new_lecture"),
                     style: textDirection == TextDirection.ltr
                         ? Utilities.getUbuntuTextStyleWithSize(
-                      16,
-                      color: Theme.of(context).textTheme.caption.color,
-                      // fontWeight: FontWeight.bold,
-                    )
+                            16,
+                            color: Theme.of(context).textTheme.caption.color,
+                            // fontWeight: FontWeight.bold,
+                          )
                         : Utilities.getTajwalTextStyleWithSize(
-                      16,
-                      color: Theme.of(context).textTheme.caption.color,
-                      // fontWeight: FontWeight.bold,
-                    ),
+                            16,
+                            color: Theme.of(context).textTheme.caption.color,
+                            // fontWeight: FontWeight.bold,
+                          ),
                     textAlign: TextAlign.center,
                   ),
                 ),
