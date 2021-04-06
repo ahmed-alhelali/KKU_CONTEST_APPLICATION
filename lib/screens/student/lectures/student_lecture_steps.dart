@@ -25,13 +25,9 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
     final _multipleNotifier = Provider.of<MultipleNotifier>(context);
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -40,9 +36,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
           padding: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: isLightTheme
-                ? AppTheme.lightTheme.backgroundColor
-                : AppTheme.darkTheme.backgroundColor,
+            color: Theme.of(context).backgroundColor,
           ),
           child: Stack(
             children: [
@@ -51,7 +45,7 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                 child: IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: isLightTheme ? Colors.black : Colors.white,
+                    color: Theme.of(context).appBarTheme.iconTheme.color,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -65,14 +59,14 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                   child: Text(
                     widget.title,
                     style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(18,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor)
-                        : Utilities.getTajwalTextStyleWithSize(18,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor),
+                        ? Utilities.getUbuntuTextStyleWithSize(
+                            18,
+                            color: Theme.of(context).textTheme.caption.color,
+                          )
+                        : Utilities.getTajwalTextStyleWithSize(
+                            18,
+                            color: Theme.of(context).textTheme.caption.color,
+                          ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -104,14 +98,20 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                 title: Text(
                                   e.toString(),
                                   style: textDirection == TextDirection.ltr
-                                      ? Utilities.getUbuntuTextStyleWithSize(16,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor)
-                                      : Utilities.getTajwalTextStyleWithSize(14,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor),
+                                      ? Utilities.getUbuntuTextStyleWithSize(
+                                          16,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        )
+                                      : Utilities.getTajwalTextStyleWithSize(
+                                          14,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        ),
                                 ),
                                 content: Column(
                                   children: [
@@ -119,15 +119,21 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                       descriptions[_currentStep],
                                       style: textDirection == TextDirection.ltr
                                           ? Utilities
-                                              .getUbuntuTextStyleWithSize(13,
-                                                  color: themeProvider
-                                                      .themeColor(isLightTheme)
-                                                      .textColor)
+                                              .getUbuntuTextStyleWithSize(
+                                              13,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .caption
+                                                  .color,
+                                            )
                                           : Utilities
-                                              .getTajwalTextStyleWithSize(13,
-                                                  color: themeProvider
-                                                      .themeColor(isLightTheme)
-                                                      .textColor),
+                                              .getTajwalTextStyleWithSize(
+                                              13,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .caption
+                                                  .color,
+                                            ),
                                     ),
                                     SizedBox(
                                       height: 25,
@@ -180,14 +186,11 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                               widget.title,
                                                               titles,
                                                               context,
-                                                              isLightTheme,
                                                               textDirection,
                                                               id: id);
                                                     } else {
                                                       Widgets
                                                           .getDialogToAskIfNeedMoreSteps(
-                                                        themeProvider,
-                                                        isLightTheme,
                                                         mySelectedTitles,
                                                         "you_asked_help",
                                                         context,
@@ -201,7 +204,6 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                   widget.title,
                                                                   titles,
                                                                   context,
-                                                                  isLightTheme,
                                                                   textDirection,
                                                                   id: id);
                                                         },
@@ -209,12 +211,15 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                           if (id ==
                                                               "50Un4ErjskQVOrubCLzUloBsvHl1") {
                                                             Toast.show(
-                                                              MyLocalization.of(context)
+                                                              MyLocalization.of(
+                                                                      context)
                                                                   .getTranslatedValue(
-                                                                  "you_cannot_create_chatting"),
+                                                                      "you_cannot_create_chatting"),
                                                               context,
-                                                              duration: Toast.LENGTH_LONG,
-                                                              gravity: Toast.BOTTOM,
+                                                              duration: Toast
+                                                                  .LENGTH_LONG,
+                                                              gravity:
+                                                                  Toast.BOTTOM,
                                                             );
                                                           } else {
                                                             String name = textDirection ==

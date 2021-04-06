@@ -19,12 +19,8 @@ class _InstructorWrapperScreenState extends State<InstructorWrapperScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
-
     return Scaffold(
-      backgroundColor: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
-
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           InstructorDrawerScreen(

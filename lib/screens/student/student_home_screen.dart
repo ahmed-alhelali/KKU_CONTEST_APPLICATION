@@ -18,8 +18,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
     final searchController = TextEditingController();
     if (_scaleAnimation == null) {
       _scaleAnimation =
@@ -47,9 +45,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
           borderRadius:
               menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
           child: Scaffold(
-            backgroundColor: isLightTheme
-                ? AppTheme.lightTheme.scaffoldBackgroundColor
-                : AppTheme.darkTheme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               leading: !menuOpen
                   ? IconButton(
@@ -61,7 +57,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                           menuOpen = true;
                         });
                       },
-                      color: isLightTheme ? Colors.black : Colors.white,
+                      color: Theme.of(context).appBarTheme.iconTheme.color,
                     )
                   : IconButton(
                       icon: Icon(Icons.arrow_back_ios),
@@ -71,17 +67,20 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                           menuOpen = false;
                         });
                       },
-                      color: isLightTheme ? Colors.black : Colors.white,
+                      color: Theme.of(context).appBarTheme.iconTheme.color,
                     ),
               title: Text(
                 MyLocalization.of(context)
                     .getTranslatedValue("home_page_title"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14,
-                        color:
-                            themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
               ),
               actions: [
                 IconButton(
@@ -111,14 +110,13 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       print("ignore the click");
                     }
                   },
-                  color: isLightTheme ? Colors.black : Colors.white,
+                  color: Colors.red,
+                  // color: isLightTheme ? Colors.black : Colors.white,
                 ),
               ],
               centerTitle: true,
               elevation: 0,
-              brightness: isLightTheme
-                  ? AppTheme.lightTheme.appBarTheme.brightness
-                  : AppTheme.darkTheme.appBarTheme.brightness,
+              brightness: Theme.of(context).appBarTheme.brightness,
               backgroundColor: Colors.transparent,
             ),
             body: Column(
@@ -130,14 +128,14 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     child: TextField(
                       controller: searchController,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(16,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(16,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              16,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              16,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
@@ -145,17 +143,19 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(
-                            color: isLightTheme
-                                ? Colors.black54
-                                : AppTheme.darkTheme.backgroundColor,
+                            // color: isLightTheme
+                            //     ? Colors.black54
+                            //     : AppTheme.darkTheme.backgroundColor,
+                            color: Colors.red,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(
-                            color: isLightTheme
-                                ? Colors.black54
-                                : AppTheme.darkTheme.backgroundColor,
+                            // color: isLightTheme
+                            //     ? Colors.black54
+                            //     : AppTheme.darkTheme.backgroundColor,
+                            color: Colors.red,
                           ),
                         ),
                         hintText: MyLocalization.of(context)
@@ -170,8 +170,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                   ),
                 ),
                 Expanded(
-                    child: StudentWidgets.getStudentCourses(
-                        themeProvider, isLightTheme, textDirection)),
+                    child: StudentWidgets.getStudentCourses(textDirection)),
               ],
             ),
           ),

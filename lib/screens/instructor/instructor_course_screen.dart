@@ -29,51 +29,44 @@ class _InstructorCourseState extends State<InstructorCourse>
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: isLightTheme
-            ? AppTheme.lightTheme.scaffoldBackgroundColor
-            : AppTheme.darkTheme.scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          brightness: isLightTheme
-              ? AppTheme.lightTheme.appBarTheme.brightness
-              : AppTheme.darkTheme.appBarTheme.brightness,
+          brightness: Theme.of(context).appBarTheme.brightness,
           backgroundColor: Colors.transparent,
-          iconTheme: isLightTheme
-              ? AppTheme.lightTheme.appBarTheme.iconTheme
-              : AppTheme.darkTheme.appBarTheme.iconTheme,
+          iconTheme: Theme.of(context).appBarTheme.iconTheme,
           title: Text(
             widget.courseTitle,
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(16,
-                    color: themeProvider.themeColor(isLightTheme).textColor)
-                : Utilities.getTajwalTextStyleWithSize(16,
-                    color: themeProvider.themeColor(isLightTheme).textColor),
+                ? Utilities.getUbuntuTextStyleWithSize(
+                    16,
+                    color: Theme.of(context).textTheme.caption.color,
+                  )
+                : Utilities.getTajwalTextStyleWithSize(
+                    16,
+                    color: Theme.of(context).textTheme.caption.color,
+                  ),
           ),
           bottom: TabBar(
             unselectedLabelColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: isLightTheme
-                  ? AppTheme.lightTheme.backgroundColor
-                  : AppTheme.darkTheme.backgroundColor,
+              color: Theme.of(context).backgroundColor,
             ),
             tabs: [
               Tab(
-                child: InstructorWidgets.getChildForTab(context,"lecture_section", themeProvider,
-                    isLightTheme, textDirection),
+                child: InstructorWidgets.getChildForTab(
+                    context, "lecture_section", textDirection),
               ),
               Tab(
-
-                child:  InstructorWidgets.getChildForTab(context,"student_section", themeProvider,
-                    isLightTheme, textDirection),
+                child: InstructorWidgets.getChildForTab(
+                    context, "student_section", textDirection),
               ),
             ],
           ),

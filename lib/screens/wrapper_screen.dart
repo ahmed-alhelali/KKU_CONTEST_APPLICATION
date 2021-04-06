@@ -1,4 +1,3 @@
-
 import 'package:kku_contest_app/imports.dart';
 
 class WrapperScreen extends StatefulWidget {
@@ -10,13 +9,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
-
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -24,9 +18,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
           margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: isLightTheme
-                ? AppTheme.lightTheme.backgroundColor
-                : AppTheme.darkTheme.backgroundColor,
+            color: Theme.of(context).backgroundColor,
           ),
           child: Stack(
             children: [
@@ -50,8 +42,9 @@ class _WrapperScreenState extends State<WrapperScreen> {
                     MyLocalization.of(context)
                         .getTranslatedValue("change_language"),
                     style: GoogleFonts.ubuntu(
-                        fontSize: 16,
-                        color: isLightTheme ? Colors.black : Colors.white),
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
                   ),
                 ),
               ),
@@ -68,7 +61,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         FontAwesomeIcons.chalkboardTeacher,
                         size: 80,
                         textDirection: TextDirection.ltr,
-                        color: isLightTheme? Colors.black54 : Colors.white30,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       SizedBox(
                         width: 40,
@@ -80,7 +73,6 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           size: 50,
                           textDirection: TextDirection.ltr,
                           color: Colors.green.shade800,
-
                         ),
                       ),
                       SizedBox(
@@ -90,8 +82,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         FontAwesomeIcons.users,
                         size: 80,
                         textDirection: TextDirection.ltr,
-                        color: isLightTheme? Colors.black54 : Colors.white30,
-
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ],
                   ),
@@ -105,16 +96,16 @@ class _WrapperScreenState extends State<WrapperScreen> {
                       MyLocalization.of(context)
                           .getTranslatedValue("sign_in_page_title"),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(24,
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              24,
                               fontWeight: FontWeight.bold,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(24,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              24,
                               fontWeight: FontWeight.bold,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                     SizedBox(
                       height: 25,
@@ -123,14 +114,14 @@ class _WrapperScreenState extends State<WrapperScreen> {
                       MyLocalization.of(context)
                           .getTranslatedValue("sign_in_page_subTitle"),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(14,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(14,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              14,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              14,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                   ],
                 ),
@@ -148,22 +139,23 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         style: TextButton.styleFrom(
                           primary: Colors.grey,
                           elevation: 0,
-                          backgroundColor: isLightTheme
-                              ? AppTheme.lightTheme.scaffoldBackgroundColor
-                              : AppTheme.darkTheme.scaffoldBackgroundColor,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                         ),
                         child: Text(
                           MyLocalization.of(context)
                               .getTranslatedValue("instructor"),
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor)
-                              : Utilities.getTajwalTextStyleWithSize(12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  14,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                         ),
                         onPressed: () async {
                           UserCredential userCredential = await FirebaseAuth
@@ -193,22 +185,23 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         style: TextButton.styleFrom(
                           primary: Colors.grey,
                           elevation: 0,
-                          backgroundColor: isLightTheme
-                              ? AppTheme.lightTheme.scaffoldBackgroundColor
-                              : AppTheme.darkTheme.scaffoldBackgroundColor,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
                         ),
                         child: Text(
                           MyLocalization.of(context)
                               .getTranslatedValue("student"),
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor)
-                              : Utilities.getTajwalTextStyleWithSize(12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  14,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                         ),
                         onPressed: () async {
                           UserCredential userCredential = await FirebaseAuth

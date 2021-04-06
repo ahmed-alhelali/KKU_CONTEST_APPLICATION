@@ -26,8 +26,6 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     if (_scaleAnimation == null) {
       _scaleAnimation =
@@ -56,9 +54,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
           borderRadius:
               menuOpen ? BorderRadius.circular(30) : BorderRadius.circular(0),
           child: Scaffold(
-            backgroundColor: isLightTheme
-                ? AppTheme.lightTheme.scaffoldBackgroundColor
-                : AppTheme.darkTheme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               leading: !menuOpen
                   ? IconButton(
@@ -69,7 +65,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                           menuOpen = true;
                         });
                       },
-                      color: isLightTheme ? Colors.black : Colors.white,
+                      color: Theme.of(context).appBarTheme.iconTheme.color,
                     )
                   : IconButton(
                       icon: Icon(Icons.arrow_back_ios),
@@ -79,29 +75,29 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                           menuOpen = false;
                         });
                       },
-                      color: isLightTheme ? Colors.black : Colors.white,
+                      color: Theme.of(context).appBarTheme.iconTheme.color,
                     ),
               title: Text(
                 MyLocalization.of(context)
                     .getTranslatedValue("home_page_title"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14,
-                        color:
-                            themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
               ),
               centerTitle: true,
               elevation: 0,
-              brightness: isLightTheme
-                  ? AppTheme.lightTheme.appBarTheme.brightness
-                  : AppTheme.darkTheme.appBarTheme.brightness,
+              brightness: Theme.of(context).appBarTheme.brightness,
               // iconTheme: isLightTheme ? AppTheme.lightTheme.appBarTheme.iconTheme : AppTheme.darkTheme.appBarTheme.iconTheme,
               iconTheme: Theme.of(context).appBarTheme.iconTheme,
               backgroundColor: Colors.transparent,
             ),
-            body: InstructorWidgets.getInstructorCourses(
-                themeProvider, isLightTheme, textDirection),
+            body: InstructorWidgets.getInstructorCourses(textDirection),
             floatingActionButton: Padding(
               padding: EdgeInsets.all(6),
               child: FloatingActionButton(
@@ -109,7 +105,7 @@ class _InstructorHomeScreenState extends State<InstructorHomeScreen> {
                 elevation: 0,
                 backgroundColor: Colors.green.shade800,
                 onPressed: () {
-                  InstructorWidgets.addCourseWidget(themeProvider, isLightTheme,
+                  InstructorWidgets.addCourseWidget(
                       textDirection, context, lectureTitleController);
                 },
                 child: Icon(

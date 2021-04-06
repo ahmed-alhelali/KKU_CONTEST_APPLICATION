@@ -1,17 +1,15 @@
 import 'package:kku_contest_app/imports.dart';
 
 class Widgets {
-  static changeLanguageWidget(ThemeProvider themeProvider, bool isLightTheme,
+  static changeLanguageWidget(
       TextDirection textDirection, BuildContext context) {
     showModalBottomSheet(
       context: context,
       elevation: 10,
-      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      barrierColor: Theme.of(context).shadowColor,
       enableDrag: true,
       isScrollControlled: true,
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
@@ -28,7 +26,7 @@ class Widgets {
                       bottom: MediaQuery.of(context).size.height * 0.2,
                       child: Icon(
                         FontAwesomeIcons.language,
-                        color: themeProvider.themeColor(isLightTheme).textColor,
+                        color: Theme.of(context).textTheme.caption.color,
                         size: 35,
                       ),
                     )
@@ -37,7 +35,7 @@ class Widgets {
                       bottom: MediaQuery.of(context).size.height * 0.2,
                       child: Icon(
                         FontAwesomeIcons.language,
-                        color: themeProvider.themeColor(isLightTheme).textColor,
+                        color: Theme.of(context).textTheme.caption.color,
                         size: 35,
                       ),
                     ),
@@ -51,7 +49,7 @@ class Widgets {
                       width: 150,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: themeProvider.themeColor(isLightTheme).textColor,
+                        color: Theme.of(context).textTheme.caption.color,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
@@ -60,20 +58,20 @@ class Widgets {
                           .getTranslatedValue("app_language")
                           .toUpperCase(),
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(16,
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              16,
                               letterSpacing: 1,
                               height: 1.2,
                               fontWeight: FontWeight.bold,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(16,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              16,
                               letterSpacing: 1,
                               height: 1.2,
                               fontWeight: FontWeight.bold,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                     Divider(
                       color: Colors.grey,
@@ -91,30 +89,34 @@ class Widgets {
                                 style: TextButton.styleFrom(
                                   primary: Colors.grey,
                                   elevation: 0,
-                                  backgroundColor: textDirection ==
-                                          TextDirection.ltr
-                                      ? isLightTheme
-                                          ? Colors.grey.shade200
-                                          : AppTheme.darkTheme.backgroundColor
-                                      : Colors.transparent,
+                                  backgroundColor:
+                                      textDirection == TextDirection.ltr
+                                          ? Theme.of(context).backgroundColor
+                                          : Colors.transparent,
                                 ),
                                 child: Text(
                                   'English',
                                   style: textDirection == TextDirection.ltr
-                                      ? Utilities.getUbuntuTextStyleWithSize(16,
+                                      ? Utilities.getUbuntuTextStyleWithSize(
+                                          16,
                                           letterSpacing: 1,
                                           height: 1.2,
                                           fontWeight: FontWeight.bold,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor)
-                                      : Utilities.getTajwalTextStyleWithSize(16,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        )
+                                      : Utilities.getTajwalTextStyleWithSize(
+                                          16,
                                           letterSpacing: 1,
                                           height: 1.2,
                                           fontWeight: FontWeight.bold,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor),
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        ),
                                 ),
                                 onPressed: () {
                                   Utilities.changeLanguages(
@@ -132,32 +134,36 @@ class Widgets {
                               width: 90,
                               child: TextButton(
                                 style: TextButton.styleFrom(
-                                    primary: Colors.grey,
-                                    elevation: 0,
-                                    backgroundColor:
-                                        textDirection == TextDirection.ltr
-                                            ? Colors.transparent
-                                            : isLightTheme
-                                                ? Colors.grey.shade200
-                                                : AppTheme
-                                                    .darkTheme.backgroundColor),
+                                  primary: Colors.grey,
+                                  elevation: 0,
+                                  backgroundColor:
+                                      textDirection == TextDirection.ltr
+                                          ? Colors.transparent
+                                          : Theme.of(context).backgroundColor,
+                                ),
                                 child: Text(
                                   'عربي',
                                   style: textDirection == TextDirection.ltr
-                                      ? Utilities.getUbuntuTextStyleWithSize(16,
+                                      ? Utilities.getUbuntuTextStyleWithSize(
+                                          16,
                                           letterSpacing: 1,
                                           height: 1.2,
                                           fontWeight: FontWeight.bold,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor)
-                                      : Utilities.getTajwalTextStyleWithSize(16,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        )
+                                      : Utilities.getTajwalTextStyleWithSize(
+                                          16,
                                           letterSpacing: 1,
                                           height: 1.2,
                                           fontWeight: FontWeight.bold,
-                                          color: themeProvider
-                                              .themeColor(isLightTheme)
-                                              .textColor),
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .color,
+                                        ),
                                 ),
                                 onPressed: () {
                                   Utilities.changeLanguages(
@@ -188,8 +194,6 @@ class Widgets {
   }
 
   static Widget getContainerWithOnOnTap(
-      ThemeProvider themeProvider,
-      bool isLightTheme,
       Icon icon,
       String keyMap,
       TextDirection textDirection,
@@ -209,9 +213,7 @@ class Widgets {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
-              color: isLightTheme
-                  ? AppTheme.lightTheme.scaffoldBackgroundColor
-                  : AppTheme.darkTheme.scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: textDirection == TextDirection.ltr
                   ? BorderRadius.only(
                       topRight: Radius.circular(25),
@@ -237,14 +239,14 @@ class Widgets {
                   Text(
                     MyLocalization.of(context).getTranslatedValue(keyMap),
                     style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(13,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor)
-                        : Utilities.getTajwalTextStyleWithSize(13,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor),
+                        ? Utilities.getUbuntuTextStyleWithSize(
+                            13,
+                            color: Theme.of(context).textTheme.caption.color,
+                          )
+                        : Utilities.getTajwalTextStyleWithSize(
+                            13,
+                            color: Theme.of(context).textTheme.caption.color,
+                          ),
                   ),
                   SizedBox(
                     width: 10,
@@ -260,8 +262,6 @@ class Widgets {
   }
 
   static showWarringDialog(
-    ThemeProvider themeProvider,
-    bool isLightTheme,
     String keyTitle,
     String keyContent,
     BuildContext context,
@@ -276,25 +276,28 @@ class Widgets {
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 10,
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         MyLocalization.of(context).getTranslatedValue(keyTitle),
         style: textDirection == TextDirection.ltr
-            ? Utilities.getUbuntuTextStyleWithSize(20,
-                color: themeProvider.themeColor(isLightTheme).textColor)
-            : Utilities.getTajwalTextStyleWithSize(20,
-                color: themeProvider.themeColor(isLightTheme).textColor),
+            ? Utilities.getUbuntuTextStyleWithSize(
+                20,
+                color: Theme.of(context).textTheme.caption.color,
+              )
+            : Utilities.getTajwalTextStyleWithSize(
+                20,
+                color: Theme.of(context).textTheme.caption.color,
+              ),
       ),
       content: Text(
         MyLocalization.of(context).getTranslatedValue(keyContent),
         style: textDirection == TextDirection.ltr
             ? Utilities.getUbuntuTextStyleWithSize(14,
-                color: themeProvider.themeColor(isLightTheme).textColor,
-                height: 1.5)
-            : Utilities.getTajwalTextStyleWithSize(14,
-                color: themeProvider.themeColor(isLightTheme).textColor),
+                color: Theme.of(context).textTheme.caption.color, height: 1.5)
+            : Utilities.getTajwalTextStyleWithSize(
+                14,
+                color: Theme.of(context).textTheme.caption.color,
+              ),
       ),
       actions: [
         functionOfNoButton == null
@@ -332,14 +335,12 @@ class Widgets {
 
     showDialog(
       context: context,
-      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      barrierColor: Theme.of(context).shadowColor,
       builder: (context) => alertDialog,
     );
   }
 
   static getDialogToAskIfNeedMoreSteps(
-    ThemeProvider themeProvider,
-    bool isLightTheme,
     List titles,
     String keyTitle,
     BuildContext context,
@@ -354,16 +355,18 @@ class Widgets {
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 10,
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         MyLocalization.of(context).getTranslatedValue(keyTitle),
         style: textDirection == TextDirection.ltr
-            ? Utilities.getUbuntuTextStyleWithSize(16,
-                color: themeProvider.themeColor(isLightTheme).textColor)
-            : Utilities.getTajwalTextStyleWithSize(16,
-                color: themeProvider.themeColor(isLightTheme).textColor),
+            ? Utilities.getUbuntuTextStyleWithSize(
+                16,
+                color: Theme.of(context).textTheme.caption.color,
+              )
+            : Utilities.getTajwalTextStyleWithSize(
+                16,
+                color: Theme.of(context).textTheme.caption.color,
+              ),
       ),
       content: SingleChildScrollView(
         child: Container(
@@ -378,14 +381,16 @@ class Widgets {
                         Text(
                           e,
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(12,
-                                  color: isLightTheme
-                                      ? Colors.black
-                                      : Colors.white)
-                              : Utilities.getTajwalTextStyleWithSize(12,
-                                  color: isLightTheme
-                                      ? Colors.black
-                                      : Colors.white),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                         ),
                         SizedBox(
                           height: 10,
@@ -432,7 +437,7 @@ class Widgets {
 
     showDialog(
       context: context,
-      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      barrierColor: Theme.of(context).shadowColor,
       builder: (context) => alertDialog,
     );
   }

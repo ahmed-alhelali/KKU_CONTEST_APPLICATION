@@ -2,10 +2,13 @@ import 'package:kku_contest_app/imports.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUsername, courseID;
+
   // final List<String> listTitlesSelected;
 
-  const ChatScreen(this.chatWithUsername, this.courseID,
-);
+  const ChatScreen(
+    this.chatWithUsername,
+    this.courseID,
+  );
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -69,11 +72,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageTile(
-      String message,
-      bool sendByMe,
-      ThemeProvider themeProvider,
-      TextDirection textDirection,
-      bool isLightTheme) {
+    String message,
+    bool sendByMe,
+    TextDirection textDirection,
+  ) {
     return Row(
       textDirection: textDirection,
       mainAxisAlignment:
@@ -118,17 +120,21 @@ class _ChatScreenState extends State<ChatScreen> {
                           sendByMe ? Radius.circular(0) : Radius.circular(24),
                     ),
               color: sendByMe
-                  ? (isLightTheme ? Colors.white : AppTheme.darkTheme.scaffoldBackgroundColor)
-                  : (isLightTheme ? Colors.grey.shade300 : HexColor("#29333E")),
+                  ? (Theme.of(context).scaffoldBackgroundColor)
+                  : (Theme.of(context).cardColor),
             ),
             padding: EdgeInsets.all(16),
             child: Text(
               message,
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(13,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(13,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(
+                      13,
+                      color: Theme.of(context).textTheme.caption.color,
+                    )
+                  : Utilities.getTajwalTextStyleWithSize(
+                      13,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
             ),
           ),
         ),
@@ -136,8 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget chatMessages(ThemeProvider themeProvider, TextDirection textDirection,
-      bool isLightTheme) {
+  Widget chatMessages(TextDirection textDirection) {
     return StreamBuilder(
       stream: messageStream,
       builder: (context, snapshot) {
@@ -151,9 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   return chatMessageTile(
                     ds["message"],
                     myID == ds["sendBy"],
-                    themeProvider,
                     textDirection,
-                    isLightTheme,
                   );
                 },
               )
@@ -190,25 +193,15 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.backgroundColor
-          : AppTheme.darkTheme.backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
-        brightness: isLightTheme
-            ? AppTheme.lightTheme.appBarTheme.brightness
-            : AppTheme.darkTheme.appBarTheme.brightness,
-        backgroundColor: isLightTheme
-            ? AppTheme.lightTheme.backgroundColor
-            : AppTheme.darkTheme.backgroundColor,
-        iconTheme: isLightTheme
-            ? AppTheme.lightTheme.appBarTheme.iconTheme
-            : AppTheme.darkTheme.appBarTheme.iconTheme,
+        brightness: Theme.of(context).appBarTheme.brightness,
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: Theme.of(context).appBarTheme.iconTheme,
         titleSpacing: 0.0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -232,10 +225,10 @@ class _ChatScreenState extends State<ChatScreen> {
               widget.chatWithUsername,
               style: textDirection == TextDirection.ltr
                   ? Utilities.getUbuntuTextStyleWithSize(16,
-                      color: themeProvider.themeColor(isLightTheme).textColor,
+                      color: Theme.of(context).textTheme.caption.color,
                       fontWeight: FontWeight.w600)
                   : Utilities.getTajwalTextStyleWithSize(16,
-                      color: themeProvider.themeColor(isLightTheme).textColor,
+                      color: Theme.of(context).textTheme.caption.color,
                       fontWeight: FontWeight.w600),
             ),
           ],
@@ -244,13 +237,11 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Container(
         child: Stack(
           children: [
-            chatMessages(themeProvider, textDirection, isLightTheme),
+            chatMessages(textDirection),
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
-                color: isLightTheme
-                    ? AppTheme.lightTheme.scaffoldBackgroundColor
-                    : AppTheme.darkTheme.scaffoldBackgroundColor,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Row(
                   children: [
@@ -260,14 +251,16 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: TextField(
                           controller: messageController,
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(16,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor)
-                              : Utilities.getTajwalTextStyleWithSize(16,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  16,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  16,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(35),
@@ -284,9 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 : Utilities.getTajwalTextStyleWithSize(14,
                                     color: Colors.grey),
                             filled: true,
-                            fillColor: isLightTheme
-                                ? Colors.grey.shade100
-                                : AppTheme.darkTheme.backgroundColor,
+                            fillColor: Theme.of(context).backgroundColor,
                             // hintStyle: TextStyle(
                             //   color: isLightTheme ? Colors.black : Colors.grey,
                             // ),

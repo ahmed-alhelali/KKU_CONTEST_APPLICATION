@@ -5,7 +5,7 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      systemNavigationBarColor: AppTheme.lightTheme.scaffoldBackgroundColor,
+      systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
@@ -48,8 +48,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isLightTheme = themeProvider.isDarkMode ? false : true;
     return MaterialApp(
       title: 'KKU Context App',
+      theme: ThemeProvider().themeAPP(isLightTheme),
       localizationsDelegates: [
         MyLocalization.delegate,
         GlobalMaterialLocalizations.delegate,

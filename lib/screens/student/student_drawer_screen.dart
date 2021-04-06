@@ -38,9 +38,8 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
         alignment: Alignment.topRight,
         child: Scaffold(
           body: Container(
-            color: isLightTheme
-                ? AppTheme.lightTheme.backgroundColor
-                : AppTheme.darkTheme.backgroundColor,
+            color: Theme.of(context).backgroundColor,
+
             child: ListView(
               children: [
                 SizedBox(height: 10),
@@ -53,9 +52,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
-                          color: isLightTheme
-                              ? AppTheme.lightTheme.scaffoldBackgroundColor
-                              : AppTheme.darkTheme.scaffoldBackgroundColor,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: textDirection == TextDirection.ltr
                               ? BorderRadius.only(
                                   topRight: Radius.circular(25),
@@ -75,16 +72,12 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                             style: textDirection == TextDirection.ltr
                                 ? Utilities.getUbuntuTextStyleWithSize(
                                     18,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor,
+                                    color: Theme.of(context).textTheme.caption.color,
                                     fontWeight: FontWeight.bold,
                                   )
                                 : Utilities.getTajwalTextStyleWithSize(
                                     18,
-                                    color: themeProvider
-                                        .themeColor(isLightTheme)
-                                        .textColor,
+                                    color: Theme.of(context).textTheme.caption.color,
                                     fontWeight: FontWeight.bold,
                                   ),
                           ),
@@ -98,7 +91,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                           isLightTheme
                               ? FontAwesomeIcons.lightbulb
                               : FontAwesomeIcons.solidLightbulb,
-                          color: isLightTheme ? Colors.black : Colors.white,
+                          color: Theme.of(context).appBarTheme.iconTheme.color,
                         ),
                         onPressed: () {
                           final provider = Provider.of<ThemeProvider>(context,
@@ -126,9 +119,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               width: 110.00,
                               height: 110.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme
-                                    ? HexColor("#354251").withOpacity(0.2)
-                                    : AppTheme.darkTheme.scaffoldBackgroundColor
+                                color: Theme.of(context).scaffoldBackgroundColor
                                         .withOpacity(1),
                                 shape: BoxShape.circle,
                               ),
@@ -137,9 +128,7 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               width: 100.00,
                               height: 100.00,
                               decoration: BoxDecoration(
-                                color: isLightTheme
-                                    ? HexColor("#354251").withOpacity(0.2)
-                                    : Colors.black,
+                                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -158,13 +147,9 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                               .getTranslatedValue("student_name"),
                           style: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(16,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor)
+                                  color: Theme.of(context).textTheme.caption.color,)
                               : Utilities.getTajwalTextStyleWithSize(14,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor),
+                                  color: Theme.of(context).textTheme.caption.color,),
                         ),
                       ],
                     ),
@@ -172,11 +157,9 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                 ),
                 SizedBox(height: 35),
                 Widgets.getContainerWithOnOnTap(
-                  themeProvider,
-                  isLightTheme,
                   Icon(
                     Icons.my_library_books_outlined,
-                    color: isLightTheme ? Colors.black87 : Colors.grey,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   "my_courses",
                   textDirection,
@@ -187,30 +170,24 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   //color: Colors.grey,
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: StudentWidgets.getStudentCoursesInDrawer(
-                      themeProvider, isLightTheme, textDirection),
+                  child: StudentWidgets.getStudentCoursesInDrawer( textDirection),
                 ),
                 Widgets.getContainerWithOnOnTap(
-                  themeProvider,
-                  isLightTheme,
                   Icon(
                     FontAwesomeIcons.language,
-                    color: isLightTheme ? Colors.black : Colors.grey,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                   "app_language",
                   textDirection,
                   context,
                   onTap: () {
-                    Widgets.changeLanguageWidget(
-                        themeProvider, isLightTheme, textDirection, context);
+                    Widgets.changeLanguageWidget(textDirection, context);
                   },
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Widgets.getContainerWithOnOnTap(
-                  themeProvider,
-                  isLightTheme,
                   Icon(
                     Icons.logout,
                     color: Colors.red,
@@ -220,8 +197,6 @@ class _StudentDrawerScreenState extends State<StudentDrawerScreen> {
                   context,
                   onTap: () {
                     Widgets.showWarringDialog(
-                      themeProvider,
-                      isLightTheme,
                       "are_you_sure",
                       "student_logout_warning",
                       context,

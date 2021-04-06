@@ -17,7 +17,7 @@ class ThemeProvider extends ChangeNotifier {
     bool currentValue = !isOn;
     setCurrentStatusNavigationBarColor(currentValue);
     themeColor(currentValue);
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });
   }
@@ -45,14 +45,38 @@ class ThemeProvider extends ChangeNotifier {
       textColor: isLightTheme ? Colors.black : Colors.white,
       toggleButtonColor: isLightTheme ? Color(0xFFFFFFFF) : Color(0xFf34323d),
       toggleBackgroundColor:
-      isLightTheme ? Color(0xFFe7e7e8) : Color(0xFF222029),
+          isLightTheme ? Color(0xFFe7e7e8) : Color(0xFF222029),
     );
   }
 
+  ThemeData themeAPP(bool isLightTheme) {
+    return ThemeData(
+      scaffoldBackgroundColor:
+          isLightTheme ? Colors.white : HexColor('#14191F'),
+      primaryColor: isLightTheme ? Colors.black : Colors.grey,
+      backgroundColor:
+          isLightTheme ? Colors.grey.shade200 : HexColor('#1d242c'),
+      colorScheme: isLightTheme ? ColorScheme.light() : ColorScheme.dark(),
+      appBarTheme: AppBarTheme(
+        iconTheme:
+            IconThemeData(color: isLightTheme ? Colors.black : Colors.white),
+        brightness: isLightTheme ? Brightness.light : Brightness.dark,
+      ),
+      iconTheme:
+          IconThemeData(color: isLightTheme ? Colors.black87 : Colors.grey),
+      textTheme: TextTheme(
+          caption: TextStyle(
+        color: isLightTheme ? Colors.black : Colors.white,
+      )),
+      shadowColor: isLightTheme ? Colors.black54 : Colors.white10,
+      cardColor: isLightTheme ? Colors.grey.shade300 : HexColor("#29333E"),
+      canvasColor: isLightTheme ? Colors.black : Colors.white,
+      sliderTheme: SliderThemeData(
 
+      )
+    );
+  }
 }
-
-
 
 class AppTheme {
   static final darkTheme = ThemeData(

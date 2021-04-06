@@ -19,8 +19,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
     setState(() {});
   }
 
-  Widget chatRoomsList(TextDirection textDirection, ThemeProvider themeProvider,
-      bool isLightTheme) {
+  Widget chatRoomsList(TextDirection textDirection) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection("Courses")
@@ -37,10 +36,10 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
                     ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: themeProvider.themeColor(isLightTheme).textColor)
+                        color: Theme.of(context).textTheme.caption.color,)
                     : Utilities.getTajwalTextStyleWithSize(14,
                         color:
-                            themeProvider.themeColor(isLightTheme).textColor),
+                        Theme.of(context).textTheme.caption.color,),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -60,9 +59,9 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                   .getTranslatedValue("no_student_ask_help"),
               style: textDirection == TextDirection.ltr
                   ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
+                      color: Theme.of(context).textTheme.caption.color,)
                   : Utilities.getTajwalTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                      color: Theme.of(context).textTheme.caption.color,),
               textAlign: TextAlign.center,
             ),
           );
@@ -88,14 +87,10 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                       name,
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(14,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor,
+                              color: Theme.of(context).textTheme.caption.color,
                               fontWeight: FontWeight.w600)
                           : Utilities.getTajwalTextStyleWithSize(14,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor,
+                              color: Theme.of(context).textTheme.caption.color,
                               fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
@@ -122,7 +117,8 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                     child: SizedBox(
                       height: 0.5,
                       child: Container(
-                        color: isLightTheme ? Colors.grey : Colors.white54,
+                        color: Colors.red,
+                        // color: isLightTheme ? Colors.grey : Colors.white54,
                       ),
                     ),
                   ),
@@ -144,14 +140,10 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
-      body: chatRoomsList(textDirection, themeProvider, isLightTheme),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: chatRoomsList(textDirection),
     );
   }
 }

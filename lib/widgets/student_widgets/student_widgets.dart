@@ -1,9 +1,7 @@
 import 'package:kku_contest_app/imports.dart';
 
 class StudentWidgets {
-  static Widget getStudentCourses(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection,
-      {String id}) {
+  static Widget getStudentCourses(TextDirection textDirection, {String id}) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     String courseID;
@@ -15,10 +13,14 @@ class StudentWidgets {
           return Text(
             MyLocalization.of(context).getTranslatedValue("error_connection"),
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(14,
-                    color: themeProvider.themeColor(isLightTheme).textColor)
-                : Utilities.getTajwalTextStyleWithSize(14,
-                    color: themeProvider.themeColor(isLightTheme).textColor),
+                ? Utilities.getUbuntuTextStyleWithSize(
+                    14,
+                    color: Theme.of(context).textTheme.caption.color,
+                  )
+                : Utilities.getTajwalTextStyleWithSize(
+                    14,
+                    color: Theme.of(context).textTheme.caption.color,
+                  ),
           );
         }
 
@@ -36,11 +38,14 @@ class StudentWidgets {
                 MyLocalization.of(context)
                     .getTranslatedValue("no_courses_student"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14,
-                        color:
-                            themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -59,20 +64,20 @@ class StudentWidgets {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.09,
                 decoration: BoxDecoration(
-                  color: isLightTheme
-                      ? AppTheme.lightTheme.backgroundColor
-                      : AppTheme.darkTheme.backgroundColor,
+                  color: Theme.of(context).backgroundColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(
                   currentCourse,
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(16,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(16,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          16,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          16,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
                 ),
               ),
               onTap: () {
@@ -95,8 +100,7 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentCoursesInDrawer(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection) {
+  static Widget getStudentCoursesInDrawer(TextDirection textDirection) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
@@ -114,12 +118,14 @@ class StudentWidgets {
                   MyLocalization.of(context)
                       .getTranslatedValue("error_connection"),
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
                 )
               ],
             ),
@@ -149,12 +155,14 @@ class StudentWidgets {
                 Text(
                   MyLocalization.of(context).getTranslatedValue("no_courses"),
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
                 )
               ],
             ),
@@ -174,14 +182,14 @@ class StudentWidgets {
                     title: Text(
                       currentCourse,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -197,8 +205,7 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentLectures(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection, courseID) {
+  static Widget getStudentLectures(TextDirection textDirection, courseID) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -215,11 +222,14 @@ class StudentWidgets {
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: themeProvider.themeColor(isLightTheme).textColor)
-                    : Utilities.getTajwalTextStyleWithSize(14,
-                        color:
-                            themeProvider.themeColor(isLightTheme).textColor),
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -238,10 +248,14 @@ class StudentWidgets {
               MyLocalization.of(context)
                   .getTranslatedValue("no_lectures_student"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    )
+                  : Utilities.getTajwalTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
               textAlign: TextAlign.center,
             ),
           );
@@ -260,14 +274,14 @@ class StudentWidgets {
                     title: Text(
                       titleLecture,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -288,7 +302,8 @@ class StudentWidgets {
                     child: SizedBox(
                       height: 0.5,
                       child: Container(
-                        color: isLightTheme ? Colors.grey : Colors.white54,
+                        // color: isLightTheme ? Colors.grey : Colors.white54,
+                        color: Colors.red,
                       ),
                     ),
                   ),
@@ -302,10 +317,10 @@ class StudentWidgets {
   }
 
   static showChoiceStepsIssuesDialog(courseID, lectureTitle, List titles,
-      BuildContext context, bool isLightTheme, TextDirection textDirection,
+      BuildContext context, TextDirection textDirection,
       {String id}) {
     return showDialog(
-      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      barrierColor: Theme.of(context).shadowColor,
       context: context,
       builder: (context) {
         final _multipleNotifier = Provider.of<MultipleNotifier>(context);
@@ -314,18 +329,20 @@ class StudentWidgets {
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 10,
-          backgroundColor: isLightTheme
-              ? AppTheme.lightTheme.backgroundColor
-              : AppTheme.darkTheme.backgroundColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           title: Text(
             MyLocalization.of(context).getTranslatedValue("which_steps_title"),
             style: textDirection == TextDirection.ltr
-                ? Utilities.getUbuntuTextStyleWithSize(16,
+                ? Utilities.getUbuntuTextStyleWithSize(
+                    16,
                     fontWeight: FontWeight.bold,
-                    color: isLightTheme ? Colors.black : Colors.white)
-                : Utilities.getTajwalTextStyleWithSize(16,
+                    color: Theme.of(context).textTheme.caption.color,
+                  )
+                : Utilities.getTajwalTextStyleWithSize(
+                    16,
                     fontWeight: FontWeight.bold,
-                    color: isLightTheme ? Colors.black : Colors.white),
+                    color: Theme.of(context).textTheme.caption.color,
+                  ),
           ),
           content: SingleChildScrollView(
             child: Container(
@@ -341,13 +358,9 @@ class StudentWidgets {
                           e,
                           style: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(12,
-                                  color: isLightTheme
-                                      ? Colors.black
-                                      : Colors.white)
+                            color: Theme.of(context).textTheme.caption.color,)
                               : Utilities.getTajwalTextStyleWithSize(12,
-                                  color: isLightTheme
-                                      ? Colors.black
-                                      : Colors.white),
+                            color: Theme.of(context).textTheme.caption.color,),
                         ),
                         onChanged: (value) {
                           value

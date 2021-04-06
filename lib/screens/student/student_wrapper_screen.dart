@@ -2,8 +2,7 @@ import 'package:kku_contest_app/imports.dart';
 
 class StudentWrapperScreen extends StatefulWidget {
   @override
-  _StudentWrapperScreenState createState() =>
-      _StudentWrapperScreenState();
+  _StudentWrapperScreenState createState() => _StudentWrapperScreenState();
 }
 
 class _StudentWrapperScreenState extends State<StudentWrapperScreen>
@@ -16,6 +15,7 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
     _controller = AnimationController(duration: duration, vsync: this);
     super.initState();
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -24,11 +24,8 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
-
     return Scaffold(
-      backgroundColor: isLightTheme ? AppTheme.lightTheme.backgroundColor : AppTheme.darkTheme.backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           StudentDrawerScreen(

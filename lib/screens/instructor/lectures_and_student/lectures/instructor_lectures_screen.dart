@@ -14,15 +14,11 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
 
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
-      body: InstructorWidgets.getInstructorLectures( themeProvider, isLightTheme, textDirection,widget.id),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: InstructorWidgets.getInstructorLectures(textDirection,widget.id),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(

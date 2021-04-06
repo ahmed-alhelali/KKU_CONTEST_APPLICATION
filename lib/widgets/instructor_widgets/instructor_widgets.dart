@@ -1,8 +1,7 @@
 import 'package:kku_contest_app/imports.dart';
 
 class InstructorWidgets {
-  static Widget getInstructorCourses(ThemeProvider themeProvider,
-      bool isLightTheme, TextDirection textDirection) {
+  static Widget getInstructorCourses(TextDirection textDirection) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     final slidableController = new SlidableController();
@@ -27,10 +26,14 @@ class InstructorWidgets {
             child: Text(
               MyLocalization.of(context).getTranslatedValue("no_courses"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    )
+                  : Utilities.getTajwalTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
             ),
           );
         }
@@ -49,22 +52,20 @@ class InstructorWidgets {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.09,
                     decoration: BoxDecoration(
-                      color: isLightTheme
-                          ? AppTheme.lightTheme.backgroundColor
-                          : AppTheme.darkTheme.backgroundColor,
+                      color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Text(
                       currentCourse,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(16,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(16,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              16,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              16,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                   ),
                   onTap: () {
@@ -95,8 +96,6 @@ class InstructorWidgets {
                         icon: Icons.delete,
                         onTap: () {
                           Widgets.showWarringDialog(
-                            themeProvider,
-                            isLightTheme,
                             "are_you_sure",
                             "delete_course_warring",
                             context,
@@ -130,22 +129,19 @@ class InstructorWidgets {
                               .then((value) {
                             final snackBar = SnackBar(
                               elevation: 0,
-                              backgroundColor: isLightTheme
-                                  ? AppTheme.lightTheme.backgroundColor
-                                  : AppTheme.darkTheme.scaffoldBackgroundColor,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
                               content: Text(
                                 MyLocalization.of(context)
                                     .getTranslatedValue("course_id_copied"),
                                 style: TextStyle(
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
                                 ),
                               ),
                               action: SnackBarAction(
-                                textColor: themeProvider
-                                    .themeColor(isLightTheme)
-                                    .textColor,
+                                textColor:
+                                    Theme.of(context).textTheme.caption.color,
                                 label: MyLocalization.of(context)
                                     .getTranslatedValue("close"),
                                 onPressed: () {},
@@ -169,8 +165,6 @@ class InstructorWidgets {
   }
 
   static addCourseWidget(
-      ThemeProvider themeProvider,
-      bool isLightTheme,
       TextDirection textDirection,
       BuildContext context,
       TextEditingController titleController) {
@@ -179,12 +173,10 @@ class InstructorWidgets {
     showModalBottomSheet(
       context: context,
       elevation: 10,
-      barrierColor: isLightTheme ? Colors.black54 : Colors.white10,
+      barrierColor: Theme.of(context).shadowColor,
       enableDrag: true,
       isScrollControlled: true,
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
@@ -201,7 +193,7 @@ class InstructorWidgets {
                     width: 150,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: themeProvider.themeColor(isLightTheme).textColor,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                   ),
@@ -210,13 +202,9 @@ class InstructorWidgets {
                         .getTranslatedValue("create_course"),
                     style: textDirection == TextDirection.ltr
                         ? Utilities.getUbuntuTextStyleWithSize(18,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor)
+                            color: Theme.of(context).textTheme.caption.color,)
                         : Utilities.getTajwalTextStyleWithSize(18,
-                            color: themeProvider
-                                .themeColor(isLightTheme)
-                                .textColor),
+                            color: Theme.of(context).textTheme.caption.color,),
                   ),
                   Divider(
                     color: Colors.grey,
@@ -231,19 +219,15 @@ class InstructorWidgets {
                           EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       child: TextFormField(
                         controller: titleController,
-                        cursorColor: isLightTheme ? Colors.black : Colors.white,
+                        cursorColor: Theme.of(context).canvasColor,
                         style: textDirection == TextDirection.ltr
                             ? Utilities.getUbuntuTextStyleWithSize(
                                 14,
-                                color: themeProvider
-                                    .themeColor(isLightTheme)
-                                    .textColor,
+                                color: Theme.of(context).textTheme.caption.color,
                               )
                             : Utilities.getTajwalTextStyleWithSize(
                                 14,
-                                color: themeProvider
-                                    .themeColor(isLightTheme)
-                                    .textColor,
+                                color: Theme.of(context).textTheme.caption.color,
                               ),
                         decoration: InputDecoration(
                           contentPadding: textDirection == TextDirection.ltr
@@ -254,15 +238,11 @@ class InstructorWidgets {
                           labelStyle: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(
                                   12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor,
+                                  color: Theme.of(context).textTheme.caption.color,
                                 )
                               : Utilities.getTajwalTextStyleWithSize(
                                   12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor,
+                                  color: Theme.of(context).textTheme.caption.color,
                                 ),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -383,9 +363,7 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorCoursesInDrawer(ThemeProvider themeProvider,
-      bool isLightTheme,
-      TextDirection textDirection) {
+  static Widget getInstructorCoursesInDrawer(TextDirection textDirection) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
@@ -403,12 +381,14 @@ class InstructorWidgets {
                   MyLocalization.of(context)
                       .getTranslatedValue("error_connection"),
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
                 )
               ],
             ),
@@ -438,12 +418,14 @@ class InstructorWidgets {
                 Text(
                   MyLocalization.of(context).getTranslatedValue("no_courses"),
                   style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor)
-                      : Utilities.getTajwalTextStyleWithSize(14,
-                          color:
-                              themeProvider.themeColor(isLightTheme).textColor),
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          14,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
                 )
               ],
             ),
@@ -464,14 +446,14 @@ class InstructorWidgets {
                     title: Text(
                       currentCourse,
                       style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor)
-                          : Utilities.getTajwalTextStyleWithSize(12,
-                              color: themeProvider
-                                  .themeColor(isLightTheme)
-                                  .textColor),
+                          ? Utilities.getUbuntuTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            )
+                          : Utilities.getTajwalTextStyleWithSize(
+                              12,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -487,10 +469,7 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorLectures(ThemeProvider themeProvider,
-      bool isLightTheme,
-      TextDirection textDirection,
-      courseID) {
+  static Widget getInstructorLectures(TextDirection textDirection, courseID) {
     final lectureSlidableController = new SlidableController();
 
     CollectionReference courses = FirebaseFirestore.instance
@@ -530,10 +509,14 @@ class InstructorWidgets {
               MyLocalization.of(context)
                   .getTranslatedValue("no_lectures_instructor"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor)
-                  : Utilities.getTajwalTextStyleWithSize(14,
-                      color: themeProvider.themeColor(isLightTheme).textColor),
+                  ? Utilities.getUbuntuTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    )
+                  : Utilities.getTajwalTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
               textAlign: TextAlign.center,
             ),
           );
@@ -554,14 +537,16 @@ class InstructorWidgets {
                         title: Text(
                           titleLecture,
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor)
-                              : Utilities.getTajwalTextStyleWithSize(12,
-                                  color: themeProvider
-                                      .themeColor(isLightTheme)
-                                      .textColor),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                         ),
                         trailing: IconButton(
                           icon: Icon(
@@ -581,7 +566,8 @@ class InstructorWidgets {
                         child: SizedBox(
                           height: 0.5,
                           child: Container(
-                            color: isLightTheme ? Colors.grey : Colors.white54,
+                            color: Colors.red,
+                            // color: isLightTheme ? Colors.grey : Colors.white54,
                           ),
                         ),
                       ),
@@ -601,8 +587,6 @@ class InstructorWidgets {
                           icon: Icons.pageview,
                           onTap: () {
                             Widgets.showWarringDialog(
-                              themeProvider,
-                              isLightTheme,
                               "do_not_sent_message_title",
                               "do_not_sent_message_content",
                               context,
@@ -637,22 +621,21 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getColumnOfTextFields(
-    ThemeProvider themeProvider,
-    bool isLightTheme,
-    BuildContext context,
-    TextDirection textDirection,
-    titleController,
-    descriptionController) {
+  static Widget getColumnOfTextFields(BuildContext context,
+      TextDirection textDirection, titleController, descriptionController) {
     return Column(
       children: [
         TextField(
           controller: titleController,
           style: textDirection == TextDirection.ltr
-              ? Utilities.getUbuntuTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor)
-              : Utilities.getTajwalTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor),
+              ? Utilities.getUbuntuTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                )
+              : Utilities.getTajwalTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                ),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
@@ -672,10 +655,14 @@ class InstructorWidgets {
         TextField(
           controller: descriptionController,
           style: textDirection == TextDirection.ltr
-              ? Utilities.getUbuntuTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor)
-              : Utilities.getTajwalTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor),
+              ? Utilities.getUbuntuTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                )
+              : Utilities.getTajwalTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                ),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
@@ -696,11 +683,7 @@ class InstructorWidgets {
   }
 
   static Widget getChildForTab(
-      BuildContext context,
-      String titleKey,
-      ThemeProvider themeProvider,
-      bool isLightTheme,
-      TextDirection textDirection) {
+      BuildContext context, String titleKey, TextDirection textDirection) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -711,10 +694,14 @@ class InstructorWidgets {
         child: Text(
           MyLocalization.of(context).getTranslatedValue(titleKey),
           style: textDirection == TextDirection.ltr
-              ? Utilities.getUbuntuTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor)
-              : Utilities.getTajwalTextStyleWithSize(12,
-                  color: themeProvider.themeColor(isLightTheme).textColor),
+              ? Utilities.getUbuntuTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                )
+              : Utilities.getTajwalTextStyleWithSize(
+                  12,
+                  color: Theme.of(context).textTheme.caption.color,
+                ),
         ),
       ),
     );

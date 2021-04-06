@@ -14,36 +14,26 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
 
     return Scaffold(
-      backgroundColor: isLightTheme
-          ? AppTheme.lightTheme.scaffoldBackgroundColor
-          : AppTheme.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        brightness: isLightTheme
-            ? AppTheme.lightTheme.appBarTheme.brightness
-            : AppTheme.darkTheme.appBarTheme.brightness,
-        backgroundColor: isLightTheme
-            ? AppTheme.lightTheme.backgroundColor
-            : AppTheme.darkTheme.backgroundColor,
-        iconTheme: isLightTheme
-            ? AppTheme.lightTheme.appBarTheme.iconTheme
-            : AppTheme.darkTheme.appBarTheme.iconTheme,
+        brightness: Theme.of(context).appBarTheme.brightness,
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: Theme.of(context).appBarTheme.iconTheme,
         title: Text(
           widget.title.toUpperCase(),
           style: textDirection == TextDirection.ltr
               ? Utilities.getUbuntuTextStyleWithSize(16,
-                  color: themeProvider.themeColor(isLightTheme).textColor)
+                  color: Theme.of(context).textTheme.caption.color,)
               : Utilities.getTajwalTextStyleWithSize(16,
-                  color: themeProvider.themeColor(isLightTheme).textColor),
+            color: Theme.of(context).textTheme.caption.color,),
         ),
       ),
       body: StudentWidgets.getStudentLectures(
-          themeProvider, isLightTheme, textDirection, widget.id),
+           textDirection, widget.id),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(
@@ -71,8 +61,6 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
               );
             } else {
               Widgets.showWarringDialog(
-                themeProvider,
-                isLightTheme,
                 "chat_not_exist_title",
                 "chat_not_exist_content",
                 context,
