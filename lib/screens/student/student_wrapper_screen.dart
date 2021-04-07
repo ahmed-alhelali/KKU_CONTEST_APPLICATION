@@ -37,6 +37,7 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
           StudentHomeScreen(
             controller: _controller,
             duration: duration,
+            textDirection: textDirection,
           )
         ],
       ),

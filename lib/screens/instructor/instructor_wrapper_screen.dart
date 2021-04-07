@@ -32,6 +32,7 @@ class _InstructorWrapperScreenState extends State<InstructorWrapperScreen>
           InstructorHomeScreen(
             controller: _controller,
             duration: duration,
+            textDirection: textDirection,
           )
         ],
       ),

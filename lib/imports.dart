@@ -39,6 +39,7 @@ export 'widgets/student_widgets/student_widgets.dart';
 export 'controllers/multi_chose.dart';
 export 'main.dart';
 export 'drawer_state_master.dart';
+export 'home_screen_state_master.dart';
 export 'models/languages.dart';
 export 'models/app_theme.dart';
 export 'localization/my_localization.dart';

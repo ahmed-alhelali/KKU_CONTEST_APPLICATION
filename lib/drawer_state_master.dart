@@ -2,11 +2,11 @@ import 'imports.dart';
 
 abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
 
-  String currierKey = "";
-  String nameKey = "";
-  String imagePath = "";
+  String currierKey;
+  String nameKey;
+  String imagePath;
   Widget courses ;
-  String warringKey = "";
+  String warringKey;
 
   AnimationController controller;
   Animation<double> _scaleAnimation;
