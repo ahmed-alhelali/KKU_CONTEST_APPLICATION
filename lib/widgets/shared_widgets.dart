@@ -193,11 +193,8 @@ class Widgets {
     );
   }
 
-  static Widget getContainerWithOnOnTap(
-      Icon icon,
-      String keyMap,
-      TextDirection textDirection,
-      BuildContext context,
+  static Widget getContainerWithOnOnTap(Icon icon, String keyMap,
+      TextDirection textDirection, BuildContext context,
       {Function onTap}) {
     return Padding(
       padding: textDirection == TextDirection.ltr

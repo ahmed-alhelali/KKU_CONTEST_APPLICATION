@@ -11,7 +11,8 @@ class InstructorDrawerScreen extends StatefulWidget {
   _InstructorDrawerScreenState createState() => _InstructorDrawerScreenState();
 }
 
-class _InstructorDrawerScreenState extends DrawerStateMaster<InstructorDrawerScreen> {
+class _InstructorDrawerScreenState
+    extends DrawerStateMaster<InstructorDrawerScreen> {
   AnimationController get controller => widget.controller;
 
   String get currierKey => "instructor";

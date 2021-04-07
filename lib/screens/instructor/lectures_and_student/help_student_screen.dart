@@ -35,11 +35,14 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                 MyLocalization.of(context)
                     .getTranslatedValue("error_connection"),
                 style: textDirection == TextDirection.ltr
-                    ? Utilities.getUbuntuTextStyleWithSize(14,
-                        color: Theme.of(context).textTheme.caption.color,)
-                    : Utilities.getTajwalTextStyleWithSize(14,
-                        color:
-                        Theme.of(context).textTheme.caption.color,),
+                    ? Utilities.getUbuntuTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      )
+                    : Utilities.getTajwalTextStyleWithSize(
+                        14,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -58,10 +61,14 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
               MyLocalization.of(context)
                   .getTranslatedValue("no_student_ask_help"),
               style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(14,
-                      color: Theme.of(context).textTheme.caption.color,)
-                  : Utilities.getTajwalTextStyleWithSize(14,
-                      color: Theme.of(context).textTheme.caption.color,),
+                  ? Utilities.getUbuntuTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    )
+                  : Utilities.getTajwalTextStyleWithSize(
+                      14,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
               textAlign: TextAlign.center,
             ),
           );

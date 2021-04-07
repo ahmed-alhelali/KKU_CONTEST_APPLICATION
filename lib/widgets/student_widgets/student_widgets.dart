@@ -205,7 +205,8 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentLectures(BuildContext context,TextDirection textDirection, courseID) {
+  static Widget getStudentLectures(
+      BuildContext context, TextDirection textDirection, courseID) {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -357,10 +358,16 @@ class StudentWidgets {
                         title: Text(
                           e,
                           style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(12,
-                            color: Theme.of(context).textTheme.caption.color,)
-                              : Utilities.getTajwalTextStyleWithSize(12,
-                            color: Theme.of(context).textTheme.caption.color,),
+                              ? Utilities.getUbuntuTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                )
+                              : Utilities.getTajwalTextStyleWithSize(
+                                  12,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                ),
                         ),
                         onChanged: (value) {
                           value

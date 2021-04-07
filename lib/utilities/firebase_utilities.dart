@@ -1,4 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
+
 class FirebaseUtilities {
   static String userEmailKey = "USEREMAILKEY";
   static String userIdKey = "USERKEY";

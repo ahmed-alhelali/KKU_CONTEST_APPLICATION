@@ -15,10 +15,9 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
 
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: InstructorWidgets.getInstructorLectures(textDirection,widget.id),
+      body: InstructorWidgets.getInstructorLectures(textDirection, widget.id),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(

@@ -8,7 +8,6 @@ class WrapperScreen extends StatefulWidget {
 class _WrapperScreenState extends State<WrapperScreen> {
   @override
   Widget build(BuildContext context) {
-
     final TextDirection textDirection = Directionality.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

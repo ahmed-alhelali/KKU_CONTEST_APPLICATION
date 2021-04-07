@@ -1,6 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
 
-
 class Utilities {
   static void changeLanguages(Languages language, context) {
     Locale _temp;
@@ -16,12 +15,15 @@ class Utilities {
   }
 
   static TextStyle getTajwalTextStyleWithSize(double size,
-      {FontWeight fontWeight, double letterSpacing, double height,Color color}) {
+      {FontWeight fontWeight,
+      double letterSpacing,
+      double height,
+      Color color}) {
     return GoogleFonts.tajawal(
       fontSize: size,
       letterSpacing: letterSpacing,
       height: height,
-      color: color?? Colors.white,
+      color: color ?? Colors.white,
       fontWeight: fontWeight,
     );
   }
@@ -32,12 +34,15 @@ class Utilities {
   }
 
   static TextStyle getUbuntuTextStyleWithSize(double size,
-      {FontWeight fontWeight, double letterSpacing, double height,Color color}) {
+      {FontWeight fontWeight,
+      double letterSpacing,
+      double height,
+      Color color}) {
     return GoogleFonts.ubuntu(
       fontSize: size,
       letterSpacing: letterSpacing,
       height: height,
-      color: color?? Colors.white,
+      color: color ?? Colors.white,
       fontWeight: fontWeight,
     );
   }

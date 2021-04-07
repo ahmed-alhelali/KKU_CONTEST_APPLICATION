@@ -1,17 +1,16 @@
 import 'imports.dart';
 
 abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
-
   String currierKey;
   String nameKey;
   String imagePath;
-  Widget courses ;
+  Widget courses;
+
   String warringKey;
 
   AnimationController controller;
   Animation<double> _scaleAnimation;
   Animation<Offset> _slideAnimation;
-
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +19,14 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
 
     bool isLightTheme = themeProvider.isDarkMode ? false : true;
     if (_scaleAnimation == null) {
-      _scaleAnimation =
-          Tween<double>(begin: 0.6, end: 1).animate(controller);
+      _scaleAnimation = Tween<double>(begin: 0.6, end: 1).animate(controller);
     }
     if (_slideAnimation == null) {
       _slideAnimation = textDirection == TextDirection.ltr
           ? Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
-          .animate(controller)
+              .animate(controller)
           : Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))
-          .animate(controller);
+              .animate(controller);
     }
     return SlideTransition(
       position: _slideAnimation,
@@ -53,13 +51,13 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                         color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: textDirection == TextDirection.ltr
                             ? BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                        )
+                                topRight: Radius.circular(25),
+                                bottomRight: Radius.circular(25),
+                              )
                             : BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                        ),
+                                topLeft: Radius.circular(25),
+                                bottomLeft: Radius.circular(25),
+                              ),
                       ),
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
@@ -69,17 +67,17 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                               .toUpperCase(),
                           style: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(
-                            18,
-                            color:
-                            Theme.of(context).textTheme.caption.color,
-                            fontWeight: FontWeight.bold,
-                          )
+                                  18,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                  fontWeight: FontWeight.bold,
+                                )
                               : Utilities.getTajwalTextStyleWithSize(
-                            18,
-                            color:
-                            Theme.of(context).textTheme.caption.color,
-                            fontWeight: FontWeight.bold,
-                          ),
+                                  18,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
+                                  fontWeight: FontWeight.bold,
+                                ),
                         ),
                       ),
                     ),
@@ -95,7 +93,7 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                       ),
                       onPressed: () {
                         final provider =
-                        Provider.of<ThemeProvider>(context, listen: false);
+                            Provider.of<ThemeProvider>(context, listen: false);
                         provider.changeAppTheme(isLightTheme);
                       },
                     ),
@@ -137,8 +135,7 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                           ),
                           CircleAvatar(
                             radius: 45,
-                            backgroundImage: ExactAssetImage(
-                                imagePath),
+                            backgroundImage: ExactAssetImage(imagePath),
                           ),
                         ],
                       ),
@@ -146,17 +143,18 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                         height: 15,
                       ),
                       Text(
-                        MyLocalization.of(context)
-                            .getTranslatedValue(nameKey),
+                        MyLocalization.of(context).getTranslatedValue(nameKey),
                         style: textDirection == TextDirection.ltr
                             ? Utilities.getUbuntuTextStyleWithSize(
-                          16,
-                          color:Theme.of(context).textTheme.caption.color,
-                        )
+                                16,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
+                              )
                             : Utilities.getTajwalTextStyleWithSize(
-                          14,
-                          color:Theme.of(context).textTheme.caption.color,
-                        ),
+                                14,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
+                              ),
                       ),
                     ],
                   ),

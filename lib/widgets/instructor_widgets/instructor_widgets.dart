@@ -164,9 +164,7 @@ class InstructorWidgets {
     );
   }
 
-  static addCourseWidget(
-      TextDirection textDirection,
-      BuildContext context,
+  static addCourseWidget(TextDirection textDirection, BuildContext context,
       TextEditingController titleController) {
     final formKey = GlobalKey<FormState>();
 
@@ -201,10 +199,14 @@ class InstructorWidgets {
                     MyLocalization.of(context)
                         .getTranslatedValue("create_course"),
                     style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(18,
-                            color: Theme.of(context).textTheme.caption.color,)
-                        : Utilities.getTajwalTextStyleWithSize(18,
-                            color: Theme.of(context).textTheme.caption.color,),
+                        ? Utilities.getUbuntuTextStyleWithSize(
+                            18,
+                            color: Theme.of(context).textTheme.caption.color,
+                          )
+                        : Utilities.getTajwalTextStyleWithSize(
+                            18,
+                            color: Theme.of(context).textTheme.caption.color,
+                          ),
                   ),
                   Divider(
                     color: Colors.grey,
@@ -223,11 +225,13 @@ class InstructorWidgets {
                         style: textDirection == TextDirection.ltr
                             ? Utilities.getUbuntuTextStyleWithSize(
                                 14,
-                                color: Theme.of(context).textTheme.caption.color,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
                               )
                             : Utilities.getTajwalTextStyleWithSize(
                                 14,
-                                color: Theme.of(context).textTheme.caption.color,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
                               ),
                         decoration: InputDecoration(
                           contentPadding: textDirection == TextDirection.ltr
@@ -238,11 +242,13 @@ class InstructorWidgets {
                           labelStyle: textDirection == TextDirection.ltr
                               ? Utilities.getUbuntuTextStyleWithSize(
                                   12,
-                                  color: Theme.of(context).textTheme.caption.color,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
                                 )
                               : Utilities.getTajwalTextStyleWithSize(
                                   12,
-                                  color: Theme.of(context).textTheme.caption.color,
+                                  color:
+                                      Theme.of(context).textTheme.caption.color,
                                 ),
                           suffixIcon: IconButton(
                             icon: Icon(

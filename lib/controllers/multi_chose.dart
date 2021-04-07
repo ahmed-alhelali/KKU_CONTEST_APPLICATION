@@ -1,7 +1,10 @@
 import 'package:kku_contest_app/imports.dart';
+
 class MultipleNotifier extends ChangeNotifier {
   List<String> _selecteItems;
+
   MultipleNotifier(this._selecteItems);
+
   List<String> get selectedItems => _selecteItems;
 
   bool isHaveItem(String value) => _selecteItems.contains(value);

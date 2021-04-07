@@ -1,18 +1,20 @@
 import 'package:kku_contest_app/imports.dart';
 
 class FirestoreDB {
-
   static addCourse(String courseTitle) {
     CollectionReference newCourse =
         FirebaseFirestore.instance.collection("Courses");
 
     return newCourse
         .doc(Utilities.getRandomIdForNewCourse())
-        .set({"access_by_student" : false, "time": DateTime.now(),"course_title": courseTitle})
+        .set({
+          "access_by_student": false,
+          "time": DateTime.now(),
+          "course_title": courseTitle
+        })
         .then((value) => {print("course added")})
         .catchError((error) => print(error));
   }
-
 
   static deleteCourse(courseID) {
     CollectionReference courses =
@@ -67,11 +69,11 @@ class FirestoreDB {
     return lecture.delete();
   }
 
-
   static signOut() async {
     try {
-      return FirebaseAuth.instance.signOut().then((value) => print("LOGGED OUT"));
-
+      return FirebaseAuth.instance
+          .signOut()
+          .then((value) => print("LOGGED OUT"));
     } catch (e) {
       print(e);
     }
@@ -99,8 +101,7 @@ class FirestoreDB {
         .update(lastMessageInfoMap);
   }
 
-  static createChatRoom(String courseID,
-      Map chatRoomInfoMap) async {
+  static createChatRoom(String courseID, Map chatRoomInfoMap) async {
     final snapShot = await FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
