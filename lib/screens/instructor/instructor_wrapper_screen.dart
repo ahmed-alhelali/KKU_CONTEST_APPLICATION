@@ -19,12 +19,15 @@ class _InstructorWrapperScreenState extends State<InstructorWrapperScreen>
 
   @override
   Widget build(BuildContext context) {
+    final TextDirection textDirection = Directionality.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           InstructorDrawerScreen(
             controller: _controller,
+            textDirection: textDirection,
           ),
           InstructorHomeScreen(
             controller: _controller,
