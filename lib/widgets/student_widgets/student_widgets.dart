@@ -1,13 +1,13 @@
 import 'package:kku_contest_app/imports.dart';
 
 class StudentWidgets {
-  static Widget getStudentCourses(TextDirection textDirection, {String id}) {
+  static Widget getStudentCourses(TextDirection textDirection,String id) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     String courseID;
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access_by_student", isEqualTo: true).snapshots(),
+      stream: courses.where("access_by_students", arrayContains: id).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -100,12 +100,12 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentCoursesInDrawer(TextDirection textDirection) {
+  static Widget getStudentCoursesInDrawer(TextDirection textDirection,String uid) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access_by_student", isEqualTo: true).snapshots(),
+      stream: courses.where("access_by_students", arrayContains: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(
@@ -450,7 +450,6 @@ class StudentWidgets {
                       builder: (context) => ChatScreen(
                         name,
                         courseID,
-                        // listTitlesSelected: mySelectedTitles,
                       ),
                     ),
                   );

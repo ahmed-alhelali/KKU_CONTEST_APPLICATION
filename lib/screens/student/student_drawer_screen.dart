@@ -3,8 +3,18 @@ import 'package:kku_contest_app/imports.dart';
 class StudentDrawerScreen extends StatefulWidget {
   final AnimationController controller;
   final TextDirection textDirection;
+  final String userName;
+  final String userURLImage;
+  final String uid;
 
-  const StudentDrawerScreen({Key key, this.controller, this.textDirection})
+
+  const StudentDrawerScreen(
+      {Key key,
+      this.controller,
+      this.textDirection,
+      this.userName,
+      this.userURLImage,
+      this.uid})
       : super(key: key);
 
   @override
@@ -16,12 +26,12 @@ class _StudentDrawerScreenState extends DrawerStateMaster<StudentDrawerScreen> {
 
   String get currierKey => "student";
 
-  String get nameKey => "student_name";
+  String get nameKey => widget.userName;
 
-  String get imagePath => "assets/images/student.png";
+  String get imagePath => widget.userURLImage;
 
   Widget get courses =>
-      StudentWidgets.getStudentCoursesInDrawer(widget.textDirection);
+      StudentWidgets.getStudentCoursesInDrawer(widget.textDirection,widget.uid);
 
   String get warringKey => "student_logout_warning";
 }

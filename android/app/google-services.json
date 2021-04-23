@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "376032241438-tfodbr6lm2cniulnf84f4slabefad6d7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahmedalhelali.kku_contest_app",
+            "certificate_hash": "cc34a7a05c46127fd44f2ae8f8df055a8cff0b50"
+          }
+        },
+        {
           "client_id": "376032241438-ajliad2g0gqfe7bnirraldc4qsriurp3.apps.googleusercontent.com",
           "client_type": 3
         }

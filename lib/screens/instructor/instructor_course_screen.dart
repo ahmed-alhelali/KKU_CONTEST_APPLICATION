@@ -3,8 +3,10 @@ import 'package:kku_contest_app/imports.dart';
 class InstructorCourse extends StatefulWidget {
   final String courseTitle;
   final String id;
+  final String uid;
 
-  InstructorCourse({this.courseTitle, this.id});
+
+  InstructorCourse({this.courseTitle, this.id, this.uid});
 
   @override
   _InstructorCourseState createState() => _InstructorCourseState();
@@ -75,6 +77,7 @@ class _InstructorCourseState extends State<InstructorCourse>
           children: [
             InstructorLecturesScreen(
               id: widget.id,
+              uid: widget.uid,
             ),
             HelpStudentScreen(
               id: widget.id,

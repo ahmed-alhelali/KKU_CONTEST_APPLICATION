@@ -1,13 +1,13 @@
 import 'package:kku_contest_app/imports.dart';
 
 class InstructorWidgets {
-  static Widget getInstructorCourses(TextDirection textDirection) {
+  static Widget getInstructorCourses(TextDirection textDirection,String uid) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     final slidableController = new SlidableController();
     String courseID;
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.snapshots(),
+      stream: courses.where("uid" ,isEqualTo: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -77,6 +77,7 @@ class InstructorWidgets {
                         builder: (context) => InstructorCourse(
                           id: courseID,
                           courseTitle: currentCourse,
+                          uid: uid,
                         ),
                       ),
                     );
@@ -165,7 +166,7 @@ class InstructorWidgets {
   }
 
   static addCourseWidget(TextDirection textDirection, BuildContext context,
-      TextEditingController titleController) {
+      TextEditingController titleController,String uid) {
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
@@ -350,7 +351,7 @@ class InstructorWidgets {
                                     gravity: Toast.CENTER,
                                   );
                                 } else {
-                                  FirestoreDB.addCourse(titleController.text);
+                                  FirestoreDB.addCourse(titleController.text,uid);
                                   titleController.text = "";
                                 }
                               }
@@ -369,12 +370,12 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorCoursesInDrawer(TextDirection textDirection) {
+  static Widget getInstructorCoursesInDrawer(TextDirection textDirection,String uid) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.snapshots(),
+      stream: courses.where("uid",isEqualTo: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(
@@ -445,7 +446,6 @@ class InstructorWidgets {
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
               final currentCourse = document.get("course_title");
-              // print(currentCourse);
               return Column(
                 children: [
                   ListTile(
@@ -475,9 +475,8 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorLectures(TextDirection textDirection, courseID) {
+  static Widget getInstructorLectures(TextDirection textDirection, courseID,String uid) {
     final lectureSlidableController = new SlidableController();
-
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)

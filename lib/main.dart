@@ -15,6 +15,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        Provider(
+          create: (_) => Authentication (),
+        ),
         ChangeNotifierProvider<MultipleNotifier>(
           create: (_) => MultipleNotifier([]),
         ),

@@ -8,6 +8,9 @@ class WrapperScreen extends StatefulWidget {
 class _WrapperScreenState extends State<WrapperScreen> {
   @override
   Widget build(BuildContext context) {
+    Authentication authentication =
+        Provider.of<Authentication>(context, listen: false);
+
     final TextDirection textDirection = Directionality.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -27,7 +30,6 @@ class _WrapperScreenState extends State<WrapperScreen> {
                 right: 15,
                 child: TextButton(
                   onPressed: () {
-                    print(FirebaseUtilities.getUserEmail());
                     textDirection == TextDirection.ltr
                         ? Utilities.changeLanguages(
                             Languages(1, 'عربي', 'ar'),
@@ -158,24 +160,19 @@ class _WrapperScreenState extends State<WrapperScreen> {
                                 ),
                         ),
                         onPressed: () async {
-                          UserCredential userCredential = await FirebaseAuth
-                              .instance
-                              .signInWithEmailAndPassword(
-                                  email: "ahmed0043ali12@gmail.com",
-                                  password: "instructor");
+                          bool isSuccess =
+                              await authentication.signInWithGoogle();
 
-                          String userId = userCredential.user.uid;
-                          String userEmail = userCredential.user.email;
-                          print("student ID $userId");
-                          print("student email ${userCredential.user.email}");
-                          FirebaseUtilities.saveUserEmail(userEmail);
-                          FirebaseUtilities.saveUserId(userId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InstructorWrapperScreen(),
-                            ),
-                          );
+                          UserModel userModel = authentication.loggedInUserModel;
+                          if (isSuccess) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InstructorWrapperScreen(userName: userModel.displayName, userURLImage: userModel.photoUrl,userID: userModel.id,),
+
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),
@@ -204,24 +201,21 @@ class _WrapperScreenState extends State<WrapperScreen> {
                                 ),
                         ),
                         onPressed: () async {
-                          UserCredential userCredential = await FirebaseAuth
-                              .instance
-                              .signInWithEmailAndPassword(
-                                  email: "ahmed43ali12@gmail.com",
-                                  password: "student");
+                          bool isSuccess =
+                              await authentication.signInWithGoogle();
+                          UserModel userModel = authentication.loggedInUserModel;
 
-                          String userId = userCredential.user.uid;
-                          String userEmail = userCredential.user.email;
-                          print("student ID $userId");
-                          print("student email ${userCredential.user.email}");
-                          FirebaseUtilities.saveUserEmail(userEmail);
-                          FirebaseUtilities.saveUserId(userId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StudentWrapperScreen(),
-                            ),
-                          );
+
+                          if (isSuccess) {
+                            FirebaseUtilities.saveUserId(userModel.id);
+                           
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StudentWrapperScreen(userName: userModel.displayName,userURLImage: userModel.photoUrl,uid: userModel.id,),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),

@@ -4,9 +4,11 @@ class InstructorHomeScreen extends StatefulWidget {
   final AnimationController controller;
   final Duration duration;
   final TextDirection textDirection;
+  final String uid;
+
 
   const InstructorHomeScreen(
-      {Key key, this.controller, this.duration, this.textDirection})
+      {Key key, this.controller, this.duration, this.textDirection,this.uid})
       : super(key: key);
 
   @override
@@ -69,13 +71,13 @@ class _InstructorHomeScreenState
           iconTheme: Theme.of(context).appBarTheme.iconTheme,
           backgroundColor: Colors.transparent,
         ),
-        body: InstructorWidgets.getInstructorCourses(widget.textDirection),
+        body: InstructorWidgets.getInstructorCourses(widget.textDirection,widget.uid),
         floatingActionButton: Padding(
           padding: EdgeInsets.all(6),
           child: FloatingActionButton(
             onPressed: () {
               InstructorWidgets.addCourseWidget(
-                  widget.textDirection, context, lectureTitleController);
+                  widget.textDirection, context, lectureTitleController,widget.uid);
             },
             child: Icon(
               Icons.add,

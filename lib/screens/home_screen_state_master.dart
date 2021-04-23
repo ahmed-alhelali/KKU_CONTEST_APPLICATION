@@ -1,4 +1,4 @@
-import 'imports.dart';
+import '../imports.dart';
 
 abstract class HomeScreenStateMaster<T extends StatefulWidget> extends State<T> {
 

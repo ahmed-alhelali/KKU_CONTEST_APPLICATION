@@ -1,6 +1,12 @@
 import 'package:kku_contest_app/imports.dart';
 
 class StudentWrapperScreen extends StatefulWidget {
+  final String userName;
+  final String userURLImage;
+ final String uid;
+
+  const StudentWrapperScreen({Key key, this.userName, this.userURLImage,this.uid}) : super(key: key);
+
   @override
   _StudentWrapperScreenState createState() => _StudentWrapperScreenState();
 }
@@ -33,11 +39,16 @@ class _StudentWrapperScreenState extends State<StudentWrapperScreen>
           StudentDrawerScreen(
             controller: _controller,
             textDirection: textDirection,
+            userName: widget.userName,
+            userURLImage: widget.userURLImage,
+            uid: widget.uid,
+
           ),
           StudentHomeScreen(
             controller: _controller,
             duration: duration,
             textDirection: textDirection,
+            uid: widget.uid,
           )
         ],
       ),

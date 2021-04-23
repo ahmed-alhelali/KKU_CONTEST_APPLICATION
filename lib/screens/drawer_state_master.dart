@@ -1,4 +1,4 @@
-import 'imports.dart';
+import '../imports.dart';
 
 abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
   String currierKey;
@@ -16,6 +16,8 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    Authentication authentication = Provider.of<Authentication>(context, listen: false);
+
 
     bool isLightTheme = themeProvider.isDarkMode ? false : true;
     if (_scaleAnimation == null) {
@@ -106,9 +108,11 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
               Row(
                 children: [
                   SizedBox(
-                    width: 30,
+                    width: MediaQuery.of(context).size.width * 0.1,
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Stack(
                         alignment: Alignment.center,
@@ -135,7 +139,7 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                           ),
                           CircleAvatar(
                             radius: 45,
-                            backgroundImage: ExactAssetImage(imagePath),
+                            backgroundImage: NetworkImage(imagePath),
                           ),
                         ],
                       ),
@@ -143,15 +147,15 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                         height: 15,
                       ),
                       Text(
-                        MyLocalization.of(context).getTranslatedValue(nameKey),
+                        nameKey,
                         style: textDirection == TextDirection.ltr
                             ? Utilities.getUbuntuTextStyleWithSize(
-                                16,
+                                18,
                                 color:
                                     Theme.of(context).textTheme.caption.color,
                               )
                             : Utilities.getTajwalTextStyleWithSize(
-                                14,
+                                18,
                                 color:
                                     Theme.of(context).textTheme.caption.color,
                               ),
@@ -160,7 +164,7 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                   ),
                 ],
               ),
-              SizedBox(height: 35),
+              SizedBox(height: 25),
               Widgets.getContainerWithOnOnTap(
                 Icon(
                   Icons.my_library_books_outlined,
@@ -208,7 +212,7 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                     "cancel",
                     textDirection,
                     functionOfYesButton: () {
-                      FirestoreDB.signOut();
+                      authentication.signOut();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

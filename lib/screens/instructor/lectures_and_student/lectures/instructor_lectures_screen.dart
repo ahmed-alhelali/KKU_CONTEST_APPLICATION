@@ -2,8 +2,9 @@ import 'package:kku_contest_app/imports.dart';
 
 class InstructorLecturesScreen extends StatefulWidget {
   final String id;
+  final String uid;
 
-  const InstructorLecturesScreen({Key key, this.id}) : super(key: key);
+  const InstructorLecturesScreen({Key key, this.id,this.uid}) : super(key: key);
 
   @override
   _InstructorLecturesScreenState createState() =>
@@ -17,7 +18,7 @@ class _InstructorLecturesScreenState extends State<InstructorLecturesScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: InstructorWidgets.getInstructorLectures(textDirection, widget.id),
+      body: InstructorWidgets.getInstructorLectures(textDirection, widget.id,widget.uid),
       floatingActionButton: Padding(
         padding: EdgeInsets.all(6),
         child: FloatingActionButton(

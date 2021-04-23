@@ -14,10 +14,6 @@ class FirebaseUtilities {
     return prefs.setString(userIdKey, getUserId);
   }
 
-  static Future<String> getUserEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userEmailKey);
-  }
 
   static Future<String> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
