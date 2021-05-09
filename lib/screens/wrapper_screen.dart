@@ -165,6 +165,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
 
                           UserModel userModel =
                               authentication.loggedInUserModel;
+
                           if (isSuccess) {
                             Navigator.push(
                               context,

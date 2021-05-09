@@ -33,16 +33,6 @@ class Utilities {
     return uuid.v4();
   }
 
-
-  static String getChatRoomIdByUserNames(String a, String b) {
-    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-      return "$b\_$a";
-    } else {
-      return "$a\_$b";
-    }
-
-  }
-
   static TextStyle getUbuntuTextStyleWithSize(double size,
       {FontWeight fontWeight,
       double letterSpacing,
