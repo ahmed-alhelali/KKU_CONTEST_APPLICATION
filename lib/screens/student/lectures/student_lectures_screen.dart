@@ -11,6 +11,27 @@ class StudentLectureScreen extends StatefulWidget {
 }
 
 class _StudentLectureScreenState extends State<StudentLectureScreen> {
+  String user1,user2;
+  String chatRoomID;
+  String imageForChatScreen,instructorName;
+
+
+  getInfo() async {
+    user2 = await FirebaseUtilities.getInstructorID();
+    user1 = await FirebaseUtilities.getUserId();
+    imageForChatScreen = await FirebaseUtilities.getInstructorImageUrl();
+    instructorName = await FirebaseUtilities.getInstructorName();
+    chatRoomID = "$user1\_$user2";
+  }
+
+  @override
+  void initState() {
+
+    getInfo();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
@@ -45,22 +66,23 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
           elevation: 0,
           backgroundColor: Colors.green.shade800,
           onPressed: () async {
-            String name = textDirection == TextDirection.ltr
-                ? "Abdullah Mohammad"
-                : "عبدالله محمد الغامدي";
+            // name = textDirection == TextDirection.ltr
+            //     ? "Abdullah Mohammad"
+            //     : "عبدالله محمد الغامدي";
 
             final snapShot = await FirebaseFirestore.instance
                 .collection("Courses")
                 .doc(widget.id)
                 .collection("chats")
-                .doc(widget.id)
+                .doc(chatRoomID)
                 .get();
 
+            print("CHT id $chatRoomID");
             if (snapShot.exists) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatScreen(name, widget.id),
+                  builder: (context) => ChatScreen(imageForChatScreen, widget.id,chatRoomID,instructorName),
                 ),
               );
             } else {

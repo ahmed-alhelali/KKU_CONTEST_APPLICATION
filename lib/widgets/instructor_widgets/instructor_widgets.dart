@@ -166,7 +166,7 @@ class InstructorWidgets {
   }
 
   static addCourseWidget(TextDirection textDirection, BuildContext context,
-      TextEditingController titleController,String uid) {
+      TextEditingController titleController,String uid,String userImage, String userName) {
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
@@ -351,7 +351,7 @@ class InstructorWidgets {
                                     gravity: Toast.CENTER,
                                   );
                                 } else {
-                                  FirestoreDB.addCourse(titleController.text,uid);
+                                  FirestoreDB.addCourse(titleController.text,uid,userImage, userName);
                                   titleController.text = "";
                                 }
                               }

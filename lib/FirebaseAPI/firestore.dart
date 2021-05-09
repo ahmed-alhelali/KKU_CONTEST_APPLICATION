@@ -1,7 +1,8 @@
 import 'package:kku_contest_app/imports.dart';
 
 class FirestoreDB {
-  static addCourse(String courseTitle,String uid) {
+  static addCourse(
+      String courseTitle, String uid, String userImage, String userName) {
     CollectionReference newCourse =
         FirebaseFirestore.instance.collection("Courses");
 
@@ -11,7 +12,9 @@ class FirestoreDB {
           "access_by_students": [],
           "time": DateTime.now(),
           "course_title": courseTitle,
-          "uid" : uid
+          "uid": uid,
+          "name": userName,
+          "imageUrl": userImage,
         })
         .then((value) => {print("course added")})
         .catchError((error) => print(error));
@@ -44,7 +47,8 @@ class FirestoreDB {
         .catchError((error) => print(error));
   }
 
-  static deleteAllStepsUnderLecture(String courseID, String lectureTitle) async {
+  static deleteAllStepsUnderLecture(
+      String courseID, String lectureTitle) async {
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -69,32 +73,33 @@ class FirestoreDB {
     return lecture.delete();
   }
 
-  static Future addMessage(String courseID, String messageId, Map messageInfoMap) async {
+  static Future addMessage(String courseID,String chatRoomID, String messageId, Map messageInfoMap) async {
     return FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
-        .doc(courseID)
+        .doc(chatRoomID)
         .collection("my_chats")
         .doc(messageId)
         .set(messageInfoMap);
   }
 
-  static updateLastMessageSend(String courseID, String chatRoomId, Map lastMessageInfoMap) {
+  static updateLastMessageSend(
+      String courseID, String chatRoomId, Map lastMessageInfoMap) {
     return FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
-        .doc(courseID)
+        .doc(chatRoomId)
         .update(lastMessageInfoMap);
   }
 
-  static createChatRoom(String courseID, Map chatRoomInfoMap) async {
+  static createChatRoom(String courseID, String chatRoomID,Map chatRoomInfoMap) async {
     final snapShot = await FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
-        .doc(courseID)
+        .doc(chatRoomID)
         .get();
 
     if (snapShot.exists) {
@@ -105,20 +110,24 @@ class FirestoreDB {
           .collection("Courses")
           .doc(courseID)
           .collection("chats")
-          .doc(courseID)
+          .doc(chatRoomID)
           .set(chatRoomInfoMap);
     }
   }
 
-  static Future<Stream<QuerySnapshot>> getChatRoomMessages(courseID) async {
+  static Future<Stream<QuerySnapshot>> getChatRoomMessages(courseID,String chatRoomID) async {
+
+    print("THE CHAT ROOM IS THIS $chatRoomID");
     return FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
-        .doc(courseID)
+        .doc(chatRoomID)
         .collection("my_chats")
         .orderBy("ts", descending: true)
         .snapshots();
+
+
   }
 
   static Future<Stream<QuerySnapshot>> getChatRooms(courseID) async {
@@ -128,4 +137,5 @@ class FirestoreDB {
         .collection("chats")
         .snapshots();
   }
+
 }

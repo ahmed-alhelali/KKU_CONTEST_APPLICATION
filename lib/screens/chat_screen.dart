@@ -1,12 +1,10 @@
 import 'package:kku_contest_app/imports.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String chatWithUsername, courseID;
+  final String imageForChatScreen, courseID, charRoomID,name;
 
-  const ChatScreen(
-    this.chatWithUsername,
-    this.courseID,
-  );
+  ChatScreen(
+      this.imageForChatScreen, this.courseID, this.charRoomID,this.name);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -14,34 +12,26 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String messageID = "";
-
-  String instructorID = "50Un4ErjskQVOrubCLzUloBsvHl1";
-  String studentID = "crKMIHUqhrbBLzjtOsH1b10bnNx1";
   List<String> myTitles;
-
   Stream messageStream;
   final messageController = TextEditingController();
-  String myID;
 
-  getInfoFromSharedPreference() async {
-    myID = await FirebaseUtilities.getUserId();
-  }
+  String userName;
+  String userImageUrl;
+  String userID;
 
-  getUserName() async {
-    var userID = await FirebaseUtilities.getUserId();
-    var Id = userID.toString();
-    String IDtoString = Id.toString();
-    return IDtoString;
-  }
+  String name;
+  String id;
+  String imageUrl;
 
-  addMessage(bool sendClicked) {
+  addMessage(bool sendClicked, uid) {
     if (messageController.text != "") {
       String message = messageController.text;
       var lastMessage = DateTime.now();
 
       Map<String, dynamic> messageInfoMap = {
         "message": message,
-        "sendBy": myID,
+        "sendBy": uid,
         "ts": lastMessage,
       };
 
@@ -52,13 +42,14 @@ class _ChatScreenState extends State<ChatScreen> {
       print("message added");
       FirestoreDB.addMessage(
         widget.courseID,
+        widget.charRoomID,
         messageID,
         messageInfoMap,
       );
       print("message updated");
       FirestoreDB.updateLastMessageSend(
         widget.courseID,
-        widget.courseID,
+        widget.charRoomID,
         messageInfoMap,
       );
 
@@ -85,17 +76,11 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         sendByMe
             ? SizedBox()
-            : myID == instructorID
-                ? CircleAvatar(
+            : CircleAvatar(
                     radius: 15,
-                    backgroundImage:
-                        ExactAssetImage("assets/images/student.png"),
-                  )
-                : CircleAvatar(
-                    radius: 15,
-                    backgroundImage:
-                        ExactAssetImage("assets/images/instructor_avatar.jpg"),
+                    backgroundImage: NetworkImage(widget.imageForChatScreen),
                   ),
+
         Flexible(
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -153,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   DocumentSnapshot ds = snapshot.data.docs[index];
                   return chatMessageTile(
                     ds["message"],
-                    myID == ds["sendBy"],
+                    userID == ds["sendBy"],
                     textDirection,
                   );
                 },
@@ -165,19 +150,28 @@ class _ChatScreenState extends State<ChatScreen> {
 
   getAndSetMessages() async {
     messageStream = await FirestoreDB.getChatRoomMessages(
-      widget.courseID,
-    );
+        widget.courseID, widget.charRoomID);
 
     setState(() {});
   }
 
+  getUserInfo() async {
+    userName = await FirebaseUtilities.getUserName();
+    userImageUrl = await FirebaseUtilities.getUserImageUrl();
+    userID = await FirebaseUtilities.getUserId();
+    name = await FirebaseUtilities.getInstructorName();
+    id = await FirebaseUtilities.getInstructorID();
+    imageUrl = await FirebaseUtilities.getInstructorImageUrl();
+  }
+
   doThisOnLaunch() async {
-    await getInfoFromSharedPreference();
+    getUserInfo();
     getAndSetMessages();
   }
 
   @override
   void initState() {
+    getUserInfo();
     doThisOnLaunch();
     super.initState();
   }
@@ -205,22 +199,16 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            myID == instructorID
-                ? CircleAvatar(
+           CircleAvatar(
                     radius: 20,
-                    backgroundImage:
-                        ExactAssetImage("assets/images/student.png"),
-                  )
-                : CircleAvatar(
-                    radius: 20,
-                    backgroundImage:
-                        ExactAssetImage("assets/images/instructor_avatar.jpg"),
+                    backgroundImage: NetworkImage(widget.imageForChatScreen),
                   ),
+
             SizedBox(
               width: 15,
             ),
             Text(
-              widget.chatWithUsername,
+              widget.name,
               style: textDirection == TextDirection.ltr
                   ? Utilities.getUbuntuTextStyleWithSize(16,
                       color: Theme.of(context).textTheme.caption.color,
@@ -286,7 +274,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: Colors.green.shade900,
                       ),
                       onPressed: () {
-                        addMessage(true);
+                        addMessage(true, userID);
                       },
                     ),
                   ],

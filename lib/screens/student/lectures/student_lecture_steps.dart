@@ -12,12 +12,27 @@ class StudentLectureSteps extends StatefulWidget {
 
 class _StudentLectureStepsState extends State<StudentLectureSteps> {
   int _currentStep = 0;
+  String name, user2;
 
   List<String> titles = [];
   List<String> descriptions = [];
+  String imageForChatScreen;
+
+  String chatRoomID;
+  String instructorName;
+
+  getInfo() async {
+    name = await FirebaseUtilities.getInstructorID();
+    user2 = await FirebaseUtilities.getUserId();
+    imageForChatScreen = await FirebaseUtilities.getInstructorImageUrl();
+    instructorName = await FirebaseUtilities.getInstructorName();
+    chatRoomID = "$user2\_$name";
+  }
 
   @override
   void initState() {
+    getInfo();
+
     getAllSteps(widget.id, widget.title);
     super.initState();
   }
@@ -25,7 +40,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-    final _multipleNotifier = Provider.of<MultipleNotifier>(context,listen: false);
+    final _multipleNotifier =
+        Provider.of<MultipleNotifier>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -224,20 +240,16 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                   Toast.BOTTOM,
                                                             );
                                                           } else {
-                                                            String name = textDirection ==
-                                                                    TextDirection
-                                                                        .ltr
-                                                                ? "Abdullah Mohammad"
-                                                                : "عبدالله محمد الغامدي";
-
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     ChatScreen(
-                                                                        name,
+                                                                        imageForChatScreen,
                                                                         widget
-                                                                            .id),
+                                                                            .id,
+                                                                        chatRoomID,
+                                                                        instructorName),
                                                               ),
                                                             );
                                                           }

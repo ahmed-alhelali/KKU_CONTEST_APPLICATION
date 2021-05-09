@@ -163,13 +163,17 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           bool isSuccess =
                               await authentication.signInWithGoogle();
 
-                          UserModel userModel = authentication.loggedInUserModel;
+                          UserModel userModel =
+                              authentication.loggedInUserModel;
                           if (isSuccess) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => InstructorWrapperScreen(userName: userModel.displayName, userURLImage: userModel.photoUrl,userID: userModel.id,),
-
+                                builder: (context) => InstructorWrapperScreen(
+                                  userName: userModel.displayName,
+                                  userURLImage: userModel.photoUrl,
+                                  userID: userModel.id,
+                                ),
                               ),
                             );
                           }
@@ -203,16 +207,20 @@ class _WrapperScreenState extends State<WrapperScreen> {
                         onPressed: () async {
                           bool isSuccess =
                               await authentication.signInWithGoogle();
-                          UserModel userModel = authentication.loggedInUserModel;
-
+                          UserModel userModel =
+                              authentication.loggedInUserModel;
 
                           if (isSuccess) {
                             FirebaseUtilities.saveUserId(userModel.id);
-                           
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => StudentWrapperScreen(userName: userModel.displayName,userURLImage: userModel.photoUrl,uid: userModel.id,),
+                                builder: (context) => StudentWrapperScreen(
+                                  userName: userModel.displayName,
+                                  userURLImage: userModel.photoUrl,
+                                  uid: userModel.id,
+                                ),
                               ),
                             );
                           }

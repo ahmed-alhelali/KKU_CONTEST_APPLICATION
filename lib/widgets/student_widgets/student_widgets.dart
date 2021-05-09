@@ -81,6 +81,10 @@ class StudentWidgets {
                 ),
               ),
               onTap: () {
+                FirebaseUtilities.saveInstructorName(document.get("name"));
+                FirebaseUtilities.saveInstructorID(document.get("uid"));
+                FirebaseUtilities.saveInstructorImageUrl(document.get("imageUrl"));
+
                 courseID = document.id;
                 print(courseID);
                 Navigator.push(
@@ -317,9 +321,19 @@ class StudentWidgets {
     );
   }
 
-  static showChoiceStepsIssuesDialog(courseID, lectureTitle, List titles,
+  static showChoiceStepsIssuesDialog(courseID,lectureTitle, List titles,
       BuildContext context, TextDirection textDirection,
-      {String id}) {
+      {String id}) async{
+
+
+    String userName = await FirebaseUtilities.getUserName();
+    String imageUrl = await FirebaseUtilities.getUserImageUrl();
+    String imageForChatScreen = await FirebaseUtilities.getInstructorImageUrl();
+        String userID1 = await FirebaseUtilities.getUserId();
+    String userID2 = await FirebaseUtilities.getInstructorID();
+   String  instructorName = await FirebaseUtilities.getInstructorName();
+
+
     return showDialog(
       barrierColor: Theme.of(context).shadowColor,
       context: context,
@@ -423,16 +437,19 @@ class StudentWidgets {
                 } else if (_multipleNotifier.selectedItems.isNotEmpty) {
                   Map<String, dynamic> chatRoomInfoMap = {
                     "users": [
-                      "crKMIHUqhrbBLzjtOsH1b10bnNx1",
-                      "50Un4ErjskQVOrubCLzUloBsvHl1"
+                      // "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+                      // "50Un4ErjskQVOrubCLzUloBsvHl1"
+                      userID1,
+                      userID2
                     ]
                   };
-                  String name = textDirection == TextDirection.ltr
-                      ? "Abdullah Mohammad"
-                      : "عبدالله محمد الغامدي";
+
+                  String chatRoomID =   "$userID1\_$userID2";
+
 
                   await FirestoreDB.createChatRoom(
                     courseID,
+                    chatRoomID,
                     chatRoomInfoMap,
                   );
                   List<String> mySelectedTitles =
@@ -441,15 +458,17 @@ class StudentWidgets {
                   print("mySelectedTitles = $mySelectedTitles");
 
                   for (int i = 0; i < mySelectedTitles.length; i++) {
-                    addInitialMessages(courseID, mySelectedTitles[i]);
+                    addInitialMessages(courseID,chatRoomID, mySelectedTitles[i],userID1,userName,imageUrl);
                   }
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChatScreen(
-                        name,
+                          imageForChatScreen,
                         courseID,
+                          chatRoomID,
+                        instructorName
                       ),
                     ),
                   );
@@ -474,15 +493,18 @@ class StudentWidgets {
     );
   }
 
-  static addInitialMessages(courseID, String myTitles) {
+  static addInitialMessages(courseID,String chatRoomID, String myTitles,String userID, name , imageUrl) {
     String messageID = Utilities.getRandomIdForNewCourse();
     print("myTitles = $myTitles");
     Map<String, dynamic> messageInfoMap = {
       "message": myTitles,
-      "sendBy": "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+      // "sendBy": "crKMIHUqhrbBLzjtOsH1b10bnNx1",
+      "sendBy": userID,
+      "name" : name,
+      "image_url" : imageUrl,
       "ts": DateTime.now(),
     };
-    FirestoreDB.updateLastMessageSend(courseID, courseID, messageInfoMap);
-    return FirestoreDB.addMessage(courseID, messageID, messageInfoMap);
+    FirestoreDB.updateLastMessageSend(courseID, chatRoomID, messageInfoMap);
+    return FirestoreDB.addMessage(courseID,chatRoomID, messageID, messageInfoMap);
   }
 }

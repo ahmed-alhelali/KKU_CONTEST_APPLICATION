@@ -12,7 +12,7 @@ class HelpStudentScreen extends StatefulWidget {
 
 class _HelpStudentScreenState extends State<HelpStudentScreen> {
   Stream chatRoomsStream;
-
+  // String imageForChatScreen = await FirebaseUtilities.get
   getChatRooms() async {
     chatRoomsStream = await FirestoreDB.getChatRooms(widget.id);
 
@@ -74,9 +74,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
           );
         }
 
-        String name = textDirection == TextDirection.ltr
-            ? "Ahmed Ali A Alhelali"
-            : "أحمد علي الهلالي";
+
 
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
@@ -87,11 +85,11 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                   ListTile(
                     leading: CircleAvatar(
                       radius: 20,
-                      backgroundImage:
-                          ExactAssetImage("assets/images/student.png"),
+                      backgroundImage:NetworkImage(document.get("image_url")),
+                          // ExactAssetImage("assets/images/student.png"),
                     ),
                     title: Text(
-                      name,
+                      document.get("name"),
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(14,
                               color: Theme.of(context).textTheme.caption.color,
@@ -113,7 +111,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return ChatScreen(name, widget.id);
+                            return ChatScreen(document.get("image_url"), widget.id,document.id,document.get("name"));
                           },
                         ),
                       );

@@ -6,9 +6,8 @@ class InstructorHomeScreen extends StatefulWidget {
   final TextDirection textDirection;
   final String uid;
 
-
   const InstructorHomeScreen(
-      {Key key, this.controller, this.duration, this.textDirection,this.uid})
+      {Key key, this.controller, this.duration, this.textDirection, this.uid})
       : super(key: key);
 
   @override
@@ -18,6 +17,23 @@ class InstructorHomeScreen extends StatefulWidget {
 class _InstructorHomeScreenState
     extends HomeScreenStateMaster<InstructorHomeScreen> {
   final lectureTitleController = TextEditingController();
+
+  String userName;
+  String userImageUrl;
+  String userID;
+
+  getUserInfo() async {
+    userName = await FirebaseUtilities.getUserName();
+    userImageUrl = await FirebaseUtilities.getUserImageUrl();
+    userID = await FirebaseUtilities.getUserId();
+  }
+
+  @override
+  void initState() {
+    getUserInfo();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -71,13 +87,18 @@ class _InstructorHomeScreenState
           iconTheme: Theme.of(context).appBarTheme.iconTheme,
           backgroundColor: Colors.transparent,
         ),
-        body: InstructorWidgets.getInstructorCourses(widget.textDirection,widget.uid),
+        body: InstructorWidgets.getInstructorCourses(
+            widget.textDirection, widget.uid),
         floatingActionButton: Padding(
           padding: EdgeInsets.all(6),
           child: FloatingActionButton(
             onPressed: () {
-              InstructorWidgets.addCourseWidget(
-                  widget.textDirection, context, lectureTitleController,widget.uid);
+              InstructorWidgets.addCourseWidget(widget.textDirection, context,
+                  lectureTitleController, userID,userImageUrl,userName);
+              // print(name);
+              // print(id);
+              // print(imageUrl);
+
             },
             child: Icon(
               Icons.add,
