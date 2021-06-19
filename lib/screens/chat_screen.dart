@@ -1,10 +1,10 @@
 import 'package:kku_contest_app/imports.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String imageForChatScreen, courseID, charRoomID,name;
+  final String imageForChatScreen, courseID, charRoomID, name, userID2;
 
-  ChatScreen(
-      this.imageForChatScreen, this.courseID, this.charRoomID,this.name);
+  ChatScreen(this.imageForChatScreen, this.courseID, this.charRoomID, this.name,
+      {this.userID2});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -25,6 +25,8 @@ class _ChatScreenState extends State<ChatScreen> {
   String imageUrl;
 
   addMessage(bool sendClicked, uid) {
+    print("user1 $userID");
+    print("user2 $id");
     if (messageController.text != "") {
       String message = messageController.text;
       var lastMessage = DateTime.now();
@@ -56,6 +58,39 @@ class _ChatScreenState extends State<ChatScreen> {
       if (sendClicked) {
         messageController.text = "";
         messageID = "";
+
+
+        print("USER @2 ${widget.userID2}");
+        FirebaseFirestore.instance
+            .collection("Courses")
+            .doc(widget.courseID)
+            .collection("chats")
+            .doc(widget.charRoomID)
+            .update({"read": false});
+        if(uid != widget.userID2){
+          FirebaseFirestore.instance
+              .collection("Courses")
+              .doc(widget.courseID)
+              .update({
+            "notification": FieldValue.arrayUnion([widget.userID2]),
+          });
+        }
+        if(widget.userID2 == userID){
+          FirebaseFirestore.instance
+              .collection("Courses")
+              .doc(widget.courseID)
+              .update({
+            "new_messages": FieldValue.arrayUnion([widget.userID2]),
+          });
+        }
+
+
+
+
+        // FirebaseFirestore.instance
+        //     .collection("Courses")
+        //     .doc(widget.courseID)
+        //     .update({"notification": true});
       }
     }
   }
@@ -77,10 +112,9 @@ class _ChatScreenState extends State<ChatScreen> {
         sendByMe
             ? SizedBox()
             : CircleAvatar(
-                    radius: 15,
-                    backgroundImage: NetworkImage(widget.imageForChatScreen),
-                  ),
-
+                radius: 15,
+                backgroundImage: NetworkImage(widget.imageForChatScreen),
+              ),
         Flexible(
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -199,11 +233,10 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-           CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(widget.imageForChatScreen),
-                  ),
-
+            CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage(widget.imageForChatScreen),
+            ),
             SizedBox(
               width: 15,
             ),
@@ -274,7 +307,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: Colors.green.shade900,
                       ),
                       onPressed: () {
-                        addMessage(true, userID);
+                        addMessage(
+                          true,
+                          userID,
+                        );
                       },
                     ),
                   ],

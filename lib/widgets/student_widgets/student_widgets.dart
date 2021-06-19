@@ -1,13 +1,14 @@
 import 'package:kku_contest_app/imports.dart';
 
 class StudentWidgets {
-  static Widget getStudentCourses(TextDirection textDirection,String id) {
+  static Widget getStudentCourses(TextDirection textDirection, String id) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     String courseID;
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access_by_students", arrayContains: id).snapshots(),
+      stream:
+          courses.where("access_by_students", arrayContains: id).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -55,11 +56,13 @@ class StudentWidgets {
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map((DocumentSnapshot document) {
+            List<dynamic> users = document.get("new_access");
+            List<dynamic> notification = document.get("notification");
+
             final currentCourse = document.get("course_title");
             return InkWell(
               child: Container(
                 alignment: AlignmentDirectional.centerStart,
-                padding: EdgeInsets.symmetric(horizontal: 30),
                 margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.09,
@@ -67,26 +70,94 @@ class StudentWidgets {
                   color: Theme.of(context).backgroundColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Text(
-                  currentCourse,
-                  style: textDirection == TextDirection.ltr
-                      ? Utilities.getUbuntuTextStyleWithSize(
-                          16,
-                          color: Theme.of(context).textTheme.caption.color,
-                        )
-                      : Utilities.getTajwalTextStyleWithSize(
-                          16,
-                          color: Theme.of(context).textTheme.caption.color,
+                child: Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            currentCourse,
+                            style: textDirection == TextDirection.ltr
+                                ? Utilities.getUbuntuTextStyleWithSize(
+                                    16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .color,
+                                  )
+                                : Utilities.getTajwalTextStyleWithSize(
+                                    16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .color,
+                                  ),
+                          ),
                         ),
+                        notification.contains(id)
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red.shade900,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: 15,
+                                  width: 15,
+                                ))
+                            : Center(),
+                      ],
+                    ),
+                    users.contains(id)
+                        ? Positioned(
+                            right:
+                                textDirection == TextDirection.ltr ? 0.9 : null,
+                            top: 10,
+                            left:
+                                textDirection == TextDirection.ltr ? null : 0.9,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "New Course",
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.red.shade900,
+                                  borderRadius:
+                                      textDirection == TextDirection.ltr
+                                          ? BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              bottomLeft: Radius.circular(20),
+                                            )
+                                          : BorderRadius.only(
+                                              bottomRight: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            )),
+                              height: 20,
+                              width: 80,
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
                 ),
               ),
               onTap: () {
                 FirebaseUtilities.saveInstructorName(document.get("name"));
                 FirebaseUtilities.saveInstructorID(document.get("uid"));
-                FirebaseUtilities.saveInstructorImageUrl(document.get("imageUrl"));
-
+                FirebaseUtilities.saveInstructorImageUrl(
+                    document.get("imageUrl"));
                 courseID = document.id;
                 print(courseID);
+
+                var removed = [id];
+                FirebaseFirestore.instance
+                    .collection("Courses")
+                    .doc(courseID)
+                    .update({"new_access": FieldValue.arrayRemove(removed)});
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -104,12 +175,14 @@ class StudentWidgets {
     );
   }
 
-  static Widget getStudentCoursesInDrawer(TextDirection textDirection,String uid) {
+  static Widget getStudentCoursesInDrawer(
+      TextDirection textDirection, String uid) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("access_by_students", arrayContains: uid).snapshots(),
+      stream:
+          courses.where("access_by_students", arrayContains: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(
@@ -321,18 +394,15 @@ class StudentWidgets {
     );
   }
 
-  static showChoiceStepsIssuesDialog(courseID,lectureTitle, List titles,
+  static showChoiceStepsIssuesDialog(courseID, lectureTitle, List titles,
       BuildContext context, TextDirection textDirection,
-      {String id}) async{
-
-
+      {String id}) async {
     String userName = await FirebaseUtilities.getUserName();
     String imageUrl = await FirebaseUtilities.getUserImageUrl();
     String imageForChatScreen = await FirebaseUtilities.getInstructorImageUrl();
-        String userID1 = await FirebaseUtilities.getUserId();
+    String userID1 = await FirebaseUtilities.getUserId();
     String userID2 = await FirebaseUtilities.getInstructorID();
-   String  instructorName = await FirebaseUtilities.getInstructorName();
-
+    String instructorName = await FirebaseUtilities.getInstructorName();
 
     return showDialog(
       barrierColor: Theme.of(context).shadowColor,
@@ -436,16 +506,10 @@ class StudentWidgets {
                   );
                 } else if (_multipleNotifier.selectedItems.isNotEmpty) {
                   Map<String, dynamic> chatRoomInfoMap = {
-                    "users": [
-                      // "crKMIHUqhrbBLzjtOsH1b10bnNx1",
-                      // "50Un4ErjskQVOrubCLzUloBsvHl1"
-                      userID1,
-                      userID2
-                    ]
+                    "users": [userID1, userID2]
                   };
 
-                  String chatRoomID =   "$userID1\_$userID2";
-
+                  String chatRoomID = "$userID1\_$userID2";
 
                   await FirestoreDB.createChatRoom(
                     courseID,
@@ -457,21 +521,23 @@ class StudentWidgets {
 
                   print("mySelectedTitles = $mySelectedTitles");
 
-                  for (int i = 0; i < mySelectedTitles.length; i++) {
-                    addInitialMessages(courseID,chatRoomID, mySelectedTitles[i],userID1,userName,imageUrl);
+                  if(imageUrl != null && userName != null){
+                    for (int i = 0; i < mySelectedTitles.length; i++) {
+                      addInitialMessages(courseID, chatRoomID,
+                          mySelectedTitles[i], userID1, userName, imageUrl);
+                    }
+
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(imageForChatScreen,
+                            courseID, chatRoomID, instructorName),
+                      ),
+                    );
                   }
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                          imageForChatScreen,
-                        courseID,
-                          chatRoomID,
-                        instructorName
-                      ),
-                    ),
-                  );
+
                 } else {
                   Toast.show(
                     MyLocalization.of(context)
@@ -493,18 +559,33 @@ class StudentWidgets {
     );
   }
 
-  static addInitialMessages(courseID,String chatRoomID, String myTitles,String userID, name , imageUrl) {
+  static addInitialMessages(courseID, String chatRoomID, String myTitles,
+      String userID, name, imageUrl) {
     String messageID = Utilities.getRandomIdForNewCourse();
     print("myTitles = $myTitles");
+
     Map<String, dynamic> messageInfoMap = {
       "message": myTitles,
-      // "sendBy": "crKMIHUqhrbBLzjtOsH1b10bnNx1",
       "sendBy": userID,
-      "name" : name,
-      "image_url" : imageUrl,
+      "user": userID,
+      "name": name,
+      "image_url": imageUrl,
+      "read": false,
       "ts": DateTime.now(),
     };
+    Map<String, dynamic> messageMap = {
+      "message": myTitles,
+      "sendBy": userID,
+      "ts": DateTime.now(),
+    };
+    FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .update({
+      "new_messages": FieldValue.arrayUnion([userID]),
+    });
     FirestoreDB.updateLastMessageSend(courseID, chatRoomID, messageInfoMap);
-    return FirestoreDB.addMessage(courseID,chatRoomID, messageID, messageInfoMap);
+    return FirestoreDB.addMessage(courseID, chatRoomID, messageID, messageMap);
+
   }
 }

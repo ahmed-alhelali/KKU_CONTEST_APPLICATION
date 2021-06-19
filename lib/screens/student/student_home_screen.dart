@@ -4,10 +4,10 @@ class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;
   final Duration duration;
   final TextDirection textDirection;
- final String uid;
+  final String uid;
 
   const StudentHomeScreen(
-      {Key key, this.controller, this.duration, this.textDirection,this.uid})
+      {Key key, this.controller, this.duration, this.textDirection, this.uid})
       : super(key: key);
 
   @override
@@ -69,7 +69,6 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
               icon: Icon(Icons.add),
               onPressed: () async {
                 if (searchController.text != "") {
-
                   final courseX = await FirebaseFirestore.instance
                       .collection("Courses")
                       .doc(searchController.text)
@@ -78,7 +77,10 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                     await FirebaseFirestore.instance
                         .collection("Courses")
                         .doc(searchController.text)
-                        .update({"access_by_students": FieldValue.arrayUnion([widget.uid])});
+                        .update({
+                      "access_by_students": FieldValue.arrayUnion([widget.uid]),
+                      "new_access": FieldValue.arrayUnion([widget.uid])
+                    });
                   } else {
                     Toast.show(
                       MyLocalization.of(context)
@@ -146,7 +148,8 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
               ),
             ),
             Expanded(
-                child: StudentWidgets.getStudentCourses(widget.textDirection,widget.uid )),
+                child: StudentWidgets.getStudentCourses(
+                    widget.textDirection, widget.uid)),
           ],
         ),
       );

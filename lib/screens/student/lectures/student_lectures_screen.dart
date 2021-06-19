@@ -11,9 +11,10 @@ class StudentLectureScreen extends StatefulWidget {
 }
 
 class _StudentLectureScreenState extends State<StudentLectureScreen> {
-  String user1,user2;
+  String user1, user2;
   String chatRoomID;
-  String imageForChatScreen,instructorName;
+  String imageForChatScreen, instructorName;
+  DocumentSnapshot snapShot2;
 
 
   getInfo() async {
@@ -22,11 +23,16 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
     imageForChatScreen = await FirebaseUtilities.getInstructorImageUrl();
     instructorName = await FirebaseUtilities.getInstructorName();
     chatRoomID = "$user1\_$user2";
+    snapShot2 = await FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(widget.id)
+        .collection("chats")
+        .doc(chatRoomID)
+        .get();
   }
 
   @override
   void initState() {
-
     getInfo();
 
     super.initState();
@@ -66,25 +72,43 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
           elevation: 0,
           backgroundColor: Colors.green.shade800,
           onPressed: () async {
-            // name = textDirection == TextDirection.ltr
-            //     ? "Abdullah Mohammad"
-            //     : "عبدالله محمد الغامدي";
+            var removedNotification = [user1];
 
-            final snapShot = await FirebaseFirestore.instance
+            FirebaseFirestore.instance
+                .collection("Courses")
+                .doc(widget.id)
+                .update({
+              "notification": FieldValue.arrayRemove(removedNotification)
+            });
+
+            final snapShotx = await FirebaseFirestore.instance
                 .collection("Courses")
                 .doc(widget.id)
                 .collection("chats")
                 .doc(chatRoomID)
                 .get();
 
-            print("CHT id $chatRoomID");
-            if (snapShot.exists) {
+            if (snapShotx.exists) {
+              // FirebaseFirestore.instance
+              //     .collection("Courses")
+              //     .doc(widget.id)
+              //     .update({"notification": false});
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatScreen(imageForChatScreen, widget.id,chatRoomID,instructorName),
+                  builder: (context) => ChatScreen(imageForChatScreen,
+                      widget.id, chatRoomID, instructorName,userID2: user1,),
                 ),
-              );
+              ).then((value) {
+                if (snapShotx.get("sendBy") != user1) {
+                  FirebaseFirestore.instance
+                      .collection("Courses")
+                      .doc(widget.id)
+                      .collection("chats")
+                      .doc(chatRoomID)
+                      .update({"read": true});
+                }
+              });
             } else {
               Widgets.showWarringDialog(
                 "chat_not_exist_title",
@@ -99,10 +123,75 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
               );
             }
           },
-          child: Icon(
-            FontAwesomeIcons.solidCommentAlt,
-            color: Colors.white,
-            size: 30,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Courses")
+                .doc(widget.id)
+                .collection("chats")
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData)
+                return Icon(
+                  FontAwesomeIcons.solidCommentAlt,
+                  size: 30,
+                  color: Colors.white,
+                );
+              if (snapshot.data.size > 0) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    if (document.get("user") == user1) {
+                      if (document.get("sendBy") != user1) {
+                        if (document.get("read") == false)
+                          return Stack(
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.solidCommentAlt,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                              Transform.translate(
+                                offset: textDirection == TextDirection.ltr
+                                    ? Offset(-10, -10)
+                                    : Offset(10, -10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.red.shade900,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  height: 15,
+                                  width: 15,
+                                ),
+                              )
+                            ],
+                          );
+                        return Icon(
+                          FontAwesomeIcons.solidCommentAlt,
+                          size: 30,
+                          color: Colors.white,
+                        );
+                      }
+                      return Icon(
+                        FontAwesomeIcons.solidCommentAlt,
+                        size: 30,
+                        color: Colors.white,
+                      );
+                    }
+                    return Icon(
+                      FontAwesomeIcons.solidCommentAlt,
+                      size: 30,
+                      color: Colors.white,
+                    );
+                  }).toList(),
+                );
+              }
+
+              return Icon(
+                FontAwesomeIcons.solidCommentAlt,
+                size: 30,
+                color: Colors.white,
+              );
+            },
           ),
         ),
       ),

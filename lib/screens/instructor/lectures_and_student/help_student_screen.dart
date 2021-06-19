@@ -1,4 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
+import 'package:intl/intl.dart' as intl;
 
 class HelpStudentScreen extends StatefulWidget {
   final String id, lectureTitle;
@@ -12,11 +13,12 @@ class HelpStudentScreen extends StatefulWidget {
 
 class _HelpStudentScreenState extends State<HelpStudentScreen> {
   Stream chatRoomsStream;
-  // String imageForChatScreen = await FirebaseUtilities.get
+  var currentUserID;
+
   getChatRooms() async {
     chatRoomsStream = await FirestoreDB.getChatRooms(widget.id);
+    currentUserID = await FirebaseUtilities.getUserId();
 
-    setState(() {});
   }
 
   Widget chatRoomsList(TextDirection textDirection) {
@@ -25,6 +27,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
           .collection("Courses")
           .doc(widget.id)
           .collection("chats")
+          .orderBy("ts", descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -73,21 +76,22 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
             ),
           );
         }
-
-
-
         return ListView(
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
+              Timestamp t = document['ts'];
+              DateTime d = t.toDate();
               return Column(
                 children: [
                   ListTile(
-                    leading: CircleAvatar(
+                    leading: document.get("image_url") != null ? CircleAvatar(
                       radius: 20,
-                      backgroundImage:NetworkImage(document.get("image_url")),
-                          // ExactAssetImage("assets/images/student.png"),
-                    ),
+                      backgroundImage: NetworkImage(document.get("image_url")),
+                    ) : CircleAvatar(
+                      radius: 20,
+                      backgroundImage: ExactAssetImage("assets/images/instructor_avatar.jpg"),
+                    ) ,
                     title: Text(
                       document.get("name"),
                       style: textDirection == TextDirection.ltr
@@ -99,22 +103,68 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                               fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
-                      document.get("message").toString(),
+                      document.get("sendBy") == currentUserID ? "You: ${document.get("message").toString()}" : document.get("message").toString(),
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(10,
                               color: Colors.grey.shade600)
                           : Utilities.getTajwalTextStyleWithSize(10,
                               color: Colors.grey.shade600),
                     ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          intl.DateFormat("hh:mm a").format(d).toString(),
+                          style: TextStyle(fontSize: 12),
+                          textDirection: TextDirection.ltr,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        document.get("sendBy") == currentUserID
+                            ? Container(
+                                child: Text(""),
+                              )
+                            : document.get("read") == false
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.red.shade900,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    height: 15,
+                                    width: 15,
+                                  )
+                                : Container(
+                                    child: Text(""),
+                                  ),
+                      ],
+                    ),
                     onTap: () {
+                      FirebaseFirestore.instance
+                          .collection("Courses")
+                          .doc(widget.id)
+                          .update({
+                        "new_messages": FieldValue.arrayRemove([document.get("user")]),
+                      });
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return ChatScreen(document.get("image_url"), widget.id,document.id,document.get("name"));
+                            return ChatScreen(document.get("image_url"),
+                                widget.id, document.id, document.get("name"),userID2: document.get("user"),);
                           },
                         ),
                       );
+                      if (document.get("sendBy") != currentUserID) {
+                        FirebaseFirestore.instance
+                            .collection("Courses")
+                            .doc(widget.id)
+                            .collection("chats")
+                            .doc(document.id)
+                            .update({"read": true});
+                      }
                     },
                   ),
                   Padding(

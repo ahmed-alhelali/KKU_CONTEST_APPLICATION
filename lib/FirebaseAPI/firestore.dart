@@ -14,6 +14,8 @@ class FirestoreDB {
           "course_title": courseTitle,
           "uid": uid,
           "name": userName,
+          "notification": [],
+          "new_messages": [],
           "imageUrl": userImage,
         })
         .then((value) => {print("course added")})
@@ -73,7 +75,8 @@ class FirestoreDB {
     return lecture.delete();
   }
 
-  static Future addMessage(String courseID,String chatRoomID, String messageId, Map messageInfoMap) async {
+  static Future addMessage(String courseID, String chatRoomID, String messageId,
+      Map messageInfoMap) async {
     return FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -94,7 +97,8 @@ class FirestoreDB {
         .update(lastMessageInfoMap);
   }
 
-  static createChatRoom(String courseID, String chatRoomID,Map chatRoomInfoMap) async {
+  static createChatRoom(
+      String courseID, String chatRoomID, Map chatRoomInfoMap) async {
     final snapShot = await FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
@@ -115,8 +119,8 @@ class FirestoreDB {
     }
   }
 
-  static Future<Stream<QuerySnapshot>> getChatRoomMessages(courseID,String chatRoomID) async {
-
+  static Future<Stream<QuerySnapshot>> getChatRoomMessages(
+      courseID, String chatRoomID) async {
     print("THE CHAT ROOM IS THIS $chatRoomID");
     return FirebaseFirestore.instance
         .collection("Courses")
@@ -126,8 +130,6 @@ class FirestoreDB {
         .collection("my_chats")
         .orderBy("ts", descending: true)
         .snapshots();
-
-
   }
 
   static Future<Stream<QuerySnapshot>> getChatRooms(courseID) async {
@@ -137,5 +139,4 @@ class FirestoreDB {
         .collection("chats")
         .snapshots();
   }
-
 }

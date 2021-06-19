@@ -44,6 +44,7 @@ class ThemeProvider extends ChangeNotifier {
       scaffoldBackgroundColor:
           isLightTheme ? Colors.white : HexColor('#14191F'),
       primaryColor: isLightTheme ? Colors.black : Colors.grey,
+
       backgroundColor:
           isLightTheme ? Colors.grey.shade200 : HexColor('#1d242c'),
       colorScheme: isLightTheme ? ColorScheme.light() : ColorScheme.dark(),

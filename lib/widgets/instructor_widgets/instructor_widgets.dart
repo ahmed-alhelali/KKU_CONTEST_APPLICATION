@@ -1,7 +1,7 @@
 import 'package:kku_contest_app/imports.dart';
 
 class InstructorWidgets {
-  static Widget getInstructorCourses(TextDirection textDirection,String uid) {
+  static Widget getInstructorCourses(TextDirection textDirection,String uid,{chatRoomID}) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     final slidableController = new SlidableController();
@@ -17,7 +17,9 @@ class InstructorWidgets {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+
+            ),
           );
         }
 
@@ -42,12 +44,19 @@ class InstructorWidgets {
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
+
+              // document.reference.collection("chats").doc("ssEIbH0lzJhaiEx7LMKBRoUuhQk1_6nUQ2qDbFYVxT2JBZeYFH7VYPZn1").get()
+
+
+              List<dynamic> newMessages = document.get("new_messages");
+
+
               final currentCourse = document.get("course_title");
               return Slidable(
                 child: InkWell(
                   child: Container(
                     alignment: AlignmentDirectional.centerStart,
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    // padding: EdgeInsets.symmetric(horizontal: 30),
                     margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.09,
@@ -55,18 +64,53 @@ class InstructorWidgets {
                       color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Text(
-                      currentCourse,
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 15),
+
+                          child: Text(
+                            currentCourse,
+                            style: textDirection == TextDirection.ltr
+                                ? Utilities.getUbuntuTextStyleWithSize(
                               16,
                               color: Theme.of(context).textTheme.caption.color,
                             )
-                          : Utilities.getTajwalTextStyleWithSize(
+                                : Utilities.getTajwalTextStyleWithSize(
                               16,
                               color: Theme.of(context).textTheme.caption.color,
                             ),
+                          ),
+                        ),
+
+                        newMessages.length > 0 ? Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.red.shade900,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(newMessages.length.toString(), style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+                              height: 25,
+                              width: 25,
+                            )
+                        )
+                            : Center(),
+                      ],
                     ),
+                    // child: Text(
+                    //   currentCourse,
+                    //   style: textDirection == TextDirection.ltr
+                    //       ? Utilities.getUbuntuTextStyleWithSize(
+                    //           16,
+                    //           color: Theme.of(context).textTheme.caption.color,
+                    //         )
+                    //       : Utilities.getTajwalTextStyleWithSize(
+                    //           16,
+                    //           color: Theme.of(context).textTheme.caption.color,
+                    //         ),
+                    // ),
                   ),
                   onTap: () {
                     courseID = document.id;
@@ -170,17 +214,18 @@ class InstructorWidgets {
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       elevation: 10,
       barrierColor: Theme.of(context).shadowColor,
       enableDrag: true,
-      isScrollControlled: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
       ),
       builder: (context) {
+
         return Container(
           height: 230,
           child: Stack(
