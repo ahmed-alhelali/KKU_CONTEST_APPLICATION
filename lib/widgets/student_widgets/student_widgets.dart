@@ -576,6 +576,7 @@ class StudentWidgets {
     Map<String, dynamic> messageMap = {
       "message": myTitles,
       "sendBy": userID,
+      "read": false,
       "ts": DateTime.now(),
     };
     FirebaseFirestore.instance
