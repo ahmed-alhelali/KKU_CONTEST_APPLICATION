@@ -200,11 +200,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       sendByMe ?read? Icon(
                         Icons.done_all,
-                        size: 10,
+                        size: 12,
                         color: Colors.green,
                       ) :Icon(
                         Icons.done_all,
-                        size: 10,
+                        size: 12,
                       ) :
                           SizedBox() ,
                     ],

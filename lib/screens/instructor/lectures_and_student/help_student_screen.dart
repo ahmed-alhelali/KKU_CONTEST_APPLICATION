@@ -106,7 +106,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                               fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
-                      document.get("sendBy") == currentUserID ? "You: ${document.get("message").toString()}" : document.get("message").toString(),
+                      document.get("sendBy") == currentUserID ? "You: ${document.get("message").toString().substring(0,50) + "..."}" :document.get("message").toString().substring(0,50) + "...",
                       style: textDirection == TextDirection.ltr
                           ? Utilities.getUbuntuTextStyleWithSize(10,
                               color: Colors.grey.shade600)
