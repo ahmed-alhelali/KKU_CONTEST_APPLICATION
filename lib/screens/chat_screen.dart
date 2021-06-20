@@ -1,4 +1,5 @@
 import 'package:kku_contest_app/imports.dart';
+import 'package:intl/intl.dart' as intl;
 
 class ChatScreen extends StatefulWidget {
   final String imageForChatScreen, courseID, charRoomID, name, userID2;
@@ -24,6 +25,18 @@ class _ChatScreenState extends State<ChatScreen> {
   String id;
   String imageUrl;
 
+
+  readAllMessages(courseID,chatRoomID, uid,messagesID){
+
+    FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(chatRoomID)
+        .collection("my_chats").doc(messagesID).update({"read": true});
+
+
+  }
   addMessage(bool sendClicked, uid) {
     print("user1 $userID");
     print("user2 $id");
@@ -35,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "message": message,
         "sendBy": uid,
         "ts": lastMessage,
+        "read": false,
       };
 
       if (messageID == "") {
@@ -59,7 +73,6 @@ class _ChatScreenState extends State<ChatScreen> {
         messageController.text = "";
         messageID = "";
 
-
         print("USER @2 ${widget.userID2}");
         FirebaseFirestore.instance
             .collection("Courses")
@@ -67,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
             .collection("chats")
             .doc(widget.charRoomID)
             .update({"read": false});
-        if(uid != widget.userID2){
+        if (uid != widget.userID2) {
           FirebaseFirestore.instance
               .collection("Courses")
               .doc(widget.courseID)
@@ -75,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
             "notification": FieldValue.arrayUnion([widget.userID2]),
           });
         }
-        if(widget.userID2 == userID){
+        if (widget.userID2 == userID) {
           FirebaseFirestore.instance
               .collection("Courses")
               .doc(widget.courseID)
@@ -83,9 +96,6 @@ class _ChatScreenState extends State<ChatScreen> {
             "new_messages": FieldValue.arrayUnion([widget.userID2]),
           });
         }
-
-
-
 
         // FirebaseFirestore.instance
         //     .collection("Courses")
@@ -96,10 +106,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageTile(
-    String message,
-    bool sendByMe,
-    TextDirection textDirection,
-  ) {
+      String message, bool sendByMe, TextDirection textDirection, width, time,bool read) {
+    DateTime d = time.toDate();
+
     return Row(
       textDirection: textDirection,
       mainAxisAlignment:
@@ -117,64 +126,141 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
         Flexible(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            decoration: BoxDecoration(
-              borderRadius: textDirection == TextDirection.ltr
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomRight:
-                          sendByMe ? Radius.circular(0) : Radius.circular(24),
-                      bottomLeft:
-                          sendByMe ? Radius.circular(24) : Radius.circular(0),
-                    )
-                  : BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomRight:
-                          sendByMe ? Radius.circular(24) : Radius.circular(0),
-                      bottomLeft:
-                          sendByMe ? Radius.circular(0) : Radius.circular(24),
+              margin: sendByMe
+                  ? (textDirection == TextDirection.ltr
+                      ? EdgeInsets.only(
+                          left: width * 0.15, right: 10, top: 4, bottom: 4)
+                      : EdgeInsets.only(
+                          left: 10, right: width * 0.15, top: 4, bottom: 4))
+                  : (textDirection == TextDirection.ltr
+                      ? EdgeInsets.only(
+                          left: 10, right: width * 0.15, top: 4, bottom:4)
+                      : EdgeInsets.only(
+                          left: width * 0.15, right: 10, top:4, bottom: 4)),
+
+              // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                borderRadius: textDirection == TextDirection.ltr
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomRight:
+                            sendByMe ? Radius.circular(0) : Radius.circular(24),
+                        bottomLeft:
+                            sendByMe ? Radius.circular(24) : Radius.circular(0),
+                      )
+                    : BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomRight:
+                            sendByMe ? Radius.circular(24) : Radius.circular(0),
+                        bottomLeft:
+                            sendByMe ? Radius.circular(0) : Radius.circular(24),
+                      ),
+                color: sendByMe
+                    ? (Theme.of(context).scaffoldBackgroundColor)
+                    : (Theme.of(context).cardColor),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Column(
+                crossAxisAlignment: sendByMe
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    message,
+                    // intl.DateFormat("hh:mm a").format(d).toString(),,
+                    style: textDirection == TextDirection.ltr
+                        ? Utilities.getUbuntuTextStyleWithSize(
+                            12,
+                            color: Theme.of(context).textTheme.caption.color,
+                          )
+                        : Utilities.getTajwalTextStyleWithSize(
+                            13,
+                            color: Theme.of(context).textTheme.caption.color,
+                          ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+
+                  sendByMe ?
+                  Wrap(
+                    children: [
+                      Text(
+                        intl.DateFormat("hh:mm a").format(d).toString(),
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Colors.grey,
+                        ),
+                        textDirection: TextDirection.ltr,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      sendByMe ?read? Icon(
+                        Icons.done_all,
+                        size: 10,
+                        color: Colors.green,
+                      ) :Icon(
+                        Icons.done_all,
+                        size: 10,
+                      ) :
+                          SizedBox() ,
+                    ],
+                  ) : Text(
+                    intl.DateFormat("hh:mm a").format(d).toString(),
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Colors.grey,
                     ),
-              color: sendByMe
-                  ? (Theme.of(context).scaffoldBackgroundColor)
-                  : (Theme.of(context).cardColor),
-            ),
-            padding: EdgeInsets.all(16),
-            child: Text(
-              message,
-              style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(
-                      13,
-                      color: Theme.of(context).textTheme.caption.color,
-                    )
-                  : Utilities.getTajwalTextStyleWithSize(
-                      13,
-                      color: Theme.of(context).textTheme.caption.color,
-                    ),
-            ),
-          ),
+                    textDirection: TextDirection.ltr,
+                  ),
+                ],
+              )),
         ),
       ],
     );
   }
 
+  //
+  // Align(
+  // alignment: sendByMe
+  // ? textDirection == TextDirection.ltr
+  // ? Alignment.bottomLeft
+  //     : Alignment.bottomRight
+  //     : textDirection == TextDirection.ltr
+  // ? Alignment.bottomRight
+  //     : Alignment.bottomLeft,
+  //
+  // child: Text(
+  // intl.DateFormat("hh:mm a").format(d).toString(),
+  // style: Utilities.getUbuntuTextStyleWithSize(
+  // 8,
+  // color: Theme.of(context).textTheme.caption.color,
+  // ),
+  // ),
+  // )
   Widget chatMessages(TextDirection textDirection) {
     return StreamBuilder(
       stream: messageStream,
       builder: (context, snapshot) {
+
+        var width = MediaQuery.of(context).size.width;
         return snapshot.hasData
             ? ListView.builder(
                 padding: EdgeInsets.only(bottom: 70, top: 16),
                 itemCount: snapshot.data.docs.length,
                 reverse: true,
                 itemBuilder: (context, index) {
+
                   DocumentSnapshot ds = snapshot.data.docs[index];
-                  return chatMessageTile(
-                    ds["message"],
-                    userID == ds["sendBy"],
-                    textDirection,
-                  );
+                  if(userID != ds["sendBy"]){
+                    readAllMessages(widget.courseID,widget.charRoomID,userID,ds.reference.id);
+                  }
+
+                  return chatMessageTile(ds["message"], userID == ds["sendBy"],
+                      textDirection, width, ds["ts"], ds["read"]);
                 },
               )
             : Center(child: CircularProgressIndicator());
@@ -208,6 +294,7 @@ class _ChatScreenState extends State<ChatScreen> {
     getUserInfo();
     doThisOnLaunch();
     super.initState();
+
   }
 
   @override
@@ -250,6 +337,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       color: Theme.of(context).textTheme.caption.color,
                       fontWeight: FontWeight.w600),
             ),
+
           ],
         ),
       ),
@@ -257,7 +345,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Stack(
           children: [
             chatMessages(textDirection),
-            Container(
+            Align(
               alignment: Alignment.bottomCenter,
               child: Container(
                 color: Theme.of(context).scaffoldBackgroundColor,
@@ -265,39 +353,39 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: TextField(
-                          controller: messageController,
-                          style: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(
-                                  16,
-                                  color:
-                                      Theme.of(context).textTheme.caption.color,
-                                )
-                              : Utilities.getTajwalTextStyleWithSize(
-                                  16,
-                                  color:
-                                      Theme.of(context).textTheme.caption.color,
-                                ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(35),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(35),
-                                borderSide: BorderSide.none),
-                            hintText: MyLocalization.of(context)
-                                .getTranslatedValue("type_message"),
-                            hintStyle: textDirection == TextDirection.ltr
-                                ? Utilities.getUbuntuTextStyleWithSize(14,
-                                    color: Colors.grey)
-                                : Utilities.getTajwalTextStyleWithSize(14,
-                                    color: Colors.grey),
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: null,
+                        controller: messageController,
+                        style: textDirection == TextDirection.ltr
+                            ? Utilities.getUbuntuTextStyleWithSize(
+                                16,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
+                              )
+                            : Utilities.getTajwalTextStyleWithSize(
+                                16,
+                                color:
+                                    Theme.of(context).textTheme.caption.color,
+                              ),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(35),
+                            borderSide: BorderSide.none,
                           ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(35),
+                              borderSide: BorderSide.none),
+                          hintText: MyLocalization.of(context)
+                              .getTranslatedValue("type_message"),
+                          hintStyle: textDirection == TextDirection.ltr
+                              ? Utilities.getUbuntuTextStyleWithSize(14,
+                                  color: Colors.grey)
+                              : Utilities.getTajwalTextStyleWithSize(14,
+                                  color: Colors.grey),
+                          filled: true,
+                          fillColor: Theme.of(context).backgroundColor,
                         ),
                       ),
                     ),

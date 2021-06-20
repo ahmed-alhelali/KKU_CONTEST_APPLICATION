@@ -1,13 +1,14 @@
 import 'package:kku_contest_app/imports.dart';
 
 class InstructorWidgets {
-  static Widget getInstructorCourses(TextDirection textDirection,String uid,{chatRoomID}) {
+  static Widget getInstructorCourses(TextDirection textDirection, String uid,
+      {chatRoomID}) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
     final slidableController = new SlidableController();
     String courseID;
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("uid" ,isEqualTo: uid).snapshots(),
+      stream: courses.where("uid", isEqualTo: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text(
@@ -17,9 +18,7 @@ class InstructorWidgets {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: CircularProgressIndicator(
-
-            ),
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -44,12 +43,9 @@ class InstructorWidgets {
           padding: EdgeInsets.symmetric(vertical: 6),
           children: snapshot.data.docs.map(
             (DocumentSnapshot document) {
-
               // document.reference.collection("chats").doc("ssEIbH0lzJhaiEx7LMKBRoUuhQk1_6nUQ2qDbFYVxT2JBZeYFH7VYPZn1").get()
 
-
               List<dynamic> newMessages = document.get("new_messages");
-
 
               final currentCourse = document.get("course_title");
               return Slidable(
@@ -67,35 +63,46 @@ class InstructorWidgets {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 15),
-
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
                           child: Text(
                             currentCourse,
                             style: textDirection == TextDirection.ltr
                                 ? Utilities.getUbuntuTextStyleWithSize(
-                              16,
-                              color: Theme.of(context).textTheme.caption.color,
-                            )
+                                    16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .color,
+                                  )
                                 : Utilities.getTajwalTextStyleWithSize(
-                              16,
-                              color: Theme.of(context).textTheme.caption.color,
-                            ),
+                                    16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .color,
+                                  ),
                           ),
                         ),
-
-                        newMessages.length > 0 ? Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.red.shade900,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(newMessages.length.toString(), style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-                              height: 25,
-                              width: 25,
-                            )
-                        )
+                        newMessages.length > 0
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.shade900,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    newMessages.length.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 10),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  height: 20,
+                                  // width: 20,
+                                ))
                             : Center(),
                       ],
                     ),
@@ -209,8 +216,13 @@ class InstructorWidgets {
     );
   }
 
-  static addCourseWidget(TextDirection textDirection, BuildContext context,
-      TextEditingController titleController,String uid,String userImage, String userName) {
+  static addCourseWidget(
+      TextDirection textDirection,
+      BuildContext context,
+      TextEditingController titleController,
+      String uid,
+      String userImage,
+      String userName) {
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
@@ -225,7 +237,6 @@ class InstructorWidgets {
             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
       ),
       builder: (context) {
-
         return Container(
           height: 230,
           child: Stack(
@@ -396,7 +407,8 @@ class InstructorWidgets {
                                     gravity: Toast.CENTER,
                                   );
                                 } else {
-                                  FirestoreDB.addCourse(titleController.text,uid,userImage, userName);
+                                  FirestoreDB.addCourse(titleController.text,
+                                      uid, userImage, userName);
                                   titleController.text = "";
                                 }
                               }
@@ -415,12 +427,13 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorCoursesInDrawer(TextDirection textDirection,String uid) {
+  static Widget getInstructorCoursesInDrawer(
+      TextDirection textDirection, String uid) {
     CollectionReference courses =
         FirebaseFirestore.instance.collection("Courses");
 
     return StreamBuilder<QuerySnapshot>(
-      stream: courses.where("uid",isEqualTo: uid).snapshots(),
+      stream: courses.where("uid", isEqualTo: uid).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Padding(
@@ -520,7 +533,8 @@ class InstructorWidgets {
     );
   }
 
-  static Widget getInstructorLectures(TextDirection textDirection, courseID,String uid) {
+  static Widget getInstructorLectures(
+      TextDirection textDirection, courseID, String uid) {
     final lectureSlidableController = new SlidableController();
     CollectionReference courses = FirebaseFirestore.instance
         .collection("Courses")
