@@ -3,10 +3,16 @@ import 'package:kku_contest_app/imports.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ChatScreen extends StatefulWidget {
-  final String imageForChatScreen, courseID, charRoomID, name, userID2, student;
+  final String imageForChatScreen,
+      courseID,
+      charRoomID,
+      name,
+      userID2,
+      student,
+      otherSideUserID;
 
   ChatScreen(this.imageForChatScreen, this.courseID, this.charRoomID, this.name,
-      {this.userID2, this.student});
+      {this.userID2, this.student, this.otherSideUserID});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -38,6 +44,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   addMessage(bool sendClicked, uid) {
+    print(userID);
+    print(widget.userID2);
+    print(instructorID);
     if (messageController.text != "" && messageController.text.trim() != "") {
       String message = messageController.text.trim();
       var lastMessage = DateTime.now();
@@ -330,15 +339,40 @@ class _ChatScreenState extends State<ChatScreen> {
             SizedBox(
               width: 15,
             ),
-            Text(
-              widget.name,
-              style: textDirection == TextDirection.ltr
-                  ? Utilities.getUbuntuTextStyleWithSize(16,
-                      color: Theme.of(context).textTheme.caption.color,
-                      fontWeight: FontWeight.w600)
-                  : Utilities.getTajwalTextStyleWithSize(16,
-                      color: Theme.of(context).textTheme.caption.color,
-                      fontWeight: FontWeight.w600),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.name,
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(16,
+                          color: Theme.of(context).textTheme.caption.color,
+                          fontWeight: FontWeight.w600)
+                      : Utilities.getTajwalTextStyleWithSize(16,
+                          color: Theme.of(context).textTheme.caption.color,
+                          fontWeight: FontWeight.w600),
+                ),
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(widget.otherSideUserID)
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    DocumentSnapshot ds = snapshot.data;
+
+                    if (snapshot.data == null) return SizedBox();
+
+                    return ds.get("status") == "online"
+                        ? Text(
+                            ds.get("status"),
+                            style: TextStyle(
+                                color: Colors.grey.shade600, fontSize: 10,
+                            fontWeight: FontWeight.w400),
+                          )
+                        : SizedBox();
+                  },
+                )
+              ],
             ),
           ],
         ),

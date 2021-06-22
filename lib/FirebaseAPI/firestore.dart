@@ -1,6 +1,18 @@
 import 'package:kku_contest_app/imports.dart';
 
 class FirestoreDB {
+
+  static saveUserToFirebase(String name, String id,String status){
+
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(id)
+        .set({
+      "name" : name,
+      "id" : id,
+      "status" : status
+    });
+  }
   static addCourse(
       String courseTitle, String uid, String userImage, String userName) {
     CollectionReference newCourse =

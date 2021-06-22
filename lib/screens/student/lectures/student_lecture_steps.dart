@@ -250,7 +250,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                             .id,
                                                                         chatRoomID,
                                                                         instructorName,
-                                                                    userID2: name,),
+                                                                    userID2: name,
+                                                                    otherSideUserID: name,),
                                                               ),
                                                             );
                                                           }

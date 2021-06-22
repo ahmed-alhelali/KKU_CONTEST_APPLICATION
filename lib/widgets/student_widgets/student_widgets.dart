@@ -532,7 +532,7 @@ class StudentWidgets {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ChatScreen(imageForChatScreen,
-                            courseID, chatRoomID, instructorName,userID2: userID2),
+                            courseID, chatRoomID, instructorName,userID2: userID2,otherSideUserID: userID2,),
                       ),
                     );
                   }

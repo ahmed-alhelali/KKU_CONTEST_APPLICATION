@@ -17,6 +17,7 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:toast/toast.dart';
 export 'package:google_sign_in/google_sign_in.dart';
 
+export 'package:kku_contest_app/lifeCycle.dart';
 export 'initApp.dart';
 export 'screens/wrapper_screen.dart';
 export 'screens/instructor/instructor_drawer_screen.dart';

@@ -34,12 +34,13 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
   @override
   void initState() {
     getInfo();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     final TextDirection textDirection = Directionality.of(context);
 
     return Scaffold(
@@ -105,7 +106,7 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ChatScreen(imageForChatScreen,
-                      widget.id, chatRoomID, instructorName,userID2: user1,),
+                      widget.id, chatRoomID, instructorName,userID2: user1,otherSideUserID: user2,),
                 ),
               );
             } else {

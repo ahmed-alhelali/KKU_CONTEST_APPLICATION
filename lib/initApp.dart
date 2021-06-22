@@ -7,10 +7,8 @@ init() async {
   bool student = prefs.getBool('student');
 
   Widget _screen;
-  if (student == false || student == null) {
-    if (seen == null || seen == false) {
-      _screen = WrapperScreen();
-    } else {
+  if (seen == null || seen == false) {
+    if (student == false || student == null) {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
       var userID = await FirebaseUtilities.getUserId();
@@ -19,10 +17,6 @@ init() async {
         userURLImage: userImageUrl,
         userID: userID,
       );
-    }
-  } else {
-    if (seen == null || seen == false) {
-      _screen = WrapperScreen();
     } else {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
@@ -33,6 +27,8 @@ init() async {
         uid: userID,
       );
     }
+  } else {
+    _screen = WrapperScreen();
   }
 
   runApp(
@@ -106,7 +102,7 @@ class _MyAppState extends State<MyApp> {
         return supportedLocates.first;
       },
       // home: WrapperScreen(),
-      home: widget.seen,
+      home: LifeCycleManager(child: widget.seen,),
     );
   }
 }

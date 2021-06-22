@@ -199,6 +199,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                               document.get("name"),
                               userID2: document.get("user"),
                               student: document.get("user"),
+                              otherSideUserID: document.get("user"),
                             );
                           },
                         ),
