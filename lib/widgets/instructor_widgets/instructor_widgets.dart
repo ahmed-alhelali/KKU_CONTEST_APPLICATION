@@ -121,6 +121,8 @@ class InstructorWidgets {
                   ),
                   onTap: () {
                     courseID = document.id;
+                    FirebaseUtilities.saveInstructorID(document.get("uid"));
+
                     // print(courseID);
                     Navigator.push(
                       context,

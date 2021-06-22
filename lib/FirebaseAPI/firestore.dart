@@ -88,7 +88,17 @@ class FirestoreDB {
   }
 
   static updateLastMessageSend(
-      String courseID, String chatRoomId, Map lastMessageInfoMap) {
+      String courseID, String chatRoomId, Map lastMessageInfoMap, {sendBy}) {
+
+    FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(chatRoomId).collection("my_chats").doc("sendBy").update({
+      "sendBy": sendBy
+    });
+
+
     return FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)

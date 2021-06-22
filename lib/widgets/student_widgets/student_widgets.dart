@@ -532,7 +532,7 @@ class StudentWidgets {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ChatScreen(imageForChatScreen,
-                            courseID, chatRoomID, instructorName),
+                            courseID, chatRoomID, instructorName,userID2: userID2),
                       ),
                     );
                   }
@@ -579,13 +579,23 @@ class StudentWidgets {
       "read": false,
       "ts": DateTime.now(),
     };
+
+
     FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .update({
       "new_messages": FieldValue.arrayUnion([userID]),
     });
-    FirestoreDB.updateLastMessageSend(courseID, chatRoomID, messageInfoMap);
+    FirebaseFirestore.instance
+        .collection("Courses")
+        .doc(courseID)
+        .collection("chats")
+        .doc(chatRoomID)
+        .collection("my_chats")
+        .doc("sendBy").set({ "sendBy": userID});
+
+    FirestoreDB.updateLastMessageSend(courseID, chatRoomID, messageInfoMap,sendBy: userID);
     return FirestoreDB.addMessage(courseID, chatRoomID, messageID, messageMap);
 
   }

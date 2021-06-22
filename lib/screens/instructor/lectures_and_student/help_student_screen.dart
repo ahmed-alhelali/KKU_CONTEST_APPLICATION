@@ -18,10 +18,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
   getChatRooms() async {
     chatRoomsStream = await FirestoreDB.getChatRooms(widget.id);
     currentUserID = await FirebaseUtilities.getUserId();
-
   }
-
-
 
 
   Widget chatRoomsList(TextDirection textDirection) {
@@ -85,16 +82,22 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
             (DocumentSnapshot document) {
               Timestamp t = document['ts'];
               DateTime d = t.toDate();
+              int messageLength = document.get("message").toString().length;
+
               return Column(
                 children: [
                   ListTile(
-                    leading: document.get("image_url") != null ? CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(document.get("image_url")),
-                    ) : CircleAvatar(
-                      radius: 20,
-                      backgroundImage: ExactAssetImage("assets/images/instructor_avatar.jpg"),
-                    ) ,
+                    leading: document.get("image_url") != null
+                        ? CircleAvatar(
+                            radius: 20,
+                            backgroundImage:
+                                NetworkImage(document.get("image_url")),
+                          )
+                        : CircleAvatar(
+                            radius: 20,
+                            backgroundImage: ExactAssetImage(
+                                "assets/images/instructor_avatar.jpg"),
+                          ),
                     title: Text(
                       document.get("name"),
                       style: textDirection == TextDirection.ltr
@@ -105,13 +108,38 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                               color: Theme.of(context).textTheme.caption.color,
                               fontWeight: FontWeight.w600),
                     ),
-                    subtitle: Text(
-                      document.get("sendBy") == currentUserID ? "You: ${document.get("message").toString().substring(0,50) + "..."}" :document.get("message").toString().substring(0,50) + "...",
-                      style: textDirection == TextDirection.ltr
-                          ? Utilities.getUbuntuTextStyleWithSize(10,
-                              color: Colors.grey.shade600)
-                          : Utilities.getTajwalTextStyleWithSize(10,
-                              color: Colors.grey.shade600),
+                    subtitle: Row(
+                      children: [
+                        Text(
+                          document.get("sendBy") == currentUserID
+                              ? (messageLength < 35
+                                  ? "${MyLocalization.of(context).getTranslatedValue("you")}: ${document.get("message").toString()}"
+                                  : "${MyLocalization.of(context).getTranslatedValue("you")}: ${document.get("message").toString().substring(0, 35) + "..."}")
+                              : (messageLength < 35
+                                  ? "${document.get("message").toString()}"
+                                  : "${document.get("message").toString().substring(0, 35) + "..."}"),
+                          style: textDirection == TextDirection.ltr
+                              ? Utilities.getUbuntuTextStyleWithSize(10,
+                                  color: Colors.grey.shade600)
+                              : Utilities.getTajwalTextStyleWithSize(10,
+                                  color: Colors.grey.shade600),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        document.get("sendBy") == currentUserID
+                            ?  document.get("read")
+                            ? Icon(
+                          Icons.done_all,
+                          size: 12,
+                          color: Colors.green,
+                        )
+                            : Icon(
+                          Icons.done_all,
+                          size: 12,
+                        )
+                            : SizedBox(),
+                      ],
                     ),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -148,18 +176,10 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                           .collection("Courses")
                           .doc(widget.id)
                           .update({
-                        "new_messages": FieldValue.arrayRemove([document.get("user")]),
+                        "new_messages":
+                            FieldValue.arrayRemove([document.get("user")]),
                       });
-                      
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ChatScreen(document.get("image_url"),
-                                widget.id, document.id, document.get("name"),userID2: document.get("user"),);
-                          },
-                        ),
-                      );
+
                       if (document.get("sendBy") != currentUserID) {
                         FirebaseFirestore.instance
                             .collection("Courses")
@@ -168,6 +188,22 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                             .doc(document.id)
                             .update({"read": true});
                       }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ChatScreen(
+                              document.get("image_url"),
+                              widget.id,
+                              document.id,
+                              document.get("name"),
+                              userID2: document.get("user"),
+                              student: document.get("user"),
+                            );
+                          },
+                        ),
+                      );
+
                     },
                   ),
                   Padding(

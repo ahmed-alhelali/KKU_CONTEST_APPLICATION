@@ -167,14 +167,20 @@ class _WrapperScreenState extends State<WrapperScreen> {
                               authentication.loggedInUserModel;
 
                           if (isSuccess) {
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => InstructorWrapperScreen(
-                                  userName: userModel.displayName,
-                                  userURLImage: userModel.photoUrl,
-                                  userID: userModel.id,
-                                ),
+                                builder: (context){
+                                  _updateSeen(false);
+
+                                  return InstructorWrapperScreen(
+                                    userName: userModel.displayName,
+                                    userURLImage: userModel.photoUrl,
+                                    userID: userModel.id,
+                                  );
+
+                                }
                               ),
                             );
                           }
@@ -217,11 +223,14 @@ class _WrapperScreenState extends State<WrapperScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => StudentWrapperScreen(
-                                  userName: userModel.displayName,
-                                  userURLImage: userModel.photoUrl,
-                                  uid: userModel.id,
-                                ),
+                                builder: (context){
+                                  _updateSeen(true);
+                                  return StudentWrapperScreen(
+                                    userName: userModel.displayName,
+                                    userURLImage: userModel.photoUrl,
+                                    uid: userModel.id,
+                                  );
+                                }
                               ),
                             );
                           }
@@ -236,5 +245,17 @@ class _WrapperScreenState extends State<WrapperScreen> {
         ),
       ),
     );
+  }
+
+
+  _updateSeen(bool isStudent) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool('seen',true);
+    if(isStudent == false || isStudent == null){
+      prefs.setBool("student", false);
+    }else{
+      prefs.setBool("student", true);
+    }
   }
 }

@@ -249,7 +249,8 @@ class _StudentLectureStepsState extends State<StudentLectureSteps> {
                                                                         widget
                                                                             .id,
                                                                         chatRoomID,
-                                                                        instructorName),
+                                                                        instructorName,
+                                                                    userID2: name,),
                                                               ),
                                                             );
                                                           }

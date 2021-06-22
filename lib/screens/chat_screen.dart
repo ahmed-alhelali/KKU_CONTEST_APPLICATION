@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kku_contest_app/imports.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ChatScreen extends StatefulWidget {
-  final String imageForChatScreen, courseID, charRoomID, name, userID2;
+  final String imageForChatScreen, courseID, charRoomID, name, userID2, student;
 
   ChatScreen(this.imageForChatScreen, this.courseID, this.charRoomID, this.name,
-      {this.userID2});
+      {this.userID2, this.student});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -13,7 +14,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String messageID = "";
-  List<String> myTitles;
   Stream messageStream;
   final messageController = TextEditingController();
 
@@ -22,26 +22,24 @@ class _ChatScreenState extends State<ChatScreen> {
   String userID;
 
   String name;
-  String id;
+  String instructorID;
   String imageUrl;
 
-
-  readAllMessages(courseID,chatRoomID, uid,messagesID){
-
+  readAllNewMessages(courseID, chatRoomID, uid, messagesID) {
+    print("READS");
     FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
         .doc(chatRoomID)
-        .collection("my_chats").doc(messagesID).update({"read": true});
-
-
+        .collection("my_chats")
+        .doc(messagesID)
+        .update({"read": true});
   }
+
   addMessage(bool sendClicked, uid) {
-    print("user1 $userID");
-    print("user2 $id");
-    if (messageController.text != "") {
-      String message = messageController.text;
+    if (messageController.text != "" && messageController.text.trim() != "") {
+      String message = messageController.text.trim();
       var lastMessage = DateTime.now();
 
       Map<String, dynamic> messageInfoMap = {
@@ -64,49 +62,42 @@ class _ChatScreenState extends State<ChatScreen> {
       );
       print("message updated");
       FirestoreDB.updateLastMessageSend(
-        widget.courseID,
-        widget.charRoomID,
-        messageInfoMap,
-      );
+          widget.courseID, widget.charRoomID, messageInfoMap,
+          sendBy: uid);
 
       if (sendClicked) {
         messageController.text = "";
         messageID = "";
 
-        print("USER @2 ${widget.userID2}");
         FirebaseFirestore.instance
             .collection("Courses")
             .doc(widget.courseID)
             .collection("chats")
             .doc(widget.charRoomID)
             .update({"read": false});
-        if (uid != widget.userID2) {
-          FirebaseFirestore.instance
-              .collection("Courses")
-              .doc(widget.courseID)
-              .update({
-            "notification": FieldValue.arrayUnion([widget.userID2]),
-          });
-        }
-        if (widget.userID2 == userID) {
-          FirebaseFirestore.instance
-              .collection("Courses")
-              .doc(widget.courseID)
-              .update({
-            "new_messages": FieldValue.arrayUnion([widget.userID2]),
-          });
-        }
 
-        // FirebaseFirestore.instance
-        //     .collection("Courses")
-        //     .doc(widget.courseID)
-        //     .update({"notification": true});
+        if (uid == instructorID) {
+          FirebaseFirestore.instance
+              .collection("Courses")
+              .doc(widget.courseID)
+              .update({
+            "notification": FieldValue.arrayUnion([widget.student]),
+          });
+        }
+        if (uid != instructorID) {
+          FirebaseFirestore.instance
+              .collection("Courses")
+              .doc(widget.courseID)
+              .update({
+            "new_messages": FieldValue.arrayUnion([userID]),
+          });
+        }
       }
     }
   }
 
-  Widget chatMessageTile(
-      String message, bool sendByMe, TextDirection textDirection, width, time,bool read) {
+  Widget chatMessageTile(String message, bool sendByMe,
+      TextDirection textDirection, width, time, bool read) {
     DateTime d = time.toDate();
 
     return Row(
@@ -126,68 +117,91 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
         Flexible(
           child: Container(
-              margin: sendByMe
-                  ? (textDirection == TextDirection.ltr
-                      ? EdgeInsets.only(
-                          left: width * 0.15, right: 10, top: 4, bottom: 4)
-                      : EdgeInsets.only(
-                          left: 10, right: width * 0.15, top: 4, bottom: 4))
-                  : (textDirection == TextDirection.ltr
-                      ? EdgeInsets.only(
-                          left: 10, right: width * 0.15, top: 4, bottom:4)
-                      : EdgeInsets.only(
-                          left: width * 0.15, right: 10, top:4, bottom: 4)),
+            margin: sendByMe
+                ? (textDirection == TextDirection.ltr
+                    ? EdgeInsets.only(
+                        left: width * 0.15, right: 10, top: 4, bottom: 4)
+                    : EdgeInsets.only(
+                        left: 10, right: width * 0.15, top: 4, bottom: 4))
+                : (textDirection == TextDirection.ltr
+                    ? EdgeInsets.only(
+                        left: 10, right: width * 0.15, top: 4, bottom: 4)
+                    : EdgeInsets.only(
+                        left: width * 0.15, right: 10, top: 4, bottom: 4)),
 
-              // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              decoration: BoxDecoration(
-                borderRadius: textDirection == TextDirection.ltr
-                    ? BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
-                        bottomRight:
-                            sendByMe ? Radius.circular(0) : Radius.circular(24),
-                        bottomLeft:
-                            sendByMe ? Radius.circular(24) : Radius.circular(0),
-                      )
-                    : BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
-                        bottomRight:
-                            sendByMe ? Radius.circular(24) : Radius.circular(0),
-                        bottomLeft:
-                            sendByMe ? Radius.circular(0) : Radius.circular(24),
-                      ),
-                color: sendByMe
-                    ? (Theme.of(context).scaffoldBackgroundColor)
-                    : (Theme.of(context).cardColor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                crossAxisAlignment: sendByMe
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    message,
-                    // intl.DateFormat("hh:mm a").format(d).toString(),,
-                    style: textDirection == TextDirection.ltr
-                        ? Utilities.getUbuntuTextStyleWithSize(
-                            12,
-                            color: Theme.of(context).textTheme.caption.color,
-                          )
-                        : Utilities.getTajwalTextStyleWithSize(
-                            13,
-                            color: Theme.of(context).textTheme.caption.color,
+            // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            decoration: BoxDecoration(
+              borderRadius: textDirection == TextDirection.ltr
+                  ? BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                      bottomRight:
+                          sendByMe ? Radius.circular(0) : Radius.circular(24),
+                      bottomLeft:
+                          sendByMe ? Radius.circular(24) : Radius.circular(0),
+                    )
+                  : BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                      bottomRight:
+                          sendByMe ? Radius.circular(24) : Radius.circular(0),
+                      bottomLeft:
+                          sendByMe ? Radius.circular(0) : Radius.circular(24),
+                    ),
+              color: sendByMe
+                  ? (Theme.of(context).scaffoldBackgroundColor)
+                  : (Theme.of(context).cardColor),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment:
+                  sendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message,
+                  // intl.DateFormat("hh:mm a").format(d).toString(),,
+                  style: textDirection == TextDirection.ltr
+                      ? Utilities.getUbuntuTextStyleWithSize(
+                          12,
+                          color: Theme.of(context).textTheme.caption.color,
+                        )
+                      : Utilities.getTajwalTextStyleWithSize(
+                          13,
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                sendByMe
+                    ? Wrap(
+                        children: [
+                          Text(
+                            intl.DateFormat("hh:mm a").format(d).toString(),
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Colors.grey,
+                            ),
+                            textDirection: TextDirection.ltr,
                           ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-
-                  sendByMe ?
-                  Wrap(
-                    children: [
-                      Text(
+                          SizedBox(
+                            width: 5,
+                          ),
+                          sendByMe
+                              ? read
+                                  ? Icon(
+                                      Icons.done_all,
+                                      size: 12,
+                                      color: Colors.green,
+                                    )
+                                  : Icon(
+                                      Icons.done_all,
+                                      size: 12,
+                                    )
+                              : SizedBox(),
+                        ],
+                      )
+                    : Text(
                         intl.DateFormat("hh:mm a").format(d).toString(),
                         style: TextStyle(
                           fontSize: 8,
@@ -195,57 +209,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         textDirection: TextDirection.ltr,
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      sendByMe ?read? Icon(
-                        Icons.done_all,
-                        size: 12,
-                        color: Colors.green,
-                      ) :Icon(
-                        Icons.done_all,
-                        size: 12,
-                      ) :
-                          SizedBox() ,
-                    ],
-                  ) : Text(
-                    intl.DateFormat("hh:mm a").format(d).toString(),
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: Colors.grey,
-                    ),
-                    textDirection: TextDirection.ltr,
-                  ),
-                ],
-              )),
+              ],
+            ),
+          ),
         ),
       ],
     );
   }
 
-  //
-  // Align(
-  // alignment: sendByMe
-  // ? textDirection == TextDirection.ltr
-  // ? Alignment.bottomLeft
-  //     : Alignment.bottomRight
-  //     : textDirection == TextDirection.ltr
-  // ? Alignment.bottomRight
-  //     : Alignment.bottomLeft,
-  //
-  // child: Text(
-  // intl.DateFormat("hh:mm a").format(d).toString(),
-  // style: Utilities.getUbuntuTextStyleWithSize(
-  // 8,
-  // color: Theme.of(context).textTheme.caption.color,
-  // ),
-  // ),
-  // )
   Widget chatMessages(TextDirection textDirection) {
     return StreamBuilder(
       stream: messageStream,
       builder: (context, snapshot) {
-
         var width = MediaQuery.of(context).size.width;
         return snapshot.hasData
             ? ListView.builder(
@@ -253,10 +228,41 @@ class _ChatScreenState extends State<ChatScreen> {
                 itemCount: snapshot.data.docs.length,
                 reverse: true,
                 itemBuilder: (context, index) {
-
                   DocumentSnapshot ds = snapshot.data.docs[index];
-                  if(userID != ds["sendBy"]){
-                    readAllMessages(widget.courseID,widget.charRoomID,userID,ds.reference.id);
+                  ds.reference.parent.doc("sendBy").get().then((value) {
+                    if (userID != value.get("sendBy")) {
+                      FirebaseFirestore.instance
+                          .collection("Courses")
+                          .doc(widget.courseID)
+                          .collection("chats")
+                          .doc(widget.charRoomID)
+                          .update({"read": true});
+                    }
+                    if (instructorID == value.get("sendBy") &&
+                        userID != instructorID) {
+                      FirebaseFirestore.instance
+                          .collection("Courses")
+                          .doc(widget.courseID)
+                          .update({
+                        "notification": FieldValue.arrayRemove([userID])
+                      });
+                    } else if (instructorID != value.get("sendBy") &&
+                        userID == instructorID) {
+                      FirebaseFirestore.instance
+                          .collection("Courses")
+                          .doc(widget.courseID)
+                          .update({
+                        "new_messages":
+                            FieldValue.arrayRemove([widget.student]),
+                      });
+                    }
+                  });
+
+                  if (userID != ds["sendBy"]) {
+                    if (ds["read"] == false) {
+                      readAllNewMessages(widget.courseID, widget.charRoomID,
+                          userID, ds.reference.id);
+                    }
                   }
 
                   return chatMessageTile(ds["message"], userID == ds["sendBy"],
@@ -271,7 +277,6 @@ class _ChatScreenState extends State<ChatScreen> {
   getAndSetMessages() async {
     messageStream = await FirestoreDB.getChatRoomMessages(
         widget.courseID, widget.charRoomID);
-
     setState(() {});
   }
 
@@ -280,7 +285,7 @@ class _ChatScreenState extends State<ChatScreen> {
     userImageUrl = await FirebaseUtilities.getUserImageUrl();
     userID = await FirebaseUtilities.getUserId();
     name = await FirebaseUtilities.getInstructorName();
-    id = await FirebaseUtilities.getInstructorID();
+    instructorID = await FirebaseUtilities.getInstructorID();
     imageUrl = await FirebaseUtilities.getInstructorImageUrl();
   }
 
@@ -294,7 +299,6 @@ class _ChatScreenState extends State<ChatScreen> {
     getUserInfo();
     doThisOnLaunch();
     super.initState();
-
   }
 
   @override
@@ -306,7 +310,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -337,7 +340,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       color: Theme.of(context).textTheme.caption.color,
                       fontWeight: FontWeight.w600),
             ),
-
           ],
         ),
       ),
@@ -352,54 +354,74 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Row(
                   children: [
+                    Icon(
+                      Icons.add,
+                      // size: 15,
+                    ),
                     Expanded(
-                      child: TextField(
-                        minLines: 1,
-                        maxLines: null,
-                        controller: messageController,
-                        style: textDirection == TextDirection.ltr
-                            ? Utilities.getUbuntuTextStyleWithSize(
-                                16,
-                                color:
-                                    Theme.of(context).textTheme.caption.color,
-                              )
-                            : Utilities.getTajwalTextStyleWithSize(
-                                16,
-                                color:
-                                    Theme.of(context).textTheme.caption.color,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                        // margin: EdgeInsets.only(bottom: 30.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                        child: TextField(
+                          controller: messageController,
+                          minLines: 1,
+                          maxLines: null,
+                          // onChanged: widget.onChange,
+                          decoration: InputDecoration(
+                              border: InputBorder.none, isDense: true
+                              // icon: widget.icon != null ? Icon(widget.icon) : null),
                               ),
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(35),
-                              borderSide: BorderSide.none),
-                          hintText: MyLocalization.of(context)
-                              .getTranslatedValue("type_message"),
-                          hintStyle: textDirection == TextDirection.ltr
-                              ? Utilities.getUbuntuTextStyleWithSize(14,
-                                  color: Colors.grey)
-                              : Utilities.getTajwalTextStyleWithSize(14,
-                                  color: Colors.grey),
-                          filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
+                          onChanged: (x) {
+                            setState(() {});
+                          },
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.green.shade900,
+                    Visibility(
+                      visible: messageController.text == "",
+                      replacement: Row(
+                        children: [
+                          SizedBox(
+                            width: 7.5,
+                          ),
+                          InkWell(
+                            child: Icon(
+                              Icons.send,
+                              color: Colors.green.shade900,
+                              size: 24,
+                            ),
+                            onTap: () {
+                              addMessage(
+                                true,
+                                userID,
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            width: 7.5,
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        addMessage(
-                          true,
-                          userID,
-                        );
-                      },
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.photo_camera,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.mic,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

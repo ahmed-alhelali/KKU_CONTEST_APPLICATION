@@ -121,6 +121,7 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                           color: Theme.of(context).textTheme.caption.color,
                         ),
                   decoration: InputDecoration(
+                    isDense: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(35),
                     ),

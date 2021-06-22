@@ -93,22 +93,21 @@ class _StudentLectureScreenState extends State<StudentLectureScreen> {
               //     .collection("Courses")
               //     .doc(widget.id)
               //     .update({"notification": false});
+              if (snapShotx.get("sendBy") != user1) {
+                FirebaseFirestore.instance
+                    .collection("Courses")
+                    .doc(widget.id)
+                    .collection("chats")
+                    .doc(chatRoomID)
+                    .update({"read": true});
+              }
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ChatScreen(imageForChatScreen,
                       widget.id, chatRoomID, instructorName,userID2: user1,),
                 ),
-              ).then((value) {
-                if (snapShotx.get("sendBy") != user1) {
-                  FirebaseFirestore.instance
-                      .collection("Courses")
-                      .doc(widget.id)
-                      .collection("chats")
-                      .doc(chatRoomID)
-                      .update({"read": true});
-                }
-              });
+              );
             } else {
               Widgets.showWarringDialog(
                 "chat_not_exist_title",
