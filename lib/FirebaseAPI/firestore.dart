@@ -10,7 +10,8 @@ class FirestoreDB {
         .set({
       "name" : name,
       "id" : id,
-      "status" : status
+      "status" : status,
+      "last_seen" : DateTime.now()
     });
   }
   static addCourse(

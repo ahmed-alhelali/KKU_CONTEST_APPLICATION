@@ -57,7 +57,8 @@ class Authentication {
     await FirebaseFirestore.instance
         .collection("Users")
         .doc(_userModel.id).update({
-      "status" : "offline"
+      "status" : "offline",
+      "last_seen" : DateTime.now()
     });
     _userModel = null;
   }

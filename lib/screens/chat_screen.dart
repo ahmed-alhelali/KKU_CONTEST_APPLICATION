@@ -21,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String messageID = "";
   Stream messageStream;
-  final messageController = TextEditingController();
+  TextEditingController messageController;
 
   String userName;
   String userImageUrl;
@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
     print(userID);
     print(widget.userID2);
     print(instructorID);
-    if (messageController.text != "" && messageController.text.trim() != "") {
+    if (messageController.text != "") {
       String message = messageController.text.trim();
       var lastMessage = DateTime.now();
 
@@ -76,6 +76,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
       if (sendClicked) {
         messageController.text = "";
+        _clear();
+
+
+
+
+        print(messageController.text.length);
         messageID = "";
 
         FirebaseFirestore.instance
@@ -274,6 +280,38 @@ class _ChatScreenState extends State<ChatScreen> {
                     }
                   }
 
+                  if (index == snapshot.data.docs.length - 1) {
+                    DateTime d = ds["ts"].toDate();
+
+                    return Column(
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              height: 1,
+                              width: double.infinity,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              color: Theme.of(context).backgroundColor,
+                              child: Text("${intl.DateFormat("yMMMMd").format(d).toString()}",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade400
+                              ),),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15,),
+                        chatMessageTile(ds["message"], userID == ds["sendBy"],
+                            textDirection, width, ds["ts"], ds["read"])
+                      ],
+                    );
+                  }
+
                   return chatMessageTile(ds["message"], userID == ds["sendBy"],
                       textDirection, width, ds["ts"], ds["read"]);
                 },
@@ -308,6 +346,13 @@ class _ChatScreenState extends State<ChatScreen> {
     getUserInfo();
     doThisOnLaunch();
     super.initState();
+    messageController = TextEditingController();
+    super.initState();
+  }
+
+  void _clear() {
+    messageController.clear();
+    setState((){});
   }
 
   @override
@@ -319,6 +364,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -361,15 +407,40 @@ class _ChatScreenState extends State<ChatScreen> {
                     DocumentSnapshot ds = snapshot.data;
 
                     if (snapshot.data == null) return SizedBox();
+                    DateTime d;
+                    String day;
+                    if (ds.get("status") != "online") {
+                      var t = ds.get("last_seen");
+                      d = t.toDate();
 
+                      int days = DateTime(d.year, d.month, d.day)
+                          .difference(DateTime(DateTime.now().year,
+                              DateTime.now().month, DateTime.now().day))
+                          .inDays;
+
+                      if (days == 0) {
+                        day = "today";
+                      } else if (days < 0) {
+                        day = "yesterday";
+                      }
+                    }
                     return ds.get("status") == "online"
                         ? Text(
                             ds.get("status"),
                             style: TextStyle(
-                                color: Colors.grey.shade600, fontSize: 10,
-                            fontWeight: FontWeight.w400),
+                                color: Colors.grey.shade600,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400),
                           )
-                        : SizedBox();
+                        : Text(
+                            "last seen $day at ${intl.DateFormat("hh:mm a").format(d).toString()}",
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            textDirection: TextDirection.ltr,
+                          );
                   },
                 )
               ],
@@ -410,13 +481,17 @@ class _ChatScreenState extends State<ChatScreen> {
                               // icon: widget.icon != null ? Icon(widget.icon) : null),
                               ),
                           onChanged: (x) {
-                            setState(() {});
+                            print(messageController.text);
+
+                            setState(() {
+                            });
                           },
                         ),
                       ),
                     ),
                     Visibility(
-                      visible: messageController.text == "",
+                      visible: messageController.text.length == 0,
+
                       replacement: Row(
                         children: [
                           SizedBox(
@@ -457,6 +532,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         ],
                       ),
                     ),
+
+
                   ],
                 ),
               ),

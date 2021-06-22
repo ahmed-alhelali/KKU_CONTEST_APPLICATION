@@ -37,7 +37,8 @@ class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBinding
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(ID).update({
-        "status" : status
+        "status" : status,
+        "last_seen": DateTime.now()
       });
     }else{
       print("UID is null");
