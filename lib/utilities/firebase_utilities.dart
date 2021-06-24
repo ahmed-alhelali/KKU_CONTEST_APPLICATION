@@ -11,6 +11,7 @@ class FirebaseUtilities {
   static String userIdKey = "user_id_key";
 
 
+
   static Future<bool> saveInstructorName(String getInstructorName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString(instructorNameKey, getInstructorName);
@@ -77,4 +78,6 @@ class FirebaseUtilities {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(userIdKey);
   }
+
+
 }

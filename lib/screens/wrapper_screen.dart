@@ -170,18 +170,19 @@ class _WrapperScreenState extends State<WrapperScreen> {
 
                           if (isSuccess) {
 
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context){
                                   _updateSeen(false);
-
-                                  return InstructorWrapperScreen(
-                                    userName: userModel.displayName,
-                                    userURLImage: userModel.photoUrl,
-                                    userID: userModel.id,
+                                  return LifeCycleManager(
+                                      child: InstructorWrapperScreen(
+                                        userName: userModel.displayName,
+                                        userURLImage: userModel.photoUrl,
+                                        userID: userModel.id,
+                                      )
                                   );
-
                                 }
                               ),
                             );
@@ -227,11 +228,14 @@ class _WrapperScreenState extends State<WrapperScreen> {
                               MaterialPageRoute(
                                 builder: (context){
                                   _updateSeen(true);
-                                  return StudentWrapperScreen(
-                                    userName: userModel.displayName,
-                                    userURLImage: userModel.photoUrl,
-                                    uid: userModel.id,
+                                  return LifeCycleManager(
+                                    child: StudentWrapperScreen(
+                                      userName: userModel.displayName,
+                                      userURLImage: userModel.photoUrl,
+                                      uid: userModel.id,
+                                    )
                                   );
+
                                 }
                               ),
                             );

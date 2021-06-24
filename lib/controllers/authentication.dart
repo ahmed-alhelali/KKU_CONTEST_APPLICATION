@@ -37,7 +37,6 @@ class Authentication {
       FirebaseUtilities.saveUserEmail(userCreds.user.email);
       FirebaseUtilities.saveUserImageUrl(userCreds.user.photoURL);
       FirebaseUtilities.saveUserId(userCreds.user.uid);
-
       FirestoreDB.saveUserToFirebase(userCreds.user.displayName,userCreds.user.uid,"online");
 
 
@@ -53,13 +52,15 @@ class Authentication {
   }
 
   void signOut() async {
-    await GoogleSignIn().signOut();
     await FirebaseFirestore.instance
         .collection("Users")
         .doc(_userModel.id).update({
       "status" : "offline",
       "last_seen" : DateTime.now()
     });
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+
     _userModel = null;
   }
 }

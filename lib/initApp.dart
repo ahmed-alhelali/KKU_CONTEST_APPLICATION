@@ -12,19 +12,24 @@ init() async {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
       var userID = await FirebaseUtilities.getUserId();
-      _screen = InstructorWrapperScreen(
+
+      _screen = LifeCycleManager(
+          child: InstructorWrapperScreen(
         userName: userName,
         userURLImage: userImageUrl,
         userID: userID,
-      );
+      ));
     } else {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
       var userID = await FirebaseUtilities.getUserId();
-      _screen = StudentWrapperScreen(
-        userName: userName,
-        userURLImage: userImageUrl,
-        uid: userID,
+
+      _screen = LifeCycleManager(
+        child: StudentWrapperScreen(
+          userName: userName,
+          userURLImage: userImageUrl,
+          uid: userID,
+        ),
       );
     }
   } else {
@@ -75,6 +80,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    print(widget.seen);
     bool isLightTheme = themeProvider.isDarkMode ? false : true;
     return MaterialApp(
       title: 'KKU Context App',
@@ -102,7 +108,7 @@ class _MyAppState extends State<MyApp> {
         return supportedLocates.first;
       },
       // home: WrapperScreen(),
-      home: LifeCycleManager(child: widget.seen,),
+      home: widget.seen,
     );
   }
 }

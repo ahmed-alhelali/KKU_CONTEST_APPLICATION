@@ -1,19 +1,23 @@
 import 'package:kku_contest_app/imports.dart';
 
 class FirestoreDB {
+  static saveUserToFirebase(String name, String id, String status) async {
+    final snapShot = await FirebaseFirestore.instance.collection("Users").doc(id).get();
 
-  static saveUserToFirebase(String name, String id,String status){
-
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(id)
-        .set({
-      "name" : name,
-      "id" : id,
-      "status" : status,
-      "last_seen" : DateTime.now()
-    });
+    if (snapShot.exists) {
+      FirebaseFirestore.instance.collection("Users").doc(id).update({
+        "status": status,
+      });
+    } else {
+      FirebaseFirestore.instance.collection("Users").doc(id).set({
+        "name": name,
+        "id": id,
+        "status": status,
+        "last_seen": DateTime.now()
+      });
+    }
   }
+
   static addCourse(
       String courseTitle, String uid, String userImage, String userName) {
     CollectionReference newCourse =
@@ -101,16 +105,16 @@ class FirestoreDB {
   }
 
   static updateLastMessageSend(
-      String courseID, String chatRoomId, Map lastMessageInfoMap, {sendBy}) {
-
+      String courseID, String chatRoomId, Map lastMessageInfoMap,
+      {sendBy}) {
     FirebaseFirestore.instance
         .collection("Courses")
         .doc(courseID)
         .collection("chats")
-        .doc(chatRoomId).collection("my_chats").doc("sendBy").update({
-      "sendBy": sendBy
-    });
-
+        .doc(chatRoomId)
+        .collection("my_chats")
+        .doc("sendBy")
+        .update({"sendBy": sendBy});
 
     return FirebaseFirestore.instance
         .collection("Courses")

@@ -9,39 +9,23 @@ class LifeCycleManager extends StatefulWidget {
   _LifeCycleManagerState createState() => _LifeCycleManagerState();
 }
 
-class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBindingObserver {
-  var ID;
-
-
-  doThis() async {
-    ID = await FirebaseUtilities.getUserId();
-  }
-
+class _LifeCycleManagerState extends State<LifeCycleManager>
+    with WidgetsBindingObserver {
 
   @override
   void initState() {
-
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    doThis();
-    setStatus("online");
-
-
-
   }
 
-
-
   void setStatus(String status) async {
-    if(ID != null){
+    if (FirebaseAuth.instance.currentUser.uid.isNotEmpty) {
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(ID).update({
-        "status" : status,
-        "last_seen": DateTime.now()
-      });
-    }else{
-      print("UID is null");
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .update({"status": status, "last_seen": DateTime.now()});
+    } else {
+      print("just ignore the action because we don't have user");
     }
   }
 
@@ -49,11 +33,10 @@ class _LifeCycleManagerState extends State<LifeCycleManager> with WidgetsBinding
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     print('AppLifecycleState: $state');
-    print(ID);
 
     if (state == AppLifecycleState.resumed) {
       setStatus("online");
-    } else{
+    } else {
       setStatus("offline");
     }
   }

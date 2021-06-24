@@ -211,8 +211,9 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                     "logout",
                     "cancel",
                     textDirection,
-                    functionOfYesButton: () {
+                    functionOfYesButton: () async {
                       authentication.signOut();
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
