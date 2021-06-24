@@ -171,7 +171,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           if (isSuccess) {
 
 
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context){
@@ -223,7 +223,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
                           if (isSuccess) {
                             FirebaseUtilities.saveUserId(userModel.id);
 
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context){

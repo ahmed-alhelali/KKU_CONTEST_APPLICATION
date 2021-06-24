@@ -285,25 +285,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
                     return Column(
                       children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              height: 1,
-                              width: double.infinity,
-                              color: Theme.of(context).dividerColor,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              color: Theme.of(context).backgroundColor,
-                              child: Text("${intl.DateFormat("yMMMMd").format(d).toString()}",
-                              style: TextStyle(
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          color: Theme.of(context).backgroundColor,
+                          child: Text("${intl.DateFormat("yMMMMd").format(d).toString()}",
+                            style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey.shade400
-                              ),),
-                            ),
-                          ],
+                            ),),
                         ),
                         SizedBox(height: 15,),
                         chatMessageTile(ds["message"], userID == ds["sendBy"],

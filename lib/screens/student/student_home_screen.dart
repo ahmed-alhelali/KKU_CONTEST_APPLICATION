@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:kku_contest_app/imports.dart';
+import 'package:intl/intl.dart' as intl;
 
 class StudentHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -15,7 +18,16 @@ class StudentHomeScreen extends StatefulWidget {
 }
 
 class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
-  final searchController = TextEditingController();
+  TextEditingController searchController;
+
+  Map<String, dynamic> courseMap;
+  String courseID;
+
+  @override
+  void initState() {
+    searchController = TextEditingController();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -34,6 +46,7 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
               ? IconButton(
                   icon: Icon(Icons.menu),
                   onPressed: () {
+                    print(courseID);
                     setState(() {
                       FocusScope.of(context).requestFocus(FocusNode());
                       widget.controller.forward();
@@ -66,36 +79,8 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () async {
-                if (searchController.text != "") {
-                  final courseX = await FirebaseFirestore.instance
-                      .collection("Courses")
-                      .doc(searchController.text)
-                      .get();
-                  if (courseX.exists) {
-                    await FirebaseFirestore.instance
-                        .collection("Courses")
-                        .doc(searchController.text)
-                        .update({
-                      "access_by_students": FieldValue.arrayUnion([widget.uid]),
-                      "new_access": FieldValue.arrayUnion([widget.uid])
-                    });
-                  } else {
-                    Toast.show(
-                      MyLocalization.of(context)
-                          .getTranslatedValue("course_not_exist"),
-                      context,
-                      duration: Toast.LENGTH_LONG,
-                      gravity: Toast.CENTER,
-                    );
-                  }
-                  searchController.text = "";
-                } else {
-                  print("ignore the click");
-                }
-              },
-              color: Theme.of(context).appBarTheme.iconTheme.color,
+              icon: Icon(Icons.search),
+              onPressed: onSearch,
             ),
           ],
           centerTitle: true,
@@ -145,13 +130,170 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                         : Utilities.getTajwalTextStyleWithSize(14,
                             color: Colors.grey),
                   ),
+                  onChanged: (v) {
+                    if (searchController.text == "") {
+                      setState(() {
+                        // isSearch = true;
+                      });
+                    }
+                  },
                 ),
               ),
             ),
-            Expanded(
-                child: StudentWidgets.getStudentCourses(
-                    widget.textDirection, widget.uid)),
+            Flexible(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  StudentWidgets.getStudentCourses(
+                      widget.textDirection, widget.uid),
+                  courseMap != null
+                      ? showAddCourseWidget(courseID)
+                      : SizedBox(),
+                ],
+              ),
+            )
           ],
         ),
       );
+
+  void onSearch() async {
+    if (searchController.text != "") {
+      final courseX = await FirebaseFirestore.instance
+          .collection("Courses")
+          .doc(searchController.text)
+          .get();
+      if (courseX.exists) {
+        await FirebaseFirestore.instance
+            .collection("Courses")
+            .doc(searchController.text)
+            .get()
+            .then((value) {
+          setState(() {
+            courseMap = value.data();
+            courseID = value.reference.id;
+          });
+        });
+      } else {
+        Toast.show(
+          MyLocalization.of(context).getTranslatedValue("course_not_exist"),
+          context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.CENTER,
+        );
+      }
+      _clear();
+    }
+  }
+
+  void _clear() {
+    searchController.clear();
+    setState(() {});
+  }
+
+  showAddCourseWidget(courseID) {
+    Timestamp t = courseMap['time'];
+    DateTime d = t.toDate();
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+      child: Container(
+        alignment: AlignmentDirectional.centerStart,
+        margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.1,
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8.5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Course Name: ${courseMap["course_title"]}",
+                      style: Utilities.getUbuntuTextStyleWithSize(14,
+                          color: Theme.of(context).textTheme.caption.color,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 1,
+                    ),
+                    Text(
+                      "Created By: ${courseMap["name"]}",
+                      style: Utilities.getUbuntuTextStyleWithSize(
+                        13,
+                        color: Theme.of(context).textTheme.caption.color,
+                      ),
+                    ),
+                    Text(
+                      "date: ${intl.DateFormat("yMMMMd").format(d).toString()}",
+                      style: Utilities.getUbuntuTextStyleWithSize(12,
+                          color: Theme.of(context).textTheme.caption.color,
+                          fontWeight: FontWeight.w100),
+                    ),
+                  ],
+                )),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Colors.green.shade800,
+                        ),
+                        child: Text(
+                          "ADD",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          await FirebaseFirestore.instance
+                              .collection("Courses")
+                              .doc(courseID)
+                              .update({
+                            "access_by_students":
+                                FieldValue.arrayUnion([widget.uid]),
+                            "new_access": FieldValue.arrayUnion([widget.uid])
+                          });
+                          setState(() {
+                            courseMap = null;
+                            _clear();
+                          });
+                        },
+                      ),
+                      height: 30,
+                      width: 50,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      child: TextButton(
+                        child: Text(
+                          "Undo",
+                          style: TextStyle(
+                              color: Theme.of(context).textTheme.caption.color),
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            courseMap = null;
+                            _clear();
+                          });
+                        },
+                      ),
+                      height: 30,
+                      width: 50,
+                    ),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
 }
