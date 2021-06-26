@@ -64,6 +64,7 @@ class ThemeProvider extends ChangeNotifier {
       shadowColor: isLightTheme ? Colors.black54 : Colors.white10,
       dividerColor: isLightTheme ? Colors.grey : Colors.white54,
       cardColor: isLightTheme ? Colors.grey.shade300 : HexColor("#29333E"),
+      errorColor:isLightTheme ? Colors.grey : HexColor("#29333E"),
       canvasColor: isLightTheme ? Colors.black : Colors.white,
       accentColor: isLightTheme ? Colors.blue.shade100 : Colors.grey,
       floatingActionButtonTheme: FloatingActionButtonThemeData(

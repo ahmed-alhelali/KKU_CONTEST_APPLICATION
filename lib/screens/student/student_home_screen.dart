@@ -194,19 +194,28 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
     Timestamp t = courseMap['time'];
     DateTime d = t.toDate();
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       child: Container(
         alignment: AlignmentDirectional.centerStart,
         margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
         width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: MediaQuery.of(context).size.height * 0.15,
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).errorColor.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+          color: Theme.of(context).cardColor,
+          // color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8.5),
@@ -237,9 +246,12 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                     ),
                   ],
                 )),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
                       child: TextButton(
@@ -257,7 +269,7 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                               .doc(courseID)
                               .update({
                             "access_by_students":
-                                FieldValue.arrayUnion([widget.uid]),
+                            FieldValue.arrayUnion([widget.uid]),
                             "new_access": FieldValue.arrayUnion([widget.uid])
                           });
                           setState(() {
@@ -290,7 +302,9 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
                       width: 50,
                     ),
                   ],
-                )),
+                ),
+              ),
+            )
           ],
         ),
       ),

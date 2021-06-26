@@ -8,6 +8,9 @@ init() async {
 
   Widget _screen;
   if (seen == null || seen == false) {
+    _screen = WrapperScreen();
+
+  } else {
     if (student == false || student == null) {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
@@ -15,10 +18,10 @@ init() async {
 
       _screen = LifeCycleManager(
           child: InstructorWrapperScreen(
-        userName: userName,
-        userURLImage: userImageUrl,
-        userID: userID,
-      ));
+            userName: userName,
+            userURLImage: userImageUrl,
+            userID: userID,
+          ));
     } else {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
@@ -32,8 +35,6 @@ init() async {
         ),
       );
     }
-  } else {
-    _screen = WrapperScreen();
   }
 
   runApp(
