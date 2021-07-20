@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class InstructorHomeScreen extends StatefulWidget {
   final AnimationController controller;
@@ -87,8 +87,11 @@ class _InstructorHomeScreenState
           iconTheme: Theme.of(context).appBarTheme.iconTheme,
           backgroundColor: Colors.transparent,
         ),
-        body: InstructorWidgets.getInstructorCourses(
+    resizeToAvoidBottomInset: false,
+
+    body: InstructorWidgets.getInstructorCourses(
             widget.textDirection, widget.uid),
+
         floatingActionButton: Padding(
           padding: EdgeInsets.all(6),
           child: FloatingActionButton(

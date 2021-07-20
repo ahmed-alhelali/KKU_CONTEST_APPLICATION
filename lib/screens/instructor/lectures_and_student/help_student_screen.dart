@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 import 'package:intl/intl.dart' as intl;
 
 class HelpStudentScreen extends StatefulWidget {
@@ -114,7 +114,7 @@ class _HelpStudentScreenState extends State<HelpStudentScreen> {
                           document.get("sendBy") == currentUserID
                               ? (messageLength < 35
                                   ? "${MyLocalization.of(context).getTranslatedValue("you")}: ${document.get("message").toString()}"
-                                  : "${MyLocalization.of(context).getTranslatedValue("you")}: ${document.get("message").toString().substring(0, 35) + "..."}")
+                                  : "${MyLocalization.of(context).getTranslatedValue("you")}: ${document.get("message").toString().substring(0, 30) + "..."}")
                               : (messageLength < 35
                                   ? "${document.get("message").toString()}"
                                   : "${document.get("message").toString().substring(0, 35) + "..."}"),

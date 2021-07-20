@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class InstructorWidgets {
   static Widget getInstructorCourses(TextDirection textDirection, String uid,
@@ -240,6 +240,10 @@ class InstructorWidgets {
       ),
       builder: (context) {
         return Container(
+          //this line fix hiding the bottomSheet behind the keyboard issue
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+
           height: 230,
           child: Stack(
             children: [
@@ -371,7 +375,8 @@ class InstructorWidgets {
                                   .getTranslatedValue("cancel"),
                               style: TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: HexColor("#A74552"),
+                            // backgroundColor: HexColor("#A74552"),
+                            backgroundColor: Colors.red.shade600,
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -387,7 +392,8 @@ class InstructorWidgets {
                                   .getTranslatedValue("create"),
                               style: TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: HexColor("#5C704D"),
+                            // backgroundColor: HexColor("#5C704D"),
+                            backgroundColor: Colors.green.shade800,
                             onPressed: () async {
                               CollectionReference newCourse = FirebaseFirestore
                                   .instance

@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class FirestoreDB {
   static saveUserToFirebase(String name, String id, String status) async {

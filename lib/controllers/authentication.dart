@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class Authentication {
   Authentication() {
@@ -13,8 +13,10 @@ class Authentication {
 
   UserModel get loggedInUserModel => _userModel;
 
+  GoogleSignIn googleSignIn = GoogleSignIn();
+
+
   Future<bool> signInWithGoogle() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount googleUser = await googleSignIn.signIn();
 
@@ -24,6 +26,7 @@ class Authentication {
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
+
 
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -52,14 +55,17 @@ class Authentication {
   }
 
   void signOut() async {
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(_userModel.id).update({
-      "status" : "offline",
-      "last_seen" : DateTime.now()
-    });
+
     await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
+
+    await googleSignIn.signOut().then((value){
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(_userModel.id).update({
+        "status" : "offline",
+        "last_seen" : DateTime.now()
+      });
+    });
 
     _userModel = null;
   }

@@ -1,4 +1,6 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
+
+import 'controllers/theme_controllers/theme_controller.dart';
 
 init() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -9,7 +11,6 @@ init() async {
   Widget _screen;
   if (seen == null || seen == false) {
     _screen = WrapperScreen();
-
   } else {
     if (student == false || student == null) {
       var userName = await FirebaseUtilities.getUserName();
@@ -18,10 +19,10 @@ init() async {
 
       _screen = LifeCycleManager(
           child: InstructorWrapperScreen(
-            userName: userName,
-            userURLImage: userImageUrl,
-            userID: userID,
-          ));
+        userName: userName,
+        userURLImage: userImageUrl,
+        userID: userID,
+      ));
     } else {
       var userName = await FirebaseUtilities.getUserName();
       var userImageUrl = await FirebaseUtilities.getUserImageUrl();
@@ -47,18 +48,15 @@ init() async {
           create: (_) => MultipleNotifier([]),
         ),
       ],
-      child: ChangeNotifierProvider(
-        create: (_) => ThemeProvider(),
-        child: MyApp(_screen),
-      ),
+      child: MyApp(_screen),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  Widget seen;
+  Widget screen;
 
-  MyApp(this.seen);
+  MyApp(this.screen);
 
   static void setLocale(BuildContext context, Locale locale) {
     _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
@@ -72,6 +70,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale _locale;
 
+  getInitialLanguage()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if(preferences.getString("isEn") == "ar" || preferences.getString("isEn") == null){
+      _locale = Locale('ar', '');
+    }else{
+      _locale = Locale('en', '');
+    }
+  }
+  @override
+  void initState() {
+    getInitialLanguage();
+    super.initState();
+  }
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -80,36 +91,37 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    print(widget.seen);
-    bool isLightTheme = themeProvider.isDarkMode ? false : true;
-    return MaterialApp(
-      title: 'KKU Context App',
-      theme: ThemeProvider().themeAPP(isLightTheme),
-      localizationsDelegates: [
-        MyLocalization.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      debugShowCheckedModeBanner: false,
-      locale: _locale,
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('ar', ''),
-      ],
-      localeResolutionCallback: (currentLocate, supportedLocates) {
-        if (currentLocate != null) {
-          for (Locale locale in supportedLocates) {
-            if (currentLocate.languageCode == locale.languageCode) {
-              return currentLocate;
+    return ChangeNotifierProvider(
+      create: (_) => ThemeController(),
+      child: Consumer(builder: (context, ThemeController themeNotifier, child) {
+        return MaterialApp(
+          title: 'Connected',
+          theme: AppTheme.appTheme(themeNotifier.isDark),
+          localizationsDelegates: [
+            MyLocalization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          debugShowCheckedModeBanner: false,
+          locale: _locale,
+          supportedLocales: [
+            const Locale('en', ''),
+            const Locale('ar', ''),
+          ],
+          localeResolutionCallback: (currentLocate, supportedLocates) {
+            if (currentLocate != null) {
+              for (Locale locale in supportedLocates) {
+                if (currentLocate.languageCode == locale.languageCode) {
+                  return currentLocate;
+                }
+              }
             }
-          }
-        }
-        return supportedLocates.first;
-      },
-      // home: WrapperScreen(),
-      home: widget.seen,
+            return supportedLocates.first;
+          },
+          home: widget.screen,
+        );
+      }),
     );
   }
 }

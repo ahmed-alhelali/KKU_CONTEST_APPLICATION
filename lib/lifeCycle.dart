@@ -14,6 +14,7 @@ class _LifeCycleManagerState extends State<LifeCycleManager>
 
   @override
   void initState() {
+    setStatus("online");
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }

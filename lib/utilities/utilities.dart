@@ -1,7 +1,7 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class Utilities {
-  static void changeLanguages(Languages language, context) {
+  static Future<void> changeLanguages(Languages language, context) async {
     Locale _temp;
     switch (language.languageCode) {
       case 'en':
@@ -12,6 +12,8 @@ class Utilities {
         break;
     }
     MyApp.setLocale(context, _temp);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("isEn", language.languageCode);
   }
 
   static TextStyle getTajwalTextStyleWithSize(double size,

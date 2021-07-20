@@ -1,6 +1,17 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kku_contest_app/imports.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
+
+// import 'package:image_picker/image_picker.dart';
+import 'package:connected/imports.dart';
 import 'package:intl/intl.dart' as intl;
+
+// import 'package:firebase_storage/firebase_storage.dart'; // For File Upload To Firestore
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart'; // For Image Picker
+import 'package:path/path.dart' as Path;
 
 class ChatScreen extends StatefulWidget {
   final String imageForChatScreen,
@@ -30,6 +41,9 @@ class _ChatScreenState extends State<ChatScreen> {
   String name;
   String instructorID;
   String imageUrl;
+
+  File _image;
+  String _uploadedFileURL;
 
   readAllNewMessages(courseID, chatRoomID, uid, messagesID) {
     print("READS");
@@ -78,9 +92,6 @@ class _ChatScreenState extends State<ChatScreen> {
         messageController.text = "";
         _clear();
 
-
-
-
         print(messageController.text.length);
         messageID = "";
 
@@ -118,7 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Row(
       textDirection: textDirection,
       mainAxisAlignment:
-          sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         SizedBox(
@@ -127,103 +138,115 @@ class _ChatScreenState extends State<ChatScreen> {
         sendByMe
             ? SizedBox()
             : CircleAvatar(
-                radius: 15,
-                backgroundImage: NetworkImage(widget.imageForChatScreen),
-              ),
+          radius: 15,
+          backgroundImage: NetworkImage(widget.imageForChatScreen),
+        ),
         Flexible(
           child: Container(
             margin: sendByMe
                 ? (textDirection == TextDirection.ltr
-                    ? EdgeInsets.only(
-                        left: width * 0.15, right: 10, top: 4, bottom: 4)
-                    : EdgeInsets.only(
-                        left: 10, right: width * 0.15, top: 4, bottom: 4))
+                ? EdgeInsets.only(
+                left: width * 0.15, right: 10, top: 4, bottom: 4)
+                : EdgeInsets.only(
+                left: 10, right: width * 0.15, top: 4, bottom: 4))
                 : (textDirection == TextDirection.ltr
-                    ? EdgeInsets.only(
-                        left: 10, right: width * 0.15, top: 4, bottom: 4)
-                    : EdgeInsets.only(
-                        left: width * 0.15, right: 10, top: 4, bottom: 4)),
+                ? EdgeInsets.only(
+                left: 10, right: width * 0.15, top: 4, bottom: 4)
+                : EdgeInsets.only(
+                left: width * 0.15, right: 10, top: 4, bottom: 4)),
 
             // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             decoration: BoxDecoration(
               borderRadius: textDirection == TextDirection.ltr
                   ? BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomRight:
-                          sendByMe ? Radius.circular(0) : Radius.circular(24),
-                      bottomLeft:
-                          sendByMe ? Radius.circular(24) : Radius.circular(0),
-                    )
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                sendByMe ? Radius.circular(0) : Radius.circular(15),
+                bottomLeft:
+                sendByMe ? Radius.circular(15) : Radius.circular(0),
+              )
                   : BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomRight:
-                          sendByMe ? Radius.circular(24) : Radius.circular(0),
-                      bottomLeft:
-                          sendByMe ? Radius.circular(0) : Radius.circular(24),
-                    ),
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight:
+                sendByMe ? Radius.circular(15) : Radius.circular(0),
+                bottomLeft:
+                sendByMe ? Radius.circular(0) : Radius.circular(15),
+              ),
               color: sendByMe
-                  ? (Theme.of(context).scaffoldBackgroundColor)
-                  : (Theme.of(context).cardColor),
+                  ? (Theme
+                  .of(context)
+                  .scaffoldBackgroundColor)
+                  : (Theme
+                  .of(context)
+                  .cardColor),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Column(
               crossAxisAlignment:
-                  sendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              sendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 Text(
                   message,
                   // intl.DateFormat("hh:mm a").format(d).toString(),,
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(
-                          12,
-                          color: Theme.of(context).textTheme.caption.color,
-                        )
+                    12,
+                    color: Theme
+                        .of(context)
+                        .textTheme
+                        .caption
+                        .color,
+                  )
                       : Utilities.getTajwalTextStyleWithSize(
-                          13,
-                          color: Theme.of(context).textTheme.caption.color,
-                        ),
+                    13,
+                    color: Theme
+                        .of(context)
+                        .textTheme
+                        .caption
+                        .color,
+                  ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 sendByMe
                     ? Wrap(
-                        children: [
-                          Text(
-                            intl.DateFormat("hh:mm a").format(d).toString(),
-                            style: TextStyle(
-                              fontSize: 8,
-                              color: Colors.grey,
-                            ),
-                            textDirection: TextDirection.ltr,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          sendByMe
-                              ? read
-                                  ? Icon(
-                                      Icons.done_all,
-                                      size: 12,
-                                      color: Colors.green,
-                                    )
-                                  : Icon(
-                                      Icons.done_all,
-                                      size: 12,
-                                    )
-                              : SizedBox(),
-                        ],
-                      )
-                    : Text(
-                        intl.DateFormat("hh:mm a").format(d).toString(),
-                        style: TextStyle(
-                          fontSize: 8,
-                          color: Colors.grey,
-                        ),
-                        textDirection: TextDirection.ltr,
+                  children: [
+                    Text(
+                      intl.DateFormat("hh:mm a").format(d).toString(),
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Colors.grey,
                       ),
+                      textDirection: TextDirection.ltr,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    sendByMe
+                        ? read
+                        ? Icon(
+                      Icons.done_all,
+                      size: 12,
+                      color: Colors.green,
+                    )
+                        : Icon(
+                      Icons.done_all,
+                      size: 12,
+                    )
+                        : SizedBox(),
+                  ],
+                )
+                    : Text(
+                  intl.DateFormat("hh:mm a").format(d).toString(),
+                  style: TextStyle(
+                    fontSize: 8,
+                    color: Colors.grey,
+                  ),
+                  textDirection: TextDirection.ltr,
+                ),
               ],
             ),
           ),
@@ -232,79 +255,151 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+
+  Future chooseFile() async {
+    ImagePicker picker = ImagePicker();
+    PickedFile image = await ImagePicker.platform
+        .pickImage(source: ImageSource.camera, imageQuality: 50)
+        .then((image) {
+      setState(() {
+        _image = image as File;
+        uploadFile();
+      });
+    });
+
+    // await picker.getImage(source: ImageSource.gallery).then((image) {
+    //
+    // });
+  }
+  Future<void> _sendImage(List<int> imageData) async {
+    setState(() {
+      // _isImageOptionClicked = !_isImageOptionClicked;
+      // _isSendingImages = true;
+    });
+    // final result = await _uplaodImageToServer(imageData);
+
+    // final message = Message(
+    //   idFrom: userId,
+    //   idTo: widget.peerId,
+    //   content: result['url'],
+    //   type: MessageType.image,
+    //   isRead: false,
+    //   timestamp: result['fileName'],
+    // );
+
+    // await _sendMessage(message);
+
+    // _isSendingImages = false;
+  }
+  //
+  // Future<Map<String, String>> _uplaodImageToServer(List<int> imageData) async {
+  //   final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+  //   UploadTask task = FirebaseStorage.instance
+  //       .ref()
+  //       .child("ahmed_test" + '-' + fileName)
+  //       .putData(imageData);
+  //
+  //   final taskSnapshot = await task.snapshot.storage;
+  //   return {
+  //     'url': await taskSnapshot.ref.getDownloadURL(),
+  //     'fileName': fileName,
+  //   };
+  // }
+
+  Future uploadFile() async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('chats/${Path.basename(_image.path)}}');
+    UploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.whenComplete(() => null);
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL;
+      });
+    });
+  }
+
   Widget chatMessages(TextDirection textDirection) {
     return StreamBuilder(
       stream: messageStream,
       builder: (context, snapshot) {
-        var width = MediaQuery.of(context).size.width;
+        var width = MediaQuery
+            .of(context)
+            .size
+            .width;
         return snapshot.hasData
             ? ListView.builder(
-                padding: EdgeInsets.only(bottom: 70, top: 16),
-                itemCount: snapshot.data.docs.length,
-                reverse: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  ds.reference.parent.doc("sendBy").get().then((value) {
-                    if (userID != value.get("sendBy")) {
-                      FirebaseFirestore.instance
-                          .collection("Courses")
-                          .doc(widget.courseID)
-                          .collection("chats")
-                          .doc(widget.charRoomID)
-                          .update({"read": true});
-                    }
-                    if (instructorID == value.get("sendBy") &&
-                        userID != instructorID) {
-                      FirebaseFirestore.instance
-                          .collection("Courses")
-                          .doc(widget.courseID)
-                          .update({
-                        "notification": FieldValue.arrayRemove([userID])
-                      });
-                    } else if (instructorID != value.get("sendBy") &&
-                        userID == instructorID) {
-                      FirebaseFirestore.instance
-                          .collection("Courses")
-                          .doc(widget.courseID)
-                          .update({
-                        "new_messages":
-                            FieldValue.arrayRemove([widget.student]),
-                      });
-                    }
-                  });
+          padding: EdgeInsets.only(bottom: 70, top: 16),
+          itemCount: snapshot.data.docs.length,
+          reverse: true,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+            ds.reference.parent.doc("sendBy").get().then((value) {
+              if (userID != value.get("sendBy")) {
+                FirebaseFirestore.instance
+                    .collection("Courses")
+                    .doc(widget.courseID)
+                    .collection("chats")
+                    .doc(widget.charRoomID)
+                    .update({"read": true});
+              }
+              if (instructorID == value.get("sendBy") &&
+                  userID != instructorID) {
+                FirebaseFirestore.instance
+                    .collection("Courses")
+                    .doc(widget.courseID)
+                    .update({
+                  "notification": FieldValue.arrayRemove([userID])
+                });
+              } else if (instructorID != value.get("sendBy") &&
+                  userID == instructorID) {
+                FirebaseFirestore.instance
+                    .collection("Courses")
+                    .doc(widget.courseID)
+                    .update({
+                  "new_messages":
+                  FieldValue.arrayRemove([widget.student]),
+                });
+              }
+            });
 
-                  if (userID != ds["sendBy"]) {
-                    if (ds["read"] == false) {
-                      readAllNewMessages(widget.courseID, widget.charRoomID,
-                          userID, ds.reference.id);
-                    }
-                  }
+            if (userID != ds["sendBy"]) {
+              if (ds["read"] == false) {
+                readAllNewMessages(widget.courseID, widget.charRoomID,
+                    userID, ds.reference.id);
+              }
+            }
+            DateTime d = ds["ts"].toDate();
+            if (index == snapshot.data.docs.length - 1) {
+              DateTime d = ds["ts"].toDate();
 
-                  if (index == snapshot.data.docs.length - 1) {
-                    DateTime d = ds["ts"].toDate();
+              return Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    color: Theme
+                        .of(context)
+                        .backgroundColor,
+                    child: Text(
+                      "${intl.DateFormat("yMMMMd").format(d).toString()}",
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.grey.shade400),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  chatMessageTile(ds["message"], userID == ds["sendBy"],
+                      textDirection, width, ds["ts"], ds["read"])
+                ],
+              );
+            }
 
-                    return Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          color: Theme.of(context).backgroundColor,
-                          child: Text("${intl.DateFormat("yMMMMd").format(d).toString()}",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade400
-                            ),),
-                        ),
-                        SizedBox(height: 15,),
-                        chatMessageTile(ds["message"], userID == ds["sendBy"],
-                            textDirection, width, ds["ts"], ds["read"])
-                      ],
-                    );
-                  }
-
-                  return chatMessageTile(ds["message"], userID == ds["sendBy"],
-                      textDirection, width, ds["ts"], ds["read"]);
-                },
-              )
+            return chatMessageTile(ds["message"], userID == ds["sendBy"],
+                textDirection, width, ds["ts"], ds["read"]);
+          },
+        )
             : Center(child: CircularProgressIndicator());
       },
     );
@@ -341,7 +436,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _clear() {
     messageController.clear();
-    setState((){});
+    setState(() {});
   }
 
   @override
@@ -355,13 +450,23 @@ class _ChatScreenState extends State<ChatScreen> {
     final TextDirection textDirection = Directionality.of(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme
+          .of(context)
+          .backgroundColor,
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
-        brightness: Theme.of(context).appBarTheme.brightness,
-        backgroundColor: Theme.of(context).backgroundColor,
-        iconTheme: Theme.of(context).appBarTheme.iconTheme,
+        brightness: Theme
+            .of(context)
+            .appBarTheme
+            .brightness,
+        backgroundColor: Theme
+            .of(context)
+            .backgroundColor,
+        iconTheme: Theme
+            .of(context)
+            .appBarTheme
+            .iconTheme,
         titleSpacing: 0.0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -381,11 +486,19 @@ class _ChatScreenState extends State<ChatScreen> {
                   widget.name,
                   style: textDirection == TextDirection.ltr
                       ? Utilities.getUbuntuTextStyleWithSize(16,
-                          color: Theme.of(context).textTheme.caption.color,
-                          fontWeight: FontWeight.w600)
+                      color: Theme
+                          .of(context)
+                          .textTheme
+                          .caption
+                          .color,
+                      fontWeight: FontWeight.w600)
                       : Utilities.getTajwalTextStyleWithSize(16,
-                          color: Theme.of(context).textTheme.caption.color,
-                          fontWeight: FontWeight.w600),
+                      color: Theme
+                          .of(context)
+                          .textTheme
+                          .caption
+                          .color,
+                      fontWeight: FontWeight.w600),
                 ),
                 StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -403,33 +516,44 @@ class _ChatScreenState extends State<ChatScreen> {
                       d = t.toDate();
 
                       int days = DateTime(d.year, d.month, d.day)
-                          .difference(DateTime(DateTime.now().year,
-                              DateTime.now().month, DateTime.now().day))
+                          .difference(DateTime(DateTime
+                          .now()
+                          .year,
+                          DateTime
+                              .now()
+                              .month, DateTime
+                              .now()
+                              .day))
                           .inDays;
 
                       if (days == 0) {
                         day = "today";
                       } else if (days < 0) {
-                        day = "yesterday";
+                        days < -1
+                            ? day =
+                            intl.DateFormat('d MMM').format(d).toString()
+                            : day = "yesterday";
                       }
                     }
                     return ds.get("status") == "online"
                         ? Text(
-                            ds.get("status"),
-                            style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400),
-                          )
+                      ds.get("status"),
+                      style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400),
+                    )
                         : Text(
-                            "last seen $day at ${intl.DateFormat("hh:mm a").format(d).toString()}",
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            textDirection: TextDirection.ltr,
-                          );
+                      "last seen $day at ${intl.DateFormat("hh:mm a")
+                          .format(d)
+                          .toString()}",
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textDirection: TextDirection.ltr,
+                    );
                   },
                 )
               ],
@@ -444,21 +568,25 @@ class _ChatScreenState extends State<ChatScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.add,
-                      // size: 15,
-                    ),
+                    // Icon(
+                    //   Icons.add,
+                    //   // size: 15,
+                    // ),
                     Expanded(
                       child: Container(
                         padding: EdgeInsets.only(left: 10.0, right: 10.0),
                         // margin: EdgeInsets.only(bottom: 30.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme
+                              .of(context)
+                              .backgroundColor,
                         ),
                         child: TextField(
                           controller: messageController,
@@ -467,20 +595,18 @@ class _ChatScreenState extends State<ChatScreen> {
                           // onChanged: widget.onChange,
                           decoration: InputDecoration(
                               border: InputBorder.none, isDense: true
-                              // icon: widget.icon != null ? Icon(widget.icon) : null),
-                              ),
+                            // icon: widget.icon != null ? Icon(widget.icon) : null),
+                          ),
                           onChanged: (x) {
                             print(messageController.text);
 
-                            setState(() {
-                            });
+                            setState(() {});
                           },
                         ),
                       ),
                     ),
                     Visibility(
                       visible: messageController.text.length == 0,
-
                       replacement: Row(
                         children: [
                           SizedBox(
@@ -507,22 +633,36 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 5,
+                            width: 7.5,
                           ),
                           Icon(
-                            Icons.photo_camera,
+                            Icons.send,
+                            color: Colors.green.shade100,
+                            size: 24,
                           ),
                           SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.mic,
+                            width: 7.5,
                           ),
                         ],
                       ),
+                      // child: Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 5,
+                      //     ),
+                      //     GestureDetector(
+                      //       child: Icon(Icons.photo_camera),
+                      //         onTap: () => chooseFile(),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     ),
+                      //     Icon(
+                      //       Icons.mic,
+                      //     ),
+                      //   ],
+                      // ),
                     ),
-
-
                   ],
                 ),
               ),

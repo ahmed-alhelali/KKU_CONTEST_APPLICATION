@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class FirebaseUtilities {
   static String instructorNameKey = "instructor_name_key";

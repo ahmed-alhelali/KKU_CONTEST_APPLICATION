@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class InstructorCourse extends StatefulWidget {
   final String courseTitle;

@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class StudentWidgets {
   static Widget getStudentCourses(TextDirection textDirection, String id) {

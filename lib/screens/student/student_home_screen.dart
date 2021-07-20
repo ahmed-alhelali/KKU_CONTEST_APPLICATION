@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 import 'package:intl/intl.dart' as intl;
 
 class StudentHomeScreen extends StatefulWidget {
@@ -193,7 +193,7 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
   showAddCourseWidget(courseID) {
     Timestamp t = courseMap['time'];
     DateTime d = t.toDate();
-    return BackdropFilter(
+    return  BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       child: Container(
         alignment: AlignmentDirectional.centerStart,
@@ -309,5 +309,7 @@ class _StudentHomeScreenState extends HomeScreenStateMaster<StudentHomeScreen> {
         ),
       ),
     );
+
+
   }
 }

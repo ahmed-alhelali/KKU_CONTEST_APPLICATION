@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ahmedalhelali.kku_contest_app">
    <application
-        android:label="kku_contest_app"
+        android:label="connected"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

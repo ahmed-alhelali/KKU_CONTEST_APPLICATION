@@ -1,4 +1,4 @@
-import 'package:kku_contest_app/imports.dart';
+import 'package:connected/imports.dart';
 
 class CreateLectureSteps extends StatefulWidget {
   final String id;
@@ -235,7 +235,8 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                     TextButton(
                       style: TextButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: HexColor("#5C704D"),
+                        backgroundColor: Colors.green.shade800,
+                        // backgroundColor: HexColor("#5C704D"),
                       ),
                       child: Text(
                         MyLocalization.of(context).getTranslatedValue("next"),
@@ -332,7 +333,7 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 TextButton(
                   style: TextButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: HexColor("#A74552"),
+                    backgroundColor: Colors.red.shade600,
                   ),
                   child: Text(
                     MyLocalization.of(context).getTranslatedValue("back"),
@@ -356,7 +357,9 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 TextButton(
                   style: TextButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: HexColor("#5C704D"),
+                    // backgroundColor: HexColor("#5C704D"),
+                    backgroundColor: Colors.green.shade800,
+
                   ),
                   child: Text(
                     MyLocalization.of(context).getTranslatedValue("next"),
@@ -469,7 +472,8 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 TextButton(
                   style: TextButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: HexColor("#A74552"),
+                    // backgroundColor: HexColor("#A74552"),
+                    backgroundColor: Colors.red.shade600
                   ),
                   child: Text(
                     MyLocalization.of(context).getTranslatedValue("back"),
@@ -487,7 +491,9 @@ class _CreateLectureStepsState extends State<CreateLectureSteps> {
                 TextButton(
                   style: TextButton.styleFrom(
                     elevation: 0,
-                    backgroundColor: HexColor("#5C704D"),
+                    // backgroundColor: HexColor("#5C704D"),
+                    backgroundColor: Colors.green.shade800,
+
                   ),
                   child: Text(
                     MyLocalization.of(context).getTranslatedValue("next"),

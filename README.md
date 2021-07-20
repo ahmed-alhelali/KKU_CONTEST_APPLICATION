@@ -1,4 +1,4 @@
-# kku_contest_app
+# connected
 
 MyAPPLICATION
 
