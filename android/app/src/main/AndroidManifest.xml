@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ahmedalhelali.kku_contest_app">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="connected"
         android:icon="@mipmap/ic_launcher">
