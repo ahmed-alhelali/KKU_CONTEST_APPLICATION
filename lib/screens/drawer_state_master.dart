@@ -213,8 +213,9 @@ abstract class DrawerStateMaster<T extends StatefulWidget> extends State<T> {
                       textDirection,
                       functionOfYesButton: () async {
                         authentication.signOut();
-
-                        Navigator.push(
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setBool("seen",false);
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => WrapperScreen(),

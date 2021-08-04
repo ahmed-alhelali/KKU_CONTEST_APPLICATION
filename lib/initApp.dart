@@ -103,6 +103,12 @@ class _MyAppState extends State<MyApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
+          builder: (context, child) {
+            return ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: child,
+            );
+          },
           debugShowCheckedModeBanner: false,
           locale: _locale,
           supportedLocales: [
@@ -123,5 +129,12 @@ class _MyAppState extends State<MyApp> {
         );
       }),
     );
+  }
+}
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

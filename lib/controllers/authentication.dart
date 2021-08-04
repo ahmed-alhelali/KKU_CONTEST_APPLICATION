@@ -1,4 +1,5 @@
 import 'package:connected/imports.dart';
+import 'package:flutter/foundation.dart';
 
 class Authentication {
   Authentication() {
@@ -14,44 +15,55 @@ class Authentication {
   UserModel get loggedInUserModel => _userModel;
 
   GoogleSignIn googleSignIn = GoogleSignIn();
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<User> signInWithGoogle() async {
 
 
-  Future<bool> signInWithGoogle() async {
+    User user;
 
-    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    if (googleUser == null) {
-      return false;
-    }
+    final GoogleSignInAccount googleSignInAccount =
+    await googleSignIn.signIn();
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
 
-
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    UserCredential userCreds =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    if (userCreds != null) {
-      FirebaseUtilities.saveUserName(userCreds.user.displayName);
-      FirebaseUtilities.saveUserEmail(userCreds.user.email);
-      FirebaseUtilities.saveUserImageUrl(userCreds.user.photoURL);
-      FirebaseUtilities.saveUserId(userCreds.user.uid);
-      FirestoreDB.saveUserToFirebase(userCreds.user.displayName,userCreds.user.uid,"online");
-
-
-      _userModel = UserModel(
-        displayName: userCreds.user.displayName,
-        photoUrl: userCreds.user.photoURL,
-        email: userCreds.user.email,
-        id: userCreds.user.uid,
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
       );
-    }
 
-    return true;
+      try {
+        final UserCredential userCredential =
+        await auth.signInWithCredential(credential);
+
+        user = userCredential.user;
+        FirebaseUtilities.saveUserName(user.displayName);
+        FirebaseUtilities.saveUserEmail(user.email);
+        FirebaseUtilities.saveUserImageUrl(user.photoURL);
+        FirebaseUtilities.saveUserId(user.uid);
+        FirestoreDB.saveUserToFirebase(user.displayName,user.uid,"online");
+        _userModel = UserModel(
+          id: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          // ...
+        } else if (e.code == 'invalid-credential') {
+          // ...
+        }
+      } catch (e) {
+        // ...
+      }
+
+    return user;
+  }
   }
 
   void signOut() async {
@@ -69,4 +81,6 @@ class Authentication {
 
     _userModel = null;
   }
+
+
 }

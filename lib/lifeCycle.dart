@@ -21,10 +21,22 @@ class _LifeCycleManagerState extends State<LifeCycleManager>
 
   void setStatus(String status) async {
     if (FirebaseAuth.instance.currentUser.uid.isNotEmpty) {
-      await FirebaseFirestore.instance
+      final snapShot = await FirebaseFirestore.instance
           .collection("Users")
-          .doc(FirebaseAuth.instance.currentUser.uid)
-          .update({"status": status, "last_seen": DateTime.now()});
+          .doc(FirebaseAuth.instance.currentUser.uid).get();
+
+      if(snapShot.exists){
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .update({"status": status, "last_seen": DateTime.now()});
+      }else{
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .set({"uid":FirebaseAuth.instance.currentUser.uid,"status": status, "last_seen": DateTime.now()});
+      }
+
     } else {
       print("just ignore the action because we don't have user");
     }

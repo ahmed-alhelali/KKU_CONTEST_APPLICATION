@@ -162,8 +162,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
                                 ),
                         ),
                         onPressed: () async {
+                          await authentication.signInWithGoogle();
+
                           bool isSuccess =
-                              await authentication.signInWithGoogle();
+                              authentication.loggedInUserModel.id.isNotEmpty;
+                          print("THE ID OF USER IS ${authentication.loggedInUserModel.id}");
 
                           UserModel userModel =
                               authentication.loggedInUserModel;
@@ -215,8 +218,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
                                 ),
                         ),
                         onPressed: () async {
+                          await authentication.signInWithGoogle();
+
                           bool isSuccess =
-                              await authentication.signInWithGoogle();
+                               authentication.loggedInUserModel.id.isNotEmpty;
+                          print("THE ID OF USER IS ${authentication.loggedInUserModel.id}");
                           UserModel userModel =
                               authentication.loggedInUserModel;
 
@@ -235,7 +241,6 @@ class _WrapperScreenState extends State<WrapperScreen> {
                                       uid: userModel.id,
                                     )
                                   );
-
                                 }
                               ),
                             );
