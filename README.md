@@ -1,6 +1,8 @@
 # Connected App
 The connected app is a mobile app that comes up with the idea that tries to solve some practical lecture problems at KKU (King Khalid University) during the Covid-19 period.
 
+This project submitted as a part of (KKU Flutter App Context-2021) 
+
 The app tries to keep the students and the instructor always connected during the practical lectures by creating an effective community inside each course
 
 # How to run
