@@ -11,16 +11,15 @@ It's important to put your own Firebase service file in order to run the app
 
  1. Create a new firebase project in your console 
  
- 2. Add an android app in the same firebase project
- 
- 3. Clone this project:
+ 2. Clone this project:
 
 ```
 git clone https://github.com/ahmed-alhelali/KKU_CONTEST_APPLICATION
-```
-
- 4. Download the google-services.json file and add it to the project 
- 5. Get packages:
+``` 
+ 
+ 3. Connect the firebase app with this project [follow the offical documentation here](https://firebase.google.com/docs/flutter/setup?platform=android).
+ 
+ 4. Get packages:
  
 
 ```
